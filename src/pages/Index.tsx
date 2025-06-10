@@ -1,12 +1,21 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, Linkedin, Github, ExternalLink, MapPin, Calendar, Building2 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Mail, Phone, Linkedin, Github, ExternalLink, MapPin, Calendar, Building2, Moon, Sun, Download, ChevronDown } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
+import FloatingElements from "@/components/FloatingElements";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("about");
+  const [isVisible, setIsVisible] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
   const skills = {
     "Mobile App Development": ["iOS & Android Development", "React Native"],
@@ -48,7 +57,7 @@ const Index = () => {
       title: "AI To-Do Agent",
       description: "Mobile and web productivity assistant leveraging React Native, Flask, and the Phi-2 LLM. Includes task memory, intelligent scheduling, and adaptive prompts.",
       technologies: ["React Native", "Flask", "Phi-2 LLM"],
-      image: "https://placehold.co/400x250/E0F2F7/2C5282?text=AI+To-Do+Agent",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=250&fit=crop&crop=center",
       demoLink: null,
       githubLink: null
     },
@@ -56,7 +65,7 @@ const Index = () => {
       title: "House Price Prediction App",
       description: "ML-powered application predicting house prices based on user input, with a Flask API backend and React Native frontend.",
       technologies: ["Flask API", "React Native", "Machine Learning"],
-      image: "https://placehold.co/400x250/E0F2F7/2C5282?text=House+Price+App",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=250&fit=crop&crop=center",
       demoLink: null,
       githubLink: null
     },
@@ -64,7 +73,7 @@ const Index = () => {
       title: "Perera's Paws",
       description: "Responsive frontend and admin panel built with Vite and Node.js. Hosted on AWS EC2 with asset management via S3 and MongoDB Atlas backend.",
       technologies: ["Vite", "Node.js", "AWS EC2", "AWS S3", "MongoDB Atlas"],
-      image: "https://placehold.co/400x250/E0F2F7/2C5282?text=Perera's+Paws",
+      image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=250&fit=crop&crop=center",
       demoLink: null,
       githubLink: null
     },
@@ -72,7 +81,7 @@ const Index = () => {
       title: "Lifesaylor: Daily Motivation App",
       description: "Motivational app available on Google Play Store, featuring daily quotes and personalized content. Focused on user-friendly design, robust backend integration, and thorough testing.",
       technologies: ["Android", "Backend Integration"],
-      image: "https://placehold.co/400x250/E0F2F7/2C5282?text=Lifesaylor+Daily",
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=250&fit=crop&crop=center",
       demoLink: "https://play.google.com/store/apps/details?id=com.lifesaylor",
       githubLink: null
     },
@@ -80,7 +89,7 @@ const Index = () => {
       title: "Lifesaylor: Affirmation App",
       description: "App promoting mental well-being through daily affirmations and mindfulness practices. Collaborated with UI/UX teams for user-friendly design and supported a successful launch.",
       technologies: ["Mobile Development", "UI/UX Collaboration"],
-      image: "https://placehold.co/400x250/E0F2F7/2C5282?text=Lifesaylor+Affirm",
+      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=250&fit=crop&crop=center",
       demoLink: "https://play.google.com/store/apps/details?id=com.lifesaylor.affirmation",
       githubLink: null
     },
@@ -88,7 +97,7 @@ const Index = () => {
       title: "WordPress Web Projects",
       description: "Developed and maintained multiple dynamic websites using WordPress, PHP, and MySQL for various clients.",
       technologies: ["WordPress", "PHP", "MySQL"],
-      image: "https://placehold.co/400x250/E0F2F7/2C5282?text=Web+Projects",
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=250&fit=crop&crop=center",
       websites: [
         { name: "Velys.com.au", url: "https://velys.com.au" },
         { name: "OkiGlobalEdu.com", url: "https://okiglobaledu.com" },
@@ -97,85 +106,107 @@ const Index = () => {
     }
   ];
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+      <FloatingElements />
+      
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-slate-200 z-50">
+      <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50 glass-effect">
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <div className="text-2xl font-bold gradient-text animate-fade-in-scale">
               Charm Thiekshana
             </div>
-            <div className="hidden md:flex space-x-8">
-              {["About", "Skills", "Experience", "Projects", "Education", "Contact"].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => setActiveSection(item.toLowerCase())}
-                  className="text-slate-600 hover:text-blue-600 transition-colors duration-200 font-medium"
-                >
-                  {item}
-                </button>
-              ))}
+            <div className="flex items-center gap-6">
+              <div className="hidden md:flex space-x-8">
+                {["About", "Skills", "Experience", "Projects", "Education", "Contact"].map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => {
+                      setActiveSection(item.toLowerCase());
+                      scrollToSection(item.toLowerCase());
+                    }}
+                    className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium hover:scale-105 transform"
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center space-x-2">
+                <Sun className="h-4 w-4" />
+                <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
+                <Moon className="h-4 w-4" />
+              </div>
             </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-20 px-6">
+      <section id="about" className="pt-24 pb-20 px-6 relative">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
+          <div className={`flex flex-col lg:flex-row items-center gap-12 ${isVisible ? 'animate-slide-in-up' : 'opacity-0'}`}>
             <div className="flex-1 text-center lg:text-left">
               <div className="mb-6">
-                <h1 className="text-5xl lg:text-6xl font-bold text-slate-800 mb-4">
+                <h1 className="text-5xl lg:text-7xl font-bold mb-4 gradient-text">
                   Charm Thiekshana
-                  <span className="block text-3xl lg:text-4xl text-blue-600 mt-2">Perera</span>
+                  <span className="block text-3xl lg:text-5xl mt-2">Perera</span>
                 </h1>
-                <p className="text-xl text-slate-600 mb-4">Software Engineer | Web & Mobile App Development</p>
-                <p className="text-lg text-slate-500 leading-relaxed max-w-2xl">
+                <p className="text-xl text-muted-foreground mb-4 animate-fade-in-scale delay-300">
+                  Software Engineer | Web & Mobile App Development
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl animate-fade-in-scale delay-500">
                   Dedicated Mobile Engineer crafting user-centric, high-performance applications with expertise in AI, web, and cloud technologies.
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-scale delay-700">
+                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shimmer">
                   <Mail className="w-5 h-5 mr-2" />
                   Get In Touch
                 </Button>
-                <Button variant="outline" size="lg" className="border-blue-200 text-blue-600 hover:bg-blue-50">
-                  <ExternalLink className="w-5 h-5 mr-2" />
-                  View Projects
+                <Button variant="outline" size="lg" className="border-primary/20 hover:bg-primary/10 transform hover:scale-105 transition-all duration-300">
+                  <Download className="w-5 h-5 mr-2" />
+                  Download CV
                 </Button>
               </div>
             </div>
-            <div className="flex-shrink-0">
-              <div className="relative">
-                <div className="w-80 h-80 rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-100 to-indigo-200">
+            <div className="flex-shrink-0 animate-fade-in-scale delay-1000">
+              <div className="relative group">
+                <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                <div className="relative w-80 h-80 rounded-2xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-all duration-500">
                   <img 
                     src="/lovable-uploads/e2880e33-3dfc-496b-b77d-fad52bbb2e34.png" 
                     alt="Charm Thiekshana Perera"
                     className="w-full h-full object-cover"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 </div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full opacity-20 animate-pulse"></div>
-                <div className="absolute -top-4 -left-4 w-16 h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-full opacity-20 animate-pulse delay-1000"></div>
               </div>
             </div>
           </div>
         </div>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronDown className="w-6 h-6 text-muted-foreground" />
+        </div>
       </section>
 
       {/* Skills Section */}
-      <section className="py-20 px-6 bg-white">
+      <section id="skills" className="py-20 px-6 bg-muted/30">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-800 mb-4">My Expertise</h2>
-            <p className="text-xl text-slate-600">Technical proficiencies across the development stack</p>
+          <div className="text-center mb-16 animate-fade-in-scale">
+            <h2 className="text-4xl font-bold mb-4 gradient-text">My Expertise</h2>
+            <p className="text-xl text-muted-foreground">Technical proficiencies across the development stack</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Object.entries(skills).map(([category, skillList]) => (
-              <Card key={category} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+            {Object.entries(skills).map(([category, skillList], index) => (
+              <Card key={category} className="group hover:shadow-2xl transition-all duration-500 border-0 shadow-lg bg-card/50 backdrop-blur-sm hover:scale-105 transform animate-fade-in-scale" style={{ animationDelay: `${index * 100}ms` }}>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-slate-800 mb-4 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors gradient-text">
                     {category}
                   </h3>
                   <div className="flex flex-wrap gap-2">
@@ -183,7 +214,7 @@ const Index = () => {
                       <Badge 
                         key={skill} 
                         variant="secondary" 
-                        className="bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
+                        className="bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-300 transform hover:scale-105"
                       >
                         {skill}
                       </Badge>
@@ -197,20 +228,20 @@ const Index = () => {
       </section>
 
       {/* Experience Section */}
-      <section className="py-20 px-6 bg-gradient-to-br from-slate-50 to-blue-50">
+      <section id="experience" className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-800 mb-4">Professional Experience</h2>
-            <p className="text-xl text-slate-600">My journey in software development</p>
+          <div className="text-center mb-16 animate-fade-in-scale">
+            <h2 className="text-4xl font-bold mb-4 gradient-text">Professional Experience</h2>
+            <p className="text-xl text-muted-foreground">My journey in software development</p>
           </div>
           <div className="space-y-8">
             {experiences.map((exp, index) => (
-              <Card key={index} className="shadow-xl border-0 overflow-hidden">
+              <Card key={index} className="shadow-2xl border-0 overflow-hidden bg-card/50 backdrop-blur-sm hover:scale-105 transform transition-all duration-500 animate-fade-in-scale" style={{ animationDelay: `${index * 200}ms` }}>
                 <CardContent className="p-8">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
                     <div>
-                      <h3 className="text-2xl font-bold text-slate-800 mb-2">{exp.role}</h3>
-                      <div className="flex items-center gap-4 text-slate-600 mb-2">
+                      <h3 className="text-2xl font-bold mb-2 gradient-text">{exp.role}</h3>
+                      <div className="flex items-center gap-4 text-muted-foreground mb-2">
                         <div className="flex items-center">
                           <Building2 className="w-4 h-4 mr-2" />
                           {exp.company}
@@ -221,16 +252,16 @@ const Index = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center text-blue-600 font-medium">
+                    <div className="flex items-center text-primary font-medium">
                       <Calendar className="w-4 h-4 mr-2" />
                       {exp.dates}
                     </div>
                   </div>
                   <ul className="space-y-3">
                     {exp.achievements.map((achievement, i) => (
-                      <li key={i} className="flex items-start">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <span className="text-slate-700 leading-relaxed">{achievement}</span>
+                      <li key={i} className="flex items-start group">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0 group-hover:scale-150 transition-transform duration-300"></div>
+                        <span className="text-muted-foreground leading-relaxed">{achievement}</span>
                       </li>
                     ))}
                   </ul>
@@ -242,37 +273,38 @@ const Index = () => {
       </section>
 
       {/* Projects Section */}
-      <section className="py-20 px-6 bg-white">
+      <section id="projects" className="py-20 px-6 bg-muted/30">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-800 mb-4">My Projects</h2>
-            <p className="text-xl text-slate-600">Showcasing practical application of skills</p>
+          <div className="text-center mb-16 animate-fade-in-scale">
+            <h2 className="text-4xl font-bold mb-4 gradient-text">My Projects</h2>
+            <p className="text-xl text-muted-foreground">Showcasing practical application of skills</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <Card key={index} className="group hover:shadow-2xl transition-all duration-300 border-0 shadow-lg overflow-hidden">
-                <div className="aspect-video overflow-hidden">
+              <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 shadow-lg overflow-hidden bg-card/50 backdrop-blur-sm hover:scale-105 transform animate-fade-in-scale" style={{ animationDelay: `${index * 100}ms` }}>
+                <div className="aspect-video overflow-hidden relative">
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors gradient-text">
                     {project.title}
                   </h3>
-                  <p className="text-slate-600 mb-4 leading-relaxed">{project.description}</p>
+                  <p className="text-muted-foreground mb-4 leading-relaxed">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech) => (
-                      <Badge key={tech} variant="outline" className="text-xs">
+                      <Badge key={tech} variant="outline" className="text-xs border-primary/20 hover:bg-primary/10 transition-colors">
                         {tech}
                       </Badge>
                     ))}
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {project.demoLink && (
-                      <Button size="sm" asChild className="bg-blue-600 hover:bg-blue-700">
+                      <Button size="sm" asChild className="bg-primary hover:bg-primary/90 transform hover:scale-105 transition-all duration-300">
                         <a href={project.demoLink} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="w-4 h-4 mr-2" />
                           Live Demo
@@ -280,7 +312,7 @@ const Index = () => {
                       </Button>
                     )}
                     {project.githubLink && (
-                      <Button size="sm" variant="outline" asChild>
+                      <Button size="sm" variant="outline" asChild className="transform hover:scale-105 transition-all duration-300">
                         <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
                           <Github className="w-4 h-4 mr-2" />
                           GitHub
@@ -290,7 +322,7 @@ const Index = () => {
                     {project.websites && (
                       <div className="flex flex-wrap gap-2 w-full mt-2">
                         {project.websites.map((website) => (
-                          <Button key={website.name} size="sm" variant="outline" asChild className="text-xs">
+                          <Button key={website.name} size="sm" variant="outline" asChild className="text-xs transform hover:scale-105 transition-all duration-300">
                             <a href={website.url} target="_blank" rel="noopener noreferrer">
                               <ExternalLink className="w-3 h-3 mr-1" />
                               {website.name}
@@ -308,23 +340,23 @@ const Index = () => {
       </section>
 
       {/* Education Section */}
-      <section className="py-20 px-6 bg-gradient-to-br from-blue-50 to-indigo-100">
+      <section id="education" className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-800 mb-4">Education</h2>
-            <p className="text-xl text-slate-600">Academic foundation</p>
+          <div className="text-center mb-16 animate-fade-in-scale">
+            <h2 className="text-4xl font-bold mb-4 gradient-text">Education</h2>
+            <p className="text-xl text-muted-foreground">Academic foundation</p>
           </div>
-          <Card className="shadow-xl border-0 overflow-hidden max-w-4xl mx-auto">
+          <Card className="shadow-2xl border-0 overflow-hidden max-w-4xl mx-auto bg-card/50 backdrop-blur-sm hover:scale-105 transform transition-all duration-500 animate-fade-in-scale">
             <CardContent className="p-8">
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-slate-800 mb-2">
+                <h3 className="text-2xl font-bold mb-2 gradient-text">
                   Bachelor of Science in Information Technology (Honours)
                 </h3>
-                <p className="text-xl text-blue-600 mb-4">Sri Lanka Institute of Information Technology (SLIIT)</p>
-                <p className="text-slate-600 mb-6">May 2018 - October 2022 • Graduated with honours</p>
+                <p className="text-xl text-primary mb-4">Sri Lanka Institute of Information Technology (SLIIT)</p>
+                <p className="text-muted-foreground mb-6">May 2018 - October 2022 • Graduated with honours</p>
                 <div className="flex flex-wrap justify-center gap-2">
                   {["Software Development", "Databases", "Mobile Application Development", "Web Application Development"].map((course) => (
-                    <Badge key={course} variant="secondary" className="bg-blue-50 text-blue-700">
+                    <Badge key={course} variant="secondary" className="bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-300 transform hover:scale-105">
                       {course}
                     </Badge>
                   ))}
@@ -336,60 +368,41 @@ const Index = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 px-6 bg-slate-900">
+      <section id="contact" className="py-20 px-6 bg-muted/30">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Get In Touch</h2>
-            <p className="text-xl text-slate-300">Let's collaborate on your next project</p>
+          <div className="text-center mb-16 animate-fade-in-scale">
+            <h2 className="text-4xl font-bold mb-4 gradient-text">Get In Touch</h2>
+            <p className="text-xl text-muted-foreground">Let's collaborate on your next project</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="bg-slate-800 border-slate-700 text-center">
-              <CardContent className="p-6">
-                <Mail className="w-8 h-8 text-blue-400 mx-auto mb-4" />
-                <h3 className="text-white font-semibold mb-2">Email</h3>
-                <a href="mailto:charmthiekshana97@gmail.com" className="text-slate-300 hover:text-blue-400 transition-colors text-sm">
-                  charmthiekshana97@gmail.com
-                </a>
-              </CardContent>
-            </Card>
-            <Card className="bg-slate-800 border-slate-700 text-center">
-              <CardContent className="p-6">
-                <Phone className="w-8 h-8 text-green-400 mx-auto mb-4" />
-                <h3 className="text-white font-semibold mb-2">Phone</h3>
-                <a href="tel:+94754465955" className="text-slate-300 hover:text-green-400 transition-colors text-sm">
-                  +94 754 465 955
-                </a>
-              </CardContent>
-            </Card>
-            <Card className="bg-slate-800 border-slate-700 text-center">
-              <CardContent className="p-6">
-                <MapPin className="w-8 h-8 text-red-400 mx-auto mb-4" />
-                <h3 className="text-white font-semibold mb-2">Location</h3>
-                <p className="text-slate-300 text-sm">Kalalpitiya, Pasyala, Sri Lanka</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-slate-800 border-slate-700 text-center">
-              <CardContent className="p-6">
-                <Linkedin className="w-8 h-8 text-blue-400 mx-auto mb-4" />
-                <h3 className="text-white font-semibold mb-2">LinkedIn</h3>
-                <a 
-                  href="https://www.linkedin.com/in/charm-thiekshana-perera/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-slate-300 hover:text-blue-400 transition-colors text-sm"
-                >
-                  Connect with me
-                </a>
-              </CardContent>
-            </Card>
+            {[
+              { icon: Mail, title: "Email", content: "charmthiekshana97@gmail.com", href: "mailto:charmthiekshana97@gmail.com", color: "text-blue-400" },
+              { icon: Phone, title: "Phone", content: "+94 754 465 955", href: "tel:+94754465955", color: "text-green-400" },
+              { icon: MapPin, title: "Location", content: "Kalalpitiya, Pasyala, Sri Lanka", href: null, color: "text-red-400" },
+              { icon: Linkedin, title: "LinkedIn", content: "Connect with me", href: "https://www.linkedin.com/in/charm-thiekshana-perera/", color: "text-blue-400" }
+            ].map((contact, index) => (
+              <Card key={contact.title} className="bg-card/50 backdrop-blur-sm border-0 text-center hover:scale-105 transform transition-all duration-500 hover:shadow-xl animate-fade-in-scale" style={{ animationDelay: `${index * 100}ms` }}>
+                <CardContent className="p-6">
+                  <contact.icon className={`w-8 h-8 mx-auto mb-4 ${contact.color}`} />
+                  <h3 className="font-semibold mb-2 gradient-text">{contact.title}</h3>
+                  {contact.href ? (
+                    <a href={contact.href} target={contact.href.startsWith('http') ? '_blank' : undefined} rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined} className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                      {contact.content}
+                    </a>
+                  ) : (
+                    <p className="text-muted-foreground text-sm">{contact.content}</p>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-6 bg-slate-950 border-t border-slate-800">
+      <footer className="py-8 px-6 border-t border-border bg-background">
         <div className="max-w-6xl mx-auto text-center">
-          <p className="text-slate-400">
+          <p className="text-muted-foreground">
             © 2024 Charm Thiekshana Perera. All rights reserved.
           </p>
         </div>
