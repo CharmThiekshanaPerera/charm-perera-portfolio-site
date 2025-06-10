@@ -7,6 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Mail, Phone, Linkedin, Github, ExternalLink, MapPin, Calendar, Building2, Moon, Sun, Download, ChevronDown } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import FloatingElements from "@/components/FloatingElements";
+import SocialMediaSlider from "@/components/SocialMediaSlider";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("about");
@@ -114,6 +115,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
       <FloatingElements />
+      <SocialMediaSlider />
       
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50 glass-effect">
@@ -381,12 +383,15 @@ const Index = () => {
               { icon: MapPin, title: "Location", content: "Kalalpitiya, Pasyala, Sri Lanka", href: null, color: "text-red-400" },
               { icon: Linkedin, title: "LinkedIn", content: "Connect with me", href: "https://www.linkedin.com/in/charm-thiekshana-perera/", color: "text-blue-400" }
             ].map((contact, index) => (
-              <Card key={contact.title} className="bg-card/50 backdrop-blur-sm border-0 text-center hover:scale-105 transform transition-all duration-500 hover:shadow-xl animate-fade-in-scale" style={{ animationDelay: `${index * 100}ms` }}>
+              <Card key={contact.title} className="bg-card/50 backdrop-blur-sm border-0 text-center hover:scale-105 transform transition-all duration-500 hover:shadow-xl animate-fade-in-scale group" style={{ animationDelay: `${index * 100}ms` }}>
                 <CardContent className="p-6">
-                  <contact.icon className={`w-8 h-8 mx-auto mb-4 ${contact.color}`} />
+                  <div className="relative mb-4">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <contact.icon className={`w-8 h-8 mx-auto relative z-10 ${contact.color} group-hover:scale-110 transition-transform duration-300`} />
+                  </div>
                   <h3 className="font-semibold mb-2 gradient-text">{contact.title}</h3>
                   {contact.href ? (
-                    <a href={contact.href} target={contact.href.startsWith('http') ? '_blank' : undefined} rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined} className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                    <a href={contact.href} target={contact.href.startsWith('http') ? '_blank' : undefined} rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined} className="text-muted-foreground hover:text-primary transition-colors text-sm hover:underline">
                       {contact.content}
                     </a>
                   ) : (
@@ -395,6 +400,20 @@ const Index = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+          
+          {/* Additional Contact CTA */}
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center gap-4 p-6 bg-gradient-to-r from-blue-500/10 to-purple-600/10 rounded-2xl border border-primary/20 backdrop-blur-sm">
+              <div className="text-left">
+                <h3 className="text-lg font-semibold gradient-text mb-1">Ready to collaborate?</h3>
+                <p className="text-muted-foreground text-sm">Let's discuss your next project</p>
+              </div>
+              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shimmer">
+                <Mail className="w-4 h-4 mr-2" />
+                Start a Conversation
+              </Button>
+            </div>
           </div>
         </div>
       </section>
