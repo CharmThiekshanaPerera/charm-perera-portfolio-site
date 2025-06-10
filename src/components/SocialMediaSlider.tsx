@@ -58,7 +58,7 @@ const SocialMediaSlider = () => {
   ];
 
   return (
-    <div className="fixed right-0 top-1/2 transform -translate-y-1/2 z-50">
+    <div className="fixed right-0 top-1/2 transform -translate-y-1/2 z-[100]">
       <div 
         className={`flex flex-col items-end transition-all duration-500 ease-in-out ${
           isExpanded ? 'translate-x-0' : 'translate-x-12'
@@ -67,7 +67,7 @@ const SocialMediaSlider = () => {
         {/* Toggle Button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`mb-4 p-3 bg-primary text-primary-foreground rounded-l-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 ${
+          className={`mb-4 p-3 bg-blue-600 text-white rounded-l-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 ${
             isExpanded ? 'rounded-r-none' : 'rounded-r-full'
           }`}
           aria-label="Toggle social media menu"
@@ -97,19 +97,19 @@ const SocialMediaSlider = () => {
                 href={social.href}
                 target={social.href.startsWith('http') ? '_blank' : undefined}
                 rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className={`group flex items-center justify-center w-12 h-12 bg-background border border-border rounded-l-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110 ${social.color} relative overflow-hidden`}
+                className={`group flex items-center justify-center w-12 h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-l-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110 ${social.color} relative overflow-hidden`}
                 aria-label={social.label}
               >
                 {/* Gradient background on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-r ${social.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
                 
                 {/* Icon */}
-                <social.icon className="w-5 h-5 relative z-10 text-foreground group-hover:text-white transition-colors duration-300" />
+                <social.icon className="w-5 h-5 relative z-10 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-300" />
                 
                 {/* Tooltip */}
-                <div className="absolute right-full mr-3 px-3 py-2 bg-foreground text-background text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 pointer-events-none whitespace-nowrap">
+                <div className="absolute right-full mr-3 px-3 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 pointer-events-none whitespace-nowrap">
                   {social.label}
-                  <div className="absolute left-full top-1/2 transform -translate-y-1/2 border-l-4 border-l-foreground border-y-4 border-y-transparent"></div>
+                  <div className="absolute left-full top-1/2 transform -translate-y-1/2 border-l-4 border-l-gray-900 dark:border-l-gray-100 border-y-4 border-y-transparent"></div>
                 </div>
               </a>
             </div>
