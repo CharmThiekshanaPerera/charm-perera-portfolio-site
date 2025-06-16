@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MessageCircle, X, Send } from 'lucide-react';
+import { MessageCircle, X, Send, Bot } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -84,23 +84,26 @@ const AIChatbot: React.FC = () => {
       {/* Floating Chat Button */}
       <Button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 left-6 w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 z-50 ${isOpen ? 'hidden' : 'flex'}`}
+        className={`fixed bottom-6 right-6 w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 z-[150] animate-pulse ${isOpen ? 'hidden' : 'flex'}`}
         aria-label="Open AI Assistant"
       >
-        <MessageCircle className="w-6 h-6" />
+        <Bot className="w-8 h-8" />
       </Button>
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-6 left-6 w-80 h-96 shadow-2xl border-0 bg-card/95 backdrop-blur-sm z-50">
-          <CardHeader className="pb-3">
+        <Card className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] shadow-2xl border-0 bg-background/95 backdrop-blur-sm z-[150] dark:bg-gray-900/95">
+          <CardHeader className="pb-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
             <div className="flex justify-between items-center">
-              <CardTitle className="text-lg gradient-text">AI Assistant</CardTitle>
+              <div className="flex items-center gap-2">
+                <Bot className="w-5 h-5" />
+                <CardTitle className="text-lg">AI Assistant</CardTitle>
+              </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsOpen(false)}
-                className="h-8 w-8 p-0"
+                className="h-8 w-8 p-0 text-white hover:bg-white/20"
               >
                 <X className="w-4 h-4" />
               </Button>
@@ -108,7 +111,7 @@ const AIChatbot: React.FC = () => {
           </CardHeader>
           <CardContent className="flex flex-col h-full p-0">
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-muted/30 dark:bg-gray-800/30">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -117,8 +120,8 @@ const AIChatbot: React.FC = () => {
                   <div
                     className={`max-w-[80%] p-3 rounded-lg text-sm ${
                       message.isUser
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted text-muted-foreground'
+                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                        : 'bg-background dark:bg-gray-700 text-foreground dark:text-gray-200 border border-border dark:border-gray-600'
                     }`}
                   >
                     {message.text}
@@ -128,19 +131,19 @@ const AIChatbot: React.FC = () => {
             </div>
             
             {/* Input */}
-            <div className="border-t border-border p-4">
+            <div className="border-t border-border dark:border-gray-600 p-4 bg-background dark:bg-gray-800">
               <div className="flex gap-2">
                 <Input
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask about Charm's experience..."
-                  className="flex-1"
+                  className="flex-1 bg-background dark:bg-gray-700 text-foreground dark:text-gray-200"
                 />
                 <Button
                   onClick={handleSendMessage}
                   size="sm"
-                  className="bg-primary hover:bg-primary/90"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                 >
                   <Send className="w-4 h-4" />
                 </Button>
