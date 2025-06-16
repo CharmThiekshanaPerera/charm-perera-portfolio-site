@@ -1,21 +1,38 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Mail, Phone, Linkedin, Github, ExternalLink, MapPin, Calendar, Building2, Moon, Sun, Download, ChevronDown } from "lucide-react";
+import { Mail, Phone, Linkedin, Github, ExternalLink, MapPin, Calendar, Building2, Moon, Sun, Download, ChevronDown, Filter } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import FloatingElements from "@/components/FloatingElements";
 import SocialMediaSlider from "@/components/SocialMediaSlider";
+import DynamicTyping from "@/components/DynamicTyping";
+import AIChatbot from "@/components/AIChatbot";
+import ContactForms from "@/components/ContactForms";
 
 const Index = () => {
-  const [activeSection, setActiveSection] = useState("about");
+  const [activeSection, setActiveSection] = useState("home");
   const [isVisible, setIsVisible] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [heroTheme, setHeroTheme] = useState(0);
   const { theme, toggleTheme } = useTheme();
+
+  const typingTexts = ["Software Engineer", "Web & Mobile App Developer", "AI Engineer", "Full Stack Developer"];
+  
+  const heroThemes = [
+    "bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900",
+    "bg-gradient-to-br from-green-800 via-teal-900 to-blue-900",
+    "bg-gradient-to-br from-orange-800 via-red-900 to-purple-900",
+    "bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900"
+  ];
 
   useEffect(() => {
     setIsVisible(true);
+    const interval = setInterval(() => {
+      setHeroTheme(prev => (prev + 1) % heroThemes.length);
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const skills = {
@@ -58,6 +75,7 @@ const Index = () => {
       title: "AI To-Do Agent",
       description: "Mobile and web productivity assistant leveraging React Native, Flask, and the Phi-2 LLM. Includes task memory, intelligent scheduling, and adaptive prompts.",
       technologies: ["React Native", "Flask", "Phi-2 LLM"],
+      category: "AI/ML",
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=250&fit=crop&crop=center",
       demoLink: null,
       githubLink: null
@@ -66,6 +84,7 @@ const Index = () => {
       title: "House Price Prediction App",
       description: "ML-powered application predicting house prices based on user input, with a Flask API backend and React Native frontend.",
       technologies: ["Flask API", "React Native", "Machine Learning"],
+      category: "AI/ML",
       image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=250&fit=crop&crop=center",
       demoLink: null,
       githubLink: null
@@ -74,6 +93,7 @@ const Index = () => {
       title: "Perera's Paws",
       description: "Responsive frontend and admin panel built with Vite and Node.js. Hosted on AWS EC2 with asset management via S3 and MongoDB Atlas backend.",
       technologies: ["Vite", "Node.js", "AWS EC2", "AWS S3", "MongoDB Atlas"],
+      category: "Web Development",
       image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=250&fit=crop&crop=center",
       demoLink: null,
       githubLink: null
@@ -82,6 +102,7 @@ const Index = () => {
       title: "Lifesaylor: Daily Motivation App",
       description: "Motivational app available on Google Play Store, featuring daily quotes and personalized content. Focused on user-friendly design, robust backend integration, and thorough testing.",
       technologies: ["Android", "Backend Integration"],
+      category: "Mobile Development",
       image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=250&fit=crop&crop=center",
       demoLink: "https://play.google.com/store/apps/details?id=com.lifesaylor",
       githubLink: null
@@ -90,6 +111,7 @@ const Index = () => {
       title: "Lifesaylor: Affirmation App",
       description: "App promoting mental well-being through daily affirmations and mindfulness practices. Collaborated with UI/UX teams for user-friendly design and supported a successful launch.",
       technologies: ["Mobile Development", "UI/UX Collaboration"],
+      category: "Mobile Development",
       image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=250&fit=crop&crop=center",
       demoLink: "https://play.google.com/store/apps/details?id=com.lifesaylor.affirmation",
       githubLink: null
@@ -98,6 +120,7 @@ const Index = () => {
       title: "WordPress Web Projects",
       description: "Developed and maintained multiple dynamic websites using WordPress, PHP, and MySQL for various clients.",
       technologies: ["WordPress", "PHP", "MySQL"],
+      category: "Web Development",
       image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=250&fit=crop&crop=center",
       websites: [
         { name: "Velys.com.au", url: "https://velys.com.au" },
@@ -106,6 +129,11 @@ const Index = () => {
       ]
     }
   ];
+
+  const categories = ["All", "Mobile Development", "Web Development", "AI/ML"];
+  const filteredProjects = selectedCategory === "All" 
+    ? projects 
+    : projects.filter(project => project.category === selectedCategory);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -116,6 +144,7 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
       <FloatingElements />
       <SocialMediaSlider />
+      <AIChatbot />
       
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50 glass-effect">
@@ -126,14 +155,16 @@ const Index = () => {
             </div>
             <div className="flex items-center gap-6">
               <div className="hidden md:flex space-x-8">
-                {["About", "Skills", "Experience", "Projects", "Education", "Contact"].map((item) => (
+                {["Home", "About", "Skills", "Experience", "Projects", "Education", "Contact"].map((item) => (
                   <button
                     key={item}
                     onClick={() => {
                       setActiveSection(item.toLowerCase());
                       scrollToSection(item.toLowerCase());
                     }}
-                    className="text-muted-foreground hover:text-primary transition-all duration-300 font-medium hover:scale-105 transform"
+                    className={`text-muted-foreground hover:text-primary transition-all duration-300 font-medium hover:scale-105 transform ${
+                      activeSection === item.toLowerCase() ? 'text-primary font-bold' : ''
+                    }`}
                   >
                     {item}
                   </button>
@@ -150,28 +181,29 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="about" className="pt-24 pb-20 px-6 relative">
-        <div className="max-w-6xl mx-auto">
+      <section id="home" className={`pt-24 pb-20 px-6 relative transition-all duration-1000 ${heroThemes[heroTheme]}`}>
+        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className={`flex flex-col lg:flex-row items-center gap-12 ${isVisible ? 'animate-slide-in-up' : 'opacity-0'}`}>
             <div className="flex-1 text-center lg:text-left">
               <div className="mb-6">
-                <h1 className="text-5xl lg:text-7xl font-bold mb-4 gradient-text">
+                <h1 className="text-5xl lg:text-7xl font-bold mb-4 text-white">
                   Charm Thiekshana
                   <span className="block text-3xl lg:text-5xl mt-2">Perera</span>
                 </h1>
-                <p className="text-xl text-muted-foreground mb-4 animate-fade-in-scale delay-300">
-                  Software Engineer | Web & Mobile App Development
-                </p>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl animate-fade-in-scale delay-500">
+                <div className="text-xl text-white/90 mb-4 animate-fade-in-scale delay-300 h-8">
+                  <DynamicTyping texts={typingTexts} className="font-medium" />
+                </div>
+                <p className="text-lg text-white/80 leading-relaxed max-w-2xl animate-fade-in-scale delay-500">
                   Dedicated Mobile Engineer crafting user-centric, high-performance applications with expertise in AI, web, and cloud technologies.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-scale delay-700">
-                <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shimmer">
+                <Button size="lg" onClick={() => scrollToSection('contact')} className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shimmer">
                   <Mail className="w-5 h-5 mr-2" />
                   Get In Touch
                 </Button>
-                <Button variant="outline" size="lg" className="border-primary/20 hover:bg-primary/10 transform hover:scale-105 transition-all duration-300">
+                <Button variant="outline" size="lg" className="border-white/20 hover:bg-white/10 text-white transform hover:scale-105 transition-all duration-300">
                   <Download className="w-5 h-5 mr-2" />
                   Download CV
                 </Button>
@@ -193,7 +225,48 @@ const Index = () => {
           </div>
         </div>
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronDown className="w-6 h-6 text-muted-foreground" />
+          <ChevronDown className="w-6 h-6 text-white/80" />
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16 animate-fade-in-scale">
+            <h2 className="text-4xl font-bold mb-4 gradient-text">About Me</h2>
+            <p className="text-xl text-muted-foreground">Passionate about creating innovative solutions</p>
+          </div>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6 animate-fade-in-scale">
+              <p className="text-lg leading-relaxed text-muted-foreground">
+                I'm a dedicated Mobile Engineer with over 2 years of experience in developing high-performance applications. 
+                My passion lies in creating user-centric solutions that combine cutting-edge technology with exceptional user experience.
+              </p>
+              <p className="text-lg leading-relaxed text-muted-foreground">
+                Currently working at Phyxle, I specialize in mobile app development, AI integration, and cloud technologies. 
+                I have successfully delivered applications that have made significant impacts in healthcare and productivity sectors.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-4 bg-card/50 rounded-lg">
+                  <div className="text-2xl font-bold gradient-text">2+</div>
+                  <div className="text-sm text-muted-foreground">Years Experience</div>
+                </div>
+                <div className="text-center p-4 bg-card/50 rounded-lg">
+                  <div className="text-2xl font-bold gradient-text">15+</div>
+                  <div className="text-sm text-muted-foreground">Projects Completed</div>
+                </div>
+              </div>
+            </div>
+            <div className="relative animate-fade-in-scale delay-300">
+              <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl">
+                <img 
+                  src="/lovable-uploads/e2880e33-3dfc-496b-b77d-fad52bbb2e34.png"
+                  alt="About Charm"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -281,8 +354,24 @@ const Index = () => {
             <h2 className="text-4xl font-bold mb-4 gradient-text">My Projects</h2>
             <p className="text-xl text-muted-foreground">Showcasing practical application of skills</p>
           </div>
+          
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {categories.map((category) => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? "default" : "outline"}
+                onClick={() => setSelectedCategory(category)}
+                className="transform hover:scale-105 transition-all duration-300"
+              >
+                <Filter className="w-4 h-4 mr-2" />
+                {category}
+              </Button>
+            ))}
+          </div>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
+            {filteredProjects.map((project, index) => (
               <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 shadow-lg overflow-hidden bg-card/50 backdrop-blur-sm hover:scale-105 transform animate-fade-in-scale" style={{ animationDelay: `${index * 100}ms` }}>
                 <div className="aspect-video overflow-hidden relative">
                   <img 
@@ -376,6 +465,12 @@ const Index = () => {
             <h2 className="text-4xl font-bold mb-4 gradient-text">Get In Touch</h2>
             <p className="text-xl text-muted-foreground">Let's collaborate on your next project</p>
           </div>
+          
+          {/* Contact Forms */}
+          <div className="mb-16">
+            <ContactForms />
+          </div>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { icon: Mail, title: "Email", content: "charmthiekshana97@gmail.com", href: "mailto:charmthiekshana97@gmail.com", color: "text-blue-400" },

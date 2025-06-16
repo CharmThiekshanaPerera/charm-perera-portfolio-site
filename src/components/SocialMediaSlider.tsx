@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Github, Linkedin, Mail, Phone, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Github, Linkedin, Mail, Phone, Facebook, Instagram, MessageSquare, Youtube } from 'lucide-react';
 
 const SocialMediaSlider = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -10,8 +10,8 @@ const SocialMediaSlider = () => {
       icon: Mail,
       href: "mailto:charmthiekshana97@gmail.com",
       label: "Email",
-      color: "hover:bg-blue-500",
-      bgGradient: "from-blue-400 to-blue-600"
+      color: "hover:bg-red-500",
+      bgGradient: "from-red-400 to-red-600"
     },
     {
       icon: Phone,
@@ -19,6 +19,13 @@ const SocialMediaSlider = () => {
       label: "Phone",
       color: "hover:bg-green-500",
       bgGradient: "from-green-400 to-green-600"
+    },
+    {
+      icon: MessageSquare,
+      href: "https://wa.me/94754465955",
+      label: "WhatsApp",
+      color: "hover:bg-green-500",
+      bgGradient: "from-green-400 to-green-500"
     },
     {
       icon: Linkedin,
@@ -29,31 +36,31 @@ const SocialMediaSlider = () => {
     },
     {
       icon: Github,
-      href: "#",
+      href: "https://github.com/charmthiekshana",
       label: "GitHub",
       color: "hover:bg-gray-700",
       bgGradient: "from-gray-600 to-gray-800"
     },
     {
       icon: Facebook,
-      href: "#",
+      href: "https://facebook.com/charmthiekshana",
       label: "Facebook",
       color: "hover:bg-blue-700",
       bgGradient: "from-blue-600 to-blue-800"
     },
     {
       icon: Instagram,
-      href: "#",
+      href: "https://instagram.com/charmthiekshana",
       label: "Instagram",
       color: "hover:bg-pink-500",
-      bgGradient: "from-pink-400 to-purple-600"
+      bgGradient: "from-pink-400 via-purple-500 to-orange-500"
     },
     {
-      icon: Twitter,
-      href: "#",
-      label: "Twitter",
-      color: "hover:bg-sky-500",
-      bgGradient: "from-sky-400 to-sky-600"
+      icon: Youtube,
+      href: "https://youtube.com/@charmthiekshana",
+      label: "YouTube",
+      color: "hover:bg-red-600",
+      bgGradient: "from-red-500 to-red-700"
     }
   ];
 
@@ -67,7 +74,7 @@ const SocialMediaSlider = () => {
         {/* Toggle Button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`mb-4 p-3 bg-blue-600 text-white rounded-l-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 ${
+          className={`mb-4 p-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-l-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 ${
             isExpanded ? 'rounded-r-none' : 'rounded-r-full'
           }`}
           aria-label="Toggle social media menu"
