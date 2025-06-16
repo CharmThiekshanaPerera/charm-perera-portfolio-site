@@ -10,12 +10,14 @@ import SocialMediaSlider from "@/components/SocialMediaSlider";
 import DynamicTyping from "@/components/DynamicTyping";
 import AIChatbot from "@/components/AIChatbot";
 import ContactForms from "@/components/ContactForms";
+import BackgroundImageSlider from "@/components/BackgroundImageSlider";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isVisible, setIsVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [heroTheme, setHeroTheme] = useState(0);
+  const [aboutTheme, setAboutTheme] = useState(0);
   const { theme, toggleTheme } = useTheme();
 
   const typingTexts = ["Software Engineer", "Web & Mobile App Developer", "AI Engineer", "Full Stack Developer"];
@@ -27,12 +29,27 @@ const Index = () => {
     "bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900"
   ];
 
+  const aboutThemes = [
+    "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900",
+    "bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900",
+    "bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-900",
+    "bg-gradient-to-br from-violet-900 via-pink-900 to-violet-900"
+  ];
+
   useEffect(() => {
     setIsVisible(true);
-    const interval = setInterval(() => {
+    const heroInterval = setInterval(() => {
       setHeroTheme(prev => (prev + 1) % heroThemes.length);
     }, 5000);
-    return () => clearInterval(interval);
+    
+    const aboutInterval = setInterval(() => {
+      setAboutTheme(prev => (prev + 1) % aboutThemes.length);
+    }, 4000);
+    
+    return () => {
+      clearInterval(heroInterval);
+      clearInterval(aboutInterval);
+    };
   }, []);
 
   const skills = {
@@ -204,9 +221,10 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Hero Section - Full Screen */}
+      {/* Hero Section - Full Screen with Background Image Slider */}
       <section id="home" className={`min-h-screen pt-24 pb-20 px-6 relative transition-all duration-1000 ${heroThemes[heroTheme]} flex items-center`}>
-        <div className="absolute inset-0 bg-black/40"></div>
+        <BackgroundImageSlider />
+        <div className="absolute inset-0 bg-black/50"></div>
         <div className="max-w-6xl mx-auto relative z-10 w-full">
           <div className={`flex flex-col lg:flex-row items-center gap-12 ${isVisible ? 'animate-slide-in-up' : 'opacity-0'}`}>
             <div className="flex-1 text-center lg:text-left">
@@ -253,31 +271,32 @@ const Index = () => {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 px-6 bg-background dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto">
+      {/* About Section with Color Changing Background */}
+      <section id="about" className={`py-20 px-6 relative transition-all duration-1000 ${aboutThemes[aboutTheme]}`}>
+        <div className="absolute inset-0 bg-black/40 dark:bg-black/60"></div>
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-16 animate-fade-in-scale">
-            <h2 className="text-4xl font-bold mb-4 text-primary dark:text-blue-400">About Me</h2>
-            <p className="text-xl text-muted-foreground dark:text-gray-300">Passionate about creating innovative solutions</p>
+            <h2 className="text-4xl font-bold mb-4 text-white">About Me</h2>
+            <p className="text-xl text-white/80">Passionate about creating innovative solutions</p>
           </div>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6 animate-fade-in-scale">
-              <p className="text-lg leading-relaxed text-muted-foreground dark:text-gray-300">
+              <p className="text-lg leading-relaxed text-white/90">
                 I'm a dedicated Mobile Engineer with over 2 years of experience in developing high-performance applications. 
                 My passion lies in creating user-centric solutions that combine cutting-edge technology with exceptional user experience.
               </p>
-              <p className="text-lg leading-relaxed text-muted-foreground dark:text-gray-300">
+              <p className="text-lg leading-relaxed text-white/90">
                 Currently working at Phyxle, I specialize in mobile app development, AI integration, and cloud technologies. 
                 I have successfully delivered applications that have made significant impacts in healthcare and productivity sectors.
               </p>
               <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-card/50 dark:bg-gray-800/50 rounded-lg border border-border dark:border-gray-700">
-                  <div className="text-2xl font-bold text-primary dark:text-blue-400">2+</div>
-                  <div className="text-sm text-muted-foreground dark:text-gray-400">Years Experience</div>
+                <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                  <div className="text-2xl font-bold text-white">2+</div>
+                  <div className="text-sm text-white/70">Years Experience</div>
                 </div>
-                <div className="text-center p-4 bg-card/50 dark:bg-gray-800/50 rounded-lg border border-border dark:border-gray-700">
-                  <div className="text-2xl font-bold text-primary dark:text-blue-400">15+</div>
-                  <div className="text-sm text-muted-foreground dark:text-gray-400">Projects Completed</div>
+                <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                  <div className="text-2xl font-bold text-white">15+</div>
+                  <div className="text-sm text-white/70">Projects Completed</div>
                 </div>
               </div>
             </div>
@@ -480,7 +499,7 @@ const Index = () => {
                   <h4 className="text-lg font-semibold mb-3 text-foreground dark:text-white">Key Coursework:</h4>
                   <div className="flex flex-wrap justify-center gap-3">
                     {["Software Development", "Databases", "Mobile Application Development", "Web Application Development"].map((course) => (
-                      <Badge key={course} variant="secondary" className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 dark:from-blue-400/20 dark:to-purple-400/20 text-primary dark:text-blue-400 border border-primary/20 dark:border-blue-400/20 hover:bg-primary/20 dark:hover:bg-blue-500/30 transition-all duration-300 transform hover:scale-105 px-4 py-2 text-sm font-medium">
+                      <Badge key={course} variant="secondary" className="bg-gradient-to-r from-blue-500/30 to-purple-500/30 dark:from-blue-400/30 dark:to-purple-400/30 text-primary dark:text-blue-400 border-2 border-primary/30 dark:border-blue-400/30 hover:bg-primary/20 dark:hover:bg-blue-500/30 transition-all duration-300 transform hover:scale-110 px-4 py-2 text-sm font-medium shadow-lg animate-pulse-glow">
                         {course}
                       </Badge>
                     ))}

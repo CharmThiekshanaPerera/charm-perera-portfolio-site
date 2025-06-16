@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Github, Linkedin, Mail, Phone, Facebook, Instagram, MessageSquare, Youtube } from 'lucide-react';
 
 const SocialMediaSlider = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true); // Changed to true by default
 
   const socialLinks = [
     {
@@ -82,14 +82,14 @@ const SocialMediaSlider = () => {
         {/* Toggle Button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`mb-4 p-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-l-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 animate-pulse ${
-            isExpanded ? 'rounded-r-none' : 'rounded-r-full'
+          className={`mb-4 p-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-l-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 ${
+            isExpanded ? 'rounded-r-none animate-pulse-glow' : 'rounded-r-full animate-bounce'
           }`}
           aria-label="Toggle social media menu"
         >
-          <div className={`transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
+          <div className={`transform transition-transform duration-300 ${isExpanded ? 'rotate-0' : 'rotate-180'}`}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
         </button>
@@ -112,7 +112,7 @@ const SocialMediaSlider = () => {
                 href={social.href}
                 target={social.href.startsWith('http') ? '_blank' : undefined}
                 rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className={`group flex items-center justify-center w-12 h-12 ${social.bgColor} text-white rounded-l-full shadow-lg ${social.shadowColor} hover:shadow-xl transition-all duration-300 transform hover:scale-110 border ${social.borderColor} relative overflow-hidden`}
+                className={`group flex items-center justify-center w-12 h-12 ${social.bgColor} text-white rounded-l-full shadow-lg ${social.shadowColor} hover:shadow-xl transition-all duration-300 transform hover:scale-110 border ${social.borderColor} relative overflow-hidden social-icon-hover`}
                 aria-label={social.label}
               >
                 {/* Icon */}
