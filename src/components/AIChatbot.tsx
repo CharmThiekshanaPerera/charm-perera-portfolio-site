@@ -29,7 +29,7 @@ const AIChatbot: React.FC = () => {
     skills: "He specializes in React Native, Flask, Node.js, AI integration (Phi-2 LLM), AWS cloud platforms, and full-stack development.",
     projects: "Notable projects include AI To-Do Agent with Phi-2 LLM, House Price Prediction App, Lifesaylor apps on Google Play Store, and multiple WordPress websites.",
     education: "Bachelor of Science in Information Technology (Honours) from Sri Lanka Institute of Information Technology (SLIIT), graduated in 2022.",
-    contact: "You can reach Charm at charmthiekshana97@gmail.com or +94 754 465 955, or connect on LinkedIn."
+    contact: "You can reach Charm at charmthiekshana97@gmail.com or +94 72 975 5955, or connect on LinkedIn at https://www.linkedin.com/in/charm-thiekshana-644b85346"
   };
 
   const generateResponse = (userMessage: string): string => {
@@ -86,13 +86,14 @@ const AIChatbot: React.FC = () => {
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-6 right-6 w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 z-[150] animate-pulse ${isOpen ? 'hidden' : 'flex'}`}
         aria-label="Open AI Assistant"
+        style={{ marginBottom: isOpen ? '520px' : '0' }}
       >
         <Bot className="w-8 h-8" />
       </Button>
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] shadow-2xl border-0 bg-background/95 backdrop-blur-sm z-[150] dark:bg-gray-900/95">
+        <Card className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] shadow-2xl border-0 bg-background/95 backdrop-blur-sm z-[150] dark:bg-gray-900/95 mb-6">
           <CardHeader className="pb-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
