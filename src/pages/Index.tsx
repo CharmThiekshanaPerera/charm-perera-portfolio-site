@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Card, CardContent } from "@/components/ui/card";
@@ -188,21 +187,151 @@ const Index = () => {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Structured Data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Charm Thiekshana Perera",
+    "jobTitle": "Mobile Engineer & Full Stack Developer",
+    "description": "Experienced Mobile Engineer specializing in React Native, AI integration, and full-stack development with 2+ years of professional experience",
+    "url": "https://charm-perera-portfolio.com",
+    "image": "https://charm-perera-portfolio.com/lovable-uploads/e2880e33-3dfc-496b-b77d-fad52bbb2e34.png",
+    "email": "charmthiekshana97@gmail.com",
+    "telephone": "+94729755955",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Kalalpitiya, Pasyala",
+      "addressRegion": "Western Province",
+      "addressCountry": "Sri Lanka"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/in/charm-thiekshana-644b85346",
+      "https://github.com/CharmThiekshanaPerera",
+      "https://www.facebook.com/Charmz1997SL",
+      "https://www.instagram.com/w_h_i_t_e___w_o_l_f_",
+      "https://www.youtube.com/channel/UC7npdzqjOKBZlKzxb72SY2Q"
+    ],
+    "knowsAbout": [
+      "React Native Development",
+      "Mobile App Development",
+      "AI Integration",
+      "Full Stack Development",
+      "React",
+      "Node.js",
+      "Flask",
+      "AWS",
+      "Machine Learning"
+    ],
+    "alumniOf": {
+      "@type": "EducationalOrganization",
+      "name": "Sri Lanka Institute of Information Technology",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "Sri Lanka"
+      }
+    },
+    "worksFor": [
+      {
+        "@type": "Organization",
+        "name": "Phyxle",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Colombo",
+          "addressCountry": "Sri Lanka"
+        }
+      }
+    ]
+  };
+
   return (
     <>
       <Helmet>
-        <title>Charm Thiekshana Perera - Mobile Engineer & Full Stack Developer</title>
-        <meta name="description" content="Experienced Mobile Engineer specializing in React Native, AI integration, and full-stack development. 2+ years building high-performance applications." />
-        <meta name="keywords" content="Mobile Engineer, React Native, AI Engineer, Full Stack Developer, Mobile App Development, Sri Lanka Developer" />
+        {/* Primary Meta Tags */}
+        <title>Charm Thiekshana Perera - Mobile Engineer & Full Stack Developer | React Native, AI Integration</title>
+        <meta name="title" content="Charm Thiekshana Perera - Mobile Engineer & Full Stack Developer | React Native, AI Integration" />
+        <meta name="description" content="Experienced Mobile Engineer from Sri Lanka specializing in React Native, AI integration, and full-stack development. 2+ years building high-performance mobile applications with expertise in Flask, AWS, and machine learning." />
+        <meta name="keywords" content="Mobile Engineer Sri Lanka, React Native Developer, AI Engineer, Full Stack Developer, Mobile App Development, React Native, Flask, AWS, Machine Learning, Charm Thiekshana Perera, Software Engineer Colombo" />
         <meta name="author" content="Charm Thiekshana Perera" />
-        <meta property="og:title" content="Charm Thiekshana Perera - Mobile Engineer" />
-        <meta property="og:description" content="Experienced Mobile Engineer specializing in React Native, AI integration, and full-stack development." />
+        <meta name="robots" content="index, follow" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="7 days" />
+        
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://charm-perera-portfolio.com" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Charm Thiekshana Perera - Mobile Engineer" />
-        <meta name="twitter:description" content="Experienced Mobile Engineer specializing in React Native, AI integration, and full-stack development." />
-        <link rel="canonical" href="https://charm-perera-portfolio.com" />
+        <meta property="og:url" content="https://charm-perera-portfolio.com/" />
+        <meta property="og:title" content="Charm Thiekshana Perera - Mobile Engineer & Full Stack Developer" />
+        <meta property="og:description" content="Experienced Mobile Engineer from Sri Lanka specializing in React Native, AI integration, and full-stack development. Building high-performance applications with cutting-edge technologies." />
+        <meta property="og:image" content="https://charm-perera-portfolio.com/lovable-uploads/e2880e33-3dfc-496b-b77d-fad52bbb2e34.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Charm Thiekshana Perera - Mobile Engineer Portfolio" />
+        <meta property="og:site_name" content="Charm Thiekshana Perera Portfolio" />
+        <meta property="og:locale" content="en_US" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://charm-perera-portfolio.com/" />
+        <meta property="twitter:title" content="Charm Thiekshana Perera - Mobile Engineer & Full Stack Developer" />
+        <meta property="twitter:description" content="Experienced Mobile Engineer from Sri Lanka specializing in React Native, AI integration, and full-stack development." />
+        <meta property="twitter:image" content="https://charm-perera-portfolio.com/lovable-uploads/e2880e33-3dfc-496b-b77d-fad52bbb2e34.png" />
+        <meta property="twitter:image:alt" content="Charm Thiekshana Perera - Mobile Engineer Portfolio" />
+        
+        {/* Additional SEO Meta Tags */}
+        <meta name="geo.region" content="LK-11" />
+        <meta name="geo.placename" content="Kalalpitiya, Pasyala, Sri Lanka" />
+        <meta name="geo.position" content="7.2906;80.5414" />
+        <meta name="ICBM" content="7.2906, 80.5414" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://charm-perera-portfolio.com/" />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+        
+        {/* Additional structured data for portfolio */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Charm Thiekshana Perera Portfolio",
+            "url": "https://charm-perera-portfolio.com",
+            "description": "Professional portfolio of Charm Thiekshana Perera, Mobile Engineer and Full Stack Developer",
+            "author": {
+              "@type": "Person",
+              "name": "Charm Thiekshana Perera"
+            },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://charm-perera-portfolio.com/?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })}
+        </script>
+        
+        {/* Preconnect to external domains */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        
+        {/* DNS Prefetch */}
+        <link rel="dns-prefetch" href="//www.google-analytics.com" />
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        
+        {/* Alternate language versions (if applicable) */}
+        <link rel="alternate" hrefLang="en" href="https://charm-perera-portfolio.com/" />
+        
+        {/* Mobile Web App Capability */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Charm Perera Portfolio" />
+        
+        {/* Theme Color */}
+        <meta name="theme-color" content="#3b82f6" />
+        <meta name="msapplication-navbutton-color" content="#3b82f6" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="#3b82f6" />
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
@@ -211,11 +340,11 @@ const Index = () => {
         <AIChatbot />
         
         {/* Navigation */}
-        <nav className="fixed top-0 w-full glass-card z-50">
+        <nav className="fixed top-0 w-full glass-card z-50" role="navigation" aria-label="Main navigation">
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex justify-between items-center">
               <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent animate-bounce-in">
-                Charm Thiekshana
+                <h1>Charm Thiekshana</h1>
               </div>
               <div className="flex items-center gap-6">
                 <div className="hidden md:flex space-x-8">
@@ -229,6 +358,7 @@ const Index = () => {
                       className={`text-foreground hover:text-blue-400 transition-all duration-300 font-medium hover:scale-110 transform ${
                         activeSection === item.toLowerCase() ? 'text-blue-400 font-bold' : ''
                       }`}
+                      aria-label={`Navigate to ${item} section`}
                     >
                       {item}
                     </button>
@@ -239,10 +369,10 @@ const Index = () => {
                   setActiveSection={setActiveSection}
                   scrollToSection={scrollToSection}
                 />
-                <div className="flex items-center space-x-2">
-                  <Sun className="h-4 w-4 text-yellow-400" />
-                  <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
-                  <Moon className="h-4 w-4 text-blue-400" />
+                <div className="flex items-center space-x-2" role="group" aria-label="Theme toggle">
+                  <Sun className="h-4 w-4 text-yellow-400" aria-hidden="true" />
+                  <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} aria-label="Toggle dark mode" />
+                  <Moon className="h-4 w-4 text-blue-400" aria-hidden="true" />
                 </div>
               </div>
             </div>
@@ -250,7 +380,7 @@ const Index = () => {
         </nav>
 
         {/* Hero Section */}
-        <section id="home" className={`min-h-screen pt-24 pb-20 px-6 relative transition-all duration-1000 ${heroThemes[heroTheme]} flex items-center`}>
+        <section id="home" className={`min-h-screen pt-24 pb-20 px-6 relative transition-all duration-1000 ${heroThemes[heroTheme]} flex items-center`} role="banner">
           <BackgroundImageSlider />
           <div className="absolute inset-0 bg-black/40"></div>
           <div className="max-w-6xl mx-auto relative z-10 w-full">
@@ -265,16 +395,16 @@ const Index = () => {
                     <DynamicTyping texts={typingTexts} className="font-medium" />
                   </div>
                   <p className="text-lg text-white/80 leading-relaxed max-w-2xl animate-fade-in-up delay-500">
-                    Dedicated Mobile Engineer crafting user-centric, high-performance applications with expertise in AI, web, and cloud technologies.
+                    Dedicated Mobile Engineer crafting user-centric, high-performance applications with expertise in AI, web, and cloud technologies. Based in Sri Lanka, serving clients globally.
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up delay-700">
-                  <Button size="lg" onClick={() => scrollToSection('contact')} className="btn-modern">
-                    <Mail className="w-5 h-5 mr-2" />
+                  <Button size="lg" onClick={() => scrollToSection('contact')} className="btn-modern" aria-label="Contact Charm Thiekshana Perera">
+                    <Mail className="w-5 h-5 mr-2" aria-hidden="true" />
                     Get In Touch
                   </Button>
-                  <Button size="lg" className="glass-card hover:scale-110 transition-all duration-300 text-white neon-border">
-                    <Download className="w-5 h-5 mr-2" />
+                  <Button size="lg" className="glass-card hover:scale-110 transition-all duration-300 text-white neon-border" aria-label="Download CV">
+                    <Download className="w-5 h-5 mr-2" aria-hidden="true" />
                     Download CV
                   </Button>
                 </div>
@@ -285,8 +415,9 @@ const Index = () => {
                   <div className="relative w-80 h-80 rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 neon-border">
                     <img 
                       src="/lovable-uploads/e2880e33-3dfc-496b-b77d-fad52bbb2e34.png" 
-                      alt="Charm Thiekshana Perera - Mobile Engineer"
+                      alt="Charm Thiekshana Perera - Professional Mobile Engineer and Full Stack Developer"
                       className="w-full h-full object-cover"
+                      loading="eager"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
                   </div>
@@ -295,7 +426,7 @@ const Index = () => {
             </div>
           </div>
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <ChevronDown className="w-6 h-6 text-white/80" />
+            <ChevronDown className="w-6 h-6 text-white/80" aria-hidden="true" />
           </div>
         </section>
 
@@ -309,15 +440,15 @@ const Index = () => {
         <ExperienceSection />
 
         {/* Projects Section */}
-        <section id="projects" className="py-20 px-6 bg-slate-800/30">
+        <section id="projects" className="py-20 px-6 bg-slate-800/30" role="region" aria-labelledby="projects-heading">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16 animate-fade-in-up">
-              <h2 className="text-4xl font-bold mb-4 text-blue-400">My Projects</h2>
-              <p className="text-xl text-slate-300">Showcasing practical application of skills</p>
+              <h2 id="projects-heading" className="text-4xl font-bold mb-4 text-blue-400">My Projects</h2>
+              <p className="text-xl text-slate-300">Showcasing practical application of skills in real-world projects</p>
             </div>
             
             {/* Category Filter */}
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <div className="flex flex-wrap justify-center gap-4 mb-12" role="group" aria-label="Project category filters">
               {categories.map((category) => (
                 <Button
                   key={category}
@@ -328,8 +459,10 @@ const Index = () => {
                       ? 'bg-blue-500 text-white' 
                       : 'border-blue-500/20 text-slate-300 hover:bg-blue-500/20'
                   }`}
+                  aria-pressed={selectedCategory === category}
+                  aria-label={`Filter projects by ${category}`}
                 >
-                  <Filter className="w-4 h-4 mr-2" />
+                  <Filter className="w-4 h-4 mr-2" aria-hidden="true" />
                   {category}
                 </Button>
               ))}
@@ -337,23 +470,24 @@ const Index = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project, index) => (
-                <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 shadow-lg overflow-hidden bg-slate-800/50 backdrop-blur-sm hover:scale-105 transform animate-fade-in-scale" style={{ animationDelay: `${index * 100}ms` }}>
+                <article key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 shadow-lg overflow-hidden bg-slate-800/50 backdrop-blur-sm hover:scale-105 transform animate-fade-in-scale rounded-lg" style={{ animationDelay: `${index * 100}ms` }}>
                   <div className="aspect-video overflow-hidden relative">
                     <img 
                       src={project.image} 
-                      alt={project.title}
+                      alt={`${project.title} - ${project.description}`}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
-                  <CardContent className="p-6">
+                  <div className="p-6">
                     <h3 className="text-xl font-bold mb-3 group-hover:text-blue-400 transition-colors text-slate-200">
                       {project.title}
                     </h3>
                     <p className="text-slate-300 mb-4 leading-relaxed">{project.description}</p>
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-4" role="list" aria-label="Technologies used">
                       {project.technologies.map((tech) => (
-                        <Badge key={tech} variant="outline" className="text-xs border-blue-500/20 text-blue-400 hover:bg-blue-500/20 transition-colors">
+                        <Badge key={tech} variant="outline" className="text-xs border-blue-500/20 text-blue-400 hover:bg-blue-500/20 transition-colors" role="listitem">
                           {tech}
                         </Badge>
                       ))}
@@ -361,16 +495,16 @@ const Index = () => {
                     <div className="flex flex-wrap gap-2">
                       {project.demoLink && (
                         <Button size="sm" asChild className="bg-blue-500 hover:bg-blue-600 transform hover:scale-105 transition-all duration-300">
-                          <a href={project.demoLink} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="w-4 h-4 mr-2" />
+                          <a href={project.demoLink} target="_blank" rel="noopener noreferrer" aria-label={`View live demo of ${project.title}`}>
+                            <ExternalLink className="w-4 h-4 mr-2" aria-hidden="true" />
                             Live Demo
                           </a>
                         </Button>
                       )}
                       {project.githubLink && (
                         <Button size="sm" variant="outline" asChild className="transform hover:scale-105 transition-all duration-300 border-blue-500/20">
-                          <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
-                            <Github className="w-4 h-4 mr-2" />
+                          <a href={project.githubLink} target="_blank" rel="noopener noreferrer" aria-label={`View source code of ${project.title} on GitHub`}>
+                            <Github className="w-4 h-4 mr-2" aria-hidden="true" />
                             GitHub
                           </a>
                         </Button>
@@ -379,8 +513,8 @@ const Index = () => {
                         <div className="flex flex-wrap gap-2 w-full mt-2">
                           {project.websites.map((website) => (
                             <Button key={website.name} size="sm" variant="outline" asChild className="text-xs transform hover:scale-105 transition-all duration-300 border-blue-500/20">
-                              <a href={website.url} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="w-3 h-3 mr-1" />
+                              <a href={website.url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${website.name} website`}>
+                                <ExternalLink className="w-3 h-3 mr-1" aria-hidden="true" />
                                 {website.name}
                               </a>
                             </Button>
@@ -388,8 +522,8 @@ const Index = () => {
                         </div>
                       )}
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </article>
               ))}
             </div>
           </div>
@@ -399,10 +533,10 @@ const Index = () => {
         <EducationSection />
 
         {/* Contact Section */}
-        <section id="contact" className="py-20 px-6 bg-slate-800/30">
+        <section id="contact" className="py-20 px-6 bg-slate-800/30" role="region" aria-labelledby="contact-heading">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16 animate-fade-in-up">
-              <h2 className="text-4xl font-bold mb-4 text-blue-400">Get In Touch</h2>
+              <h2 id="contact-heading" className="text-4xl font-bold mb-4 text-blue-400">Get In Touch</h2>
               <p className="text-xl text-slate-300">Let's collaborate on your next project</p>
             </div>
             
@@ -413,24 +547,30 @@ const Index = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
-                { icon: Mail, title: "Email", content: "charmthiekshana97@gmail.com", href: "mailto:charmthiekshana97@gmail.com" },
-                { icon: Phone, title: "Phone", content: "+94 72 975 5955", href: "tel:+94729755955" },
-                { icon: MapPin, title: "Location", content: "Kalalpitiya, Pasyala, Sri Lanka", href: null },
-                { icon: Linkedin, title: "LinkedIn", content: "Connect with me", href: "https://www.linkedin.com/in/charm-thiekshana-644b85346" }
+                { icon: Mail, title: "Email", content: "charmthiekshana97@gmail.com", href: "mailto:charmthiekshana97@gmail.com", ariaLabel: "Send email to Charm Thiekshana Perera" },
+                { icon: Phone, title: "Phone", content: "+94 72 975 5955", href: "tel:+94729755955", ariaLabel: "Call Charm Thiekshana Perera" },
+                { icon: MapPin, title: "Location", content: "Kalalpitiya, Pasyala, Sri Lanka", href: null, ariaLabel: "Location: Kalalpitiya, Pasyala, Sri Lanka" },
+                { icon: Linkedin, title: "LinkedIn", content: "Connect with me", href: "https://www.linkedin.com/in/charm-thiekshana-644b85346", ariaLabel: "Connect on LinkedIn" }
               ].map((contact, index) => (
                 <Card key={contact.title} className="bg-slate-800/50 backdrop-blur-sm border-blue-500/20 text-center hover:scale-105 transform transition-all duration-500 hover:shadow-xl animate-fade-in-scale group" style={{ animationDelay: `${index * 100}ms` }}>
                   <CardContent className="p-6">
                     <div className="relative mb-4">
                       <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <contact.icon className="w-8 h-8 mx-auto relative z-10 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
+                      <contact.icon className="w-8 h-8 mx-auto relative z-10 text-blue-400 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
                     </div>
                     <h3 className="font-semibold mb-2 text-blue-400">{contact.title}</h3>
                     {contact.href ? (
-                      <a href={contact.href} target={contact.href.startsWith('http') ? '_blank' : undefined} rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined} className="text-slate-300 hover:text-blue-400 transition-colors text-sm hover:underline">
+                      <a 
+                        href={contact.href} 
+                        target={contact.href.startsWith('http') ? '_blank' : undefined} 
+                        rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined} 
+                        className="text-slate-300 hover:text-blue-400 transition-colors text-sm hover:underline"
+                        aria-label={contact.ariaLabel}
+                      >
                         {contact.content}
                       </a>
                     ) : (
-                      <p className="text-slate-300 text-sm">{contact.content}</p>
+                      <p className="text-slate-300 text-sm" aria-label={contact.ariaLabel}>{contact.content}</p>
                     )}
                   </CardContent>
                 </Card>
@@ -444,8 +584,12 @@ const Index = () => {
                   <h3 className="text-lg font-semibold text-blue-400 mb-1">Ready to collaborate?</h3>
                   <p className="text-slate-300 text-sm">Let's discuss your next project</p>
                 </div>
-                <Button className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transform hover:scale-105 transition-all duration-300">
-                  <Mail className="w-4 h-4 mr-2" />
+                <Button 
+                  className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transform hover:scale-105 transition-all duration-300"
+                  onClick={() => scrollToSection('contact')}
+                  aria-label="Start a conversation with Charm Thiekshana Perera"
+                >
+                  <Mail className="w-4 h-4 mr-2" aria-hidden="true" />
                   Start a Conversation
                 </Button>
               </div>
@@ -454,10 +598,10 @@ const Index = () => {
         </section>
 
         {/* Footer */}
-        <footer className="py-8 px-6 border-t border-blue-500/20 bg-slate-900">
+        <footer className="py-8 px-6 border-t border-blue-500/20 bg-slate-900" role="contentinfo">
           <div className="max-w-6xl mx-auto text-center">
             <p className="text-slate-300">
-              © 2024 Charm Thiekshana Perera. All rights reserved.
+              © 2024 Charm Thiekshana Perera. All rights reserved. Mobile Engineer & Full Stack Developer.
             </p>
           </div>
         </footer>
