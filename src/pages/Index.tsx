@@ -1,10 +1,11 @@
+
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Mail, Phone, Linkedin, Github, ExternalLink, MapPin, Calendar, Building2, Moon, Sun, Download, ChevronDown, Filter } from "lucide-react";
+import { Mail, Phone, Linkedin, Github, ExternalLink, MapPin, Calendar, Building2, Moon, Sun, Download, ChevronDown, Filter, Smartphone, Code, Cloud, Brain, Database, Palette } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import FloatingElements from "@/components/FloatingElements";
 import SocialMediaSlider from "@/components/SocialMediaSlider";
