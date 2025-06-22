@@ -70,7 +70,7 @@ const SocialMediaSlider = () => {
   ];
 
   return (
-    <div className={`fixed right-4 top-1/2 transform -translate-y-1/2 z-[100] transition-all duration-500 ${isVisible ? 'translate-x-0' : 'translate-x-full'}`}>
+    <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-[100] bottom-0 right-0 z-50 p-4 " >
       <div className="flex flex-col items-end space-y-3">
         {/* Hand Handle Button */}
         <Button

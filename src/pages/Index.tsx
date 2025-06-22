@@ -56,7 +56,7 @@ const Index = () => {
       clearInterval(heroInterval);
       clearInterval(aboutInterval);
     };
-  }, []);
+  }, [aboutThemes.length, heroThemes.length]);
 
   const skills = {
     "Mobile App Development": {
@@ -340,44 +340,78 @@ const Index = () => {
         <AIChatbot />
         
         {/* Navigation */}
-        <nav className="fixed top-0 w-full glass-card z-50" role="navigation" aria-label="Main navigation">
-          <div className="max-w-6xl mx-auto px-6 py-4">
-            <div className="flex justify-between items-center">
-              <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent animate-bounce-in">
-                <h1>Charm Thiekshana</h1>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="hidden md:flex space-x-8">
-                  {["Home", "About", "Skills", "Experience", "Projects", "Education", "Contact"].map((item) => (
-                    <button
-                      key={item}
-                      onClick={() => {
-                        setActiveSection(item.toLowerCase());
-                        scrollToSection(item.toLowerCase());
-                      }}
-                      className={`text-foreground hover:text-blue-400 transition-all duration-300 font-medium hover:scale-110 transform ${
-                        activeSection === item.toLowerCase() ? 'text-blue-400 font-bold' : ''
-                      }`}
-                      aria-label={`Navigate to ${item} section`}
-                    >
-                      {item}
-                    </button>
-                  ))}
-                </div>
-                <MobileNavigation 
-                  activeSection={activeSection}
-                  setActiveSection={setActiveSection}
-                  scrollToSection={scrollToSection}
-                />
-                <div className="flex items-center space-x-2" role="group" aria-label="Theme toggle">
-                  <Sun className="h-4 w-4 text-yellow-400" aria-hidden="true" />
-                  <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} aria-label="Toggle dark mode" />
-                  <Moon className="h-4 w-4 text-blue-400" aria-hidden="true" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </nav>
+{/* Navigation */}
+<nav
+  className="fixed top-0 w-full glass-card z-50"
+  role="navigation"
+  aria-label="Main navigation"
+>
+  <div className="max-w-6xl mx-auto px-6 py-4">
+    <div className="flex justify-between items-center">
+      {/* Logo/Title */}
+      <div className="text-2xl font-bold bg-gradient-to-r from-sky-500 to-sky-400 bg-clip-text text-transparent animate-bounce-in">
+        <h1>Charm Thiekshana</h1>
+      </div>
+
+      {/* Right Side */}
+      <div className="flex items-center gap-6">
+        {/* Desktop Menu */}
+        <div className="hidden md:flex space-x-8">
+          {[
+            "Home",
+            "About",
+            "Skills",
+            "Experience",
+            "Projects",
+            "Education",
+            "Contact",
+          ].map((item) => (
+            <button
+              key={item}
+              onClick={() => {
+                setActiveSection(item.toLowerCase());
+                scrollToSection(item.toLowerCase());
+              }}
+              className={`transition-all duration-300 font-medium transform hover:scale-110 px-1
+                ${
+                  activeSection === item.toLowerCase()
+                    ? "text-primary font-bold"
+                    : "text-muted-foreground hover:text-primary"
+                }`}
+              aria-label={`Navigate to ${item} section`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+
+        {/* Mobile Navigation */}
+        <MobileNavigation
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          scrollToSection={scrollToSection}
+        />
+
+        {/* Theme Toggle */}
+        <div
+          className="flex items-center space-x-2"
+          role="group"
+          aria-label="Theme toggle"
+        >
+          <Sun className="h-4 w-4 text-yellow-400" aria-hidden="true" />
+          <Switch
+            checked={theme === "dark"}
+            onCheckedChange={toggleTheme}
+            aria-label="Toggle dark mode"
+          />
+          <Moon className="h-4 w-4 text-sky-400" aria-hidden="true" />
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
 
         {/* Hero Section */}
         <section id="home" className={`min-h-screen pt-24 pb-20 px-6 relative transition-all duration-1000 ${heroThemes[heroTheme]} flex items-center`} role="banner">
@@ -398,15 +432,23 @@ const Index = () => {
                     Dedicated Mobile Engineer crafting user-centric, high-performance applications with expertise in AI, web, and cloud technologies. Based in Sri Lanka, serving clients globally.
                   </p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up delay-700">
-                  <Button size="lg" onClick={() => scrollToSection('contact')} className="btn-modern" aria-label="Contact Charm Thiekshana Perera">
+                <div className="flex flex-col sm:flex-row items-center gap-4 mt-6 animate-fade-in-up delay-700">
+                  <Button size="lg" onClick={() => scrollToSection('contact')} className="btn-modern " aria-label="Contact Charm Thiekshana Perera">
                     <Mail className="w-5 h-5 mr-2" aria-hidden="true" />
                     Get In Touch
                   </Button>
-                  <Button size="lg" className="glass-card hover:scale-110 transition-all duration-300 text-white neon-border" aria-label="Download CV">
-                    <Download className="w-5 h-5 mr-2" aria-hidden="true" />
-                    Download CV
-                  </Button>
+                   <a
+                    href="/CHARM THIEKSHANA PERERA RESUME.pdf"
+                    download="CHARM THIEKSHANA PERERA RESUME.pdf"
+                    aria-label="Download Charm's CV"
+                  >
+                    <Button size="lg" className="glass-card hover:scale-110 transition-all duration-300 text-white neon-border w-full" asChild>
+                      <span>
+                        <Download className="w-5 h-5 mr-2" aria-hidden="true" />
+                        Download CV
+                      </span>
+                    </Button>
+                  </a>
                 </div>
               </div>
               <div className="flex-shrink-0 animate-bounce-in delay-1000">

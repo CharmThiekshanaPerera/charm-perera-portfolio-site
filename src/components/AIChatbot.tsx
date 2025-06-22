@@ -93,7 +93,7 @@ const AIChatbot: React.FC = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] shadow-2xl border-0 bg-background/95 backdrop-blur-sm z-[150] dark:bg-gray-900/95 mb-6">
+        <Card className="fixed bottom-16 right-6 w-80 sm:w-96 h-[500px] shadow-2xl border-0 bg-background/95 backdrop-blur-sm z-[150] dark:bg-gray-900/95 mb-6">
           <CardHeader className="pb-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
