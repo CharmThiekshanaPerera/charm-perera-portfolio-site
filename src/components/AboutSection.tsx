@@ -1,8 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { MapPin, Calendar, Award, Target, Heart, Code2 } from 'lucide-react';
+import { MapPin, Calendar, Award, Code2, Rocket, Heart } from 'lucide-react';
 
 interface AboutSectionProps {
   aboutTheme: number;
@@ -11,16 +10,10 @@ interface AboutSectionProps {
 
 const AboutSection: React.FC<AboutSectionProps> = ({ aboutTheme, aboutThemes }) => {
   const achievements = [
-    "2+ Years Mobile Development",
-    "15+ Successful Projects",
-    "Healthcare App Impact",
-    "AI Integration Expert"
-  ];
-
-  const values = [
-    { icon: Code2, title: "Innovation", description: "Constantly exploring new technologies and methodologies" },
-    { icon: Target, title: "Quality", description: "Delivering high-performance, user-centric applications" },
-    { icon: Heart, title: "Passion", description: "Genuinely love creating solutions that make a difference" }
+    { number: "2+", label: "Years Experience", icon: Calendar },
+    { number: "15+", label: "Projects Completed", icon: Rocket },
+    { number: "100%", label: "Client Satisfaction", icon: Heart },
+    { number: "24/7", label: "Support Available", icon: Code2 }
   ];
 
   const personalInfo = [
@@ -30,103 +23,110 @@ const AboutSection: React.FC<AboutSectionProps> = ({ aboutTheme, aboutThemes }) 
   ];
 
   return (
-    <section id="about" className={`min-h-screen py-20 px-6 relative transition-all duration-1000 ${aboutThemes[aboutTheme]} flex items-center`}>
-      <div className="absolute inset-0 bg-black/40 dark:bg-black/60"></div>
+    <section id="about" className="min-h-screen py-20 px-6 relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl animate-spin-slow"></div>
+      </div>
+      
       <div className="max-w-6xl mx-auto relative z-10 w-full">
-        <div className="text-center mb-16 animate-fade-in-scale">
-          <h2 className="text-5xl font-bold mb-6 text-white">About Me</h2>
-          <p className="text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-            Passionate Mobile Engineer dedicated to creating innovative solutions that combine cutting-edge technology with exceptional user experience
+        {/* Header */}
+        <div className="text-center mb-20 animate-fade-in-up">
+          <h2 className="text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            About Me
+          </h2>
+          <p className="text-2xl text-white/80 max-w-4xl mx-auto leading-relaxed">
+            Passionate Mobile Engineer crafting exceptional digital experiences with cutting-edge technology
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
-          <div className="space-y-8 animate-fade-in-scale">
-            <div className="space-y-6">
-              <h3 className="text-3xl font-bold text-white mb-4">My Journey</h3>
-              <p className="text-lg leading-relaxed text-white/90">
-                I'm a dedicated Mobile Engineer with over 2 years of experience in developing high-performance applications. 
-                My passion lies in creating user-centric solutions that combine cutting-edge technology with exceptional user experience.
-              </p>
-              <p className="text-lg leading-relaxed text-white/90">
-                Currently working at Phyxle, I specialize in mobile app development, AI integration, and cloud technologies. 
-                I have successfully delivered applications that have made significant impacts in healthcare and productivity sectors.
-              </p>
-              <p className="text-lg leading-relaxed text-white/90">
-                My expertise spans across React Native, AI integration with LLMs, cloud platforms, and full-stack development. 
-                I believe in continuous learning and staying updated with the latest technological advancements.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {achievements.map((achievement, index) => (
-                <div key={index} className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300">
-                  <div className="text-lg font-bold text-white">{achievement.split(' ')[0]}</div>
-                  <div className="text-sm text-white/70">{achievement.split(' ').slice(1).join(' ')}</div>
-                </div>
-              ))}
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-2 gap-20 items-center mb-20">
+          {/* Story Section */}
+          <div className="space-y-8 animate-slide-in-left">
+            <div className="glass-card rounded-3xl p-8 hover:scale-105 transition-all duration-500">
+              <h3 className="text-4xl font-bold text-purple-400 mb-6">My Journey</h3>
+              <div className="space-y-6 text-lg leading-relaxed text-white/90">
+                <p>
+                  I'm a dedicated Mobile Engineer with over 2 years of experience in developing 
+                  high-performance applications that blend innovation with exceptional user experience.
+                </p>
+                <p>
+                  Currently working at Phyxle, I specialize in mobile app development, AI integration, 
+                  and cloud technologies. My work has made significant impacts in healthcare and 
+                  productivity sectors.
+                </p>
+                <p>
+                  My expertise spans React Native, AI integration with LLMs, cloud platforms, and 
+                  full-stack development. I believe in continuous learning and pushing the boundaries 
+                  of what's possible.
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="relative animate-fade-in-scale delay-300">
-            <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl mb-8">
-              <img 
-                src="/lovable-uploads/e2880e33-3dfc-496b-b77d-fad52bbb2e34.png"
-                alt="Charm Thiekshana Perera - Mobile Engineer"
-                className="w-full h-full object-cover"
-              />
+          {/* Profile Image */}
+          <div className="relative animate-slide-in-right">
+            <div className="relative group">
+              <div className="absolute -inset-8 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-all duration-500 animate-glow"></div>
+              <div className="relative w-full max-w-md mx-auto aspect-square rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-all duration-500 neon-border">
+                <img 
+                  src="/lovable-uploads/e2880e33-3dfc-496b-b77d-fad52bbb2e34.png"
+                  alt="Charm Thiekshana Perera - Mobile Engineer"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 to-transparent"></div>
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* Achievement Stats */}
+        <div className="grid md:grid-cols-4 gap-8 mb-20">
+          {achievements.map((achievement, index) => {
+            const IconComponent = achievement.icon;
+            return (
+              <Card 
+                key={index} 
+                className="glass-card hover:scale-110 transition-all duration-500 text-center animate-bounce-in group cursor-pointer" 
+                style={{ animationDelay: `${index * 200}ms` }}
+              >
+                <CardContent className="p-8">
+                  <IconComponent className="w-12 h-12 text-purple-400 mx-auto mb-4 group-hover:text-pink-400 transition-colors duration-300" />
+                  <div className="text-4xl font-bold text-white mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    {achievement.number}
+                  </div>
+                  <p className="text-white/80 font-medium">{achievement.label}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
         {/* Personal Information */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {personalInfo.map((info, index) => (
-            <Card key={index} className="bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 animate-fade-in-scale" style={{ animationDelay: `${index * 100}ms` }}>
-              <CardContent className="p-6 text-center">
-                <info.icon className="w-8 h-8 text-white mx-auto mb-3" />
-                <h4 className="text-lg font-semibold text-white mb-2">{info.label}</h4>
-                <p className="text-white/80 text-sm">{info.value}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Values & Philosophy */}
-        <div className="mb-16">
-          <h3 className="text-3xl font-bold text-white text-center mb-12">My Values & Philosophy</h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            {values.map((value, index) => (
-              <Card key={index} className="bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 text-center animate-fade-in-scale" style={{ animationDelay: `${index * 150}ms` }}>
-                <CardContent className="p-8">
-                  <value.icon className="w-12 h-12 text-white mx-auto mb-4" />
-                  <h4 className="text-xl font-semibold text-white mb-3">{value.title}</h4>
-                  <p className="text-white/80">{value.description}</p>
+        <div className="grid md:grid-cols-3 gap-8">
+          {personalInfo.map((info, index) => {
+            const IconComponent = info.icon;
+            return (
+              <Card 
+                key={index} 
+                className="glass-card hover:scale-105 transition-all duration-500 animate-fade-in-up group" 
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                <CardContent className="p-8 text-center">
+                  <div className="relative mb-6">
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <IconComponent className="w-12 h-12 text-purple-400 mx-auto relative z-10 group-hover:scale-125 transition-transform duration-300" />
+                  </div>
+                  <h4 className="text-2xl font-semibold text-white mb-3 group-hover:text-purple-400 transition-colors duration-300">
+                    {info.label}
+                  </h4>
+                  <p className="text-white/80 text-lg">{info.value}</p>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Skills Overview */}
-        <div className="text-center">
-          <h3 className="text-3xl font-bold text-white mb-8">Technical Expertise</h3>
-          <div className="flex flex-wrap justify-center gap-3">
-            {[
-              "React Native", "AI Integration", "Flask", "Node.js", "AWS", "MongoDB", 
-              "JavaScript", "TypeScript", "Mobile Development", "Cloud Platforms",
-              "UI/UX Collaboration", "Git", "API Development"
-            ].map((skill, index) => (
-              <Badge 
-                key={skill} 
-                variant="secondary" 
-                className="bg-white/20 text-white border border-white/30 hover:bg-white/30 transition-all duration-300 transform hover:scale-105 px-4 py-2 text-sm animate-fade-in-scale"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                {skill}
-              </Badge>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>

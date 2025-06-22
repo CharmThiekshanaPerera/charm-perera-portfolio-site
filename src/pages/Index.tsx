@@ -26,10 +26,10 @@ const Index = () => {
   const typingTexts = ["Software Engineer", "Web & Mobile App Developer", "AI Engineer", "Full Stack Developer"];
   
   const heroThemes = [
-    "bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900",
-    "bg-gradient-to-br from-green-800 via-teal-900 to-blue-900",
-    "bg-gradient-to-br from-orange-800 via-red-900 to-purple-900",
-    "bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900"
+    "gradient-bg-1",
+    "gradient-bg-2",
+    "gradient-bg-3",
+    "gradient-bg-4"
   ];
 
   const aboutThemes = [
@@ -58,32 +58,32 @@ const Index = () => {
   const skills = {
     "Mobile App Development": {
       icon: Smartphone,
-      color: "text-green-500",
+      color: "text-purple-400",
       skills: ["iOS & Android Development", "React Native"]
     },
     "Frontend Development": {
       icon: Code,
-      color: "text-blue-500",
+      color: "text-blue-400",
       skills: ["React", "Vite", "HTML", "CSS", "JavaScript"]
     },
     "Backend & Cloud": {
       icon: Cloud,
-      color: "text-purple-500",
+      color: "text-pink-400",
       skills: ["Flask", "Node.js", "API Integration", "AWS (EC2, S3)", "Cloud Platforms"]
     },
     "AI & Machine Learning": {
       icon: Brain,
-      color: "text-orange-500",
+      color: "text-cyan-400",
       skills: ["LLM Integration (Phi-2 LLM)", "ML-powered App Development"]
     },
     "DevOps & Database": {
       icon: Database,
-      color: "text-red-500",
+      color: "text-green-400",
       skills: ["GitHub CI/CD Pipelines", "Database Management (MongoDB Atlas, MySQL)"]
     },
     "UI/UX & Quality Assurance": {
       icon: Palette,
-      color: "text-pink-500",
+      color: "text-yellow-400",
       skills: ["UI/UX Collaboration", "App Testing & Maintenance", "Version Control (Git)"]
     }
   };
@@ -207,10 +207,10 @@ const Index = () => {
         <AIChatbot />
         
         {/* Navigation */}
-        <nav className="fixed top-0 w-full bg-background/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-border dark:border-gray-700 z-50 glass-effect">
+        <nav className="fixed top-0 w-full glass-card z-50">
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex justify-between items-center">
-              <div className="text-2xl font-bold text-primary dark:text-blue-400 animate-fade-in-scale">
+              <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent animate-bounce-in">
                 Charm Thiekshana
               </div>
               <div className="flex items-center gap-6">
@@ -222,8 +222,8 @@ const Index = () => {
                         setActiveSection(item.toLowerCase());
                         scrollToSection(item.toLowerCase());
                       }}
-                      className={`text-muted-foreground dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-all duration-300 font-medium hover:scale-105 transform ${
-                        activeSection === item.toLowerCase() ? 'text-primary dark:text-blue-400 font-bold' : ''
+                      className={`text-foreground hover:text-primary transition-all duration-300 font-medium hover:scale-110 transform ripple ${
+                        activeSection === item.toLowerCase() ? 'text-primary font-bold' : ''
                       }`}
                     >
                       {item}
@@ -236,55 +236,55 @@ const Index = () => {
                   scrollToSection={scrollToSection}
                 />
                 <div className="flex items-center space-x-2">
-                  <Sun className="h-4 w-4 text-yellow-500" />
+                  <Sun className="h-4 w-4 text-yellow-400" />
                   <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
-                  <Moon className="h-4 w-4 text-blue-400" />
+                  <Moon className="h-4 w-4 text-purple-400" />
                 </div>
               </div>
             </div>
           </div>
         </nav>
 
-        {/* Hero Section - Full Screen with Background Image Slider */}
+        {/* Hero Section */}
         <section id="home" className={`min-h-screen pt-24 pb-20 px-6 relative transition-all duration-1000 ${heroThemes[heroTheme]} flex items-center`}>
           <BackgroundImageSlider />
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-black/40"></div>
           <div className="max-w-6xl mx-auto relative z-10 w-full">
-            <div className={`flex flex-col lg:flex-row items-center gap-12 ${isVisible ? 'animate-slide-in-up' : 'opacity-0'}`}>
+            <div className={`flex flex-col lg:flex-row items-center gap-12 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
               <div className="flex-1 text-center lg:text-left">
                 <div className="mb-6">
                   <h1 className="text-5xl lg:text-7xl font-bold mb-4 text-white">
                     Charm Thiekshana
-                    <span className="block text-3xl lg:text-5xl mt-2">Perera</span>
+                    <span className="block text-3xl lg:text-5xl mt-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Perera</span>
                   </h1>
-                  <div className="text-xl text-white/90 mb-4 animate-fade-in-scale delay-300 h-8">
+                  <div className="text-xl text-white/90 mb-4 animate-fade-in-up delay-300 h-8">
                     <DynamicTyping texts={typingTexts} className="font-medium" />
                   </div>
-                  <p className="text-lg text-white/80 leading-relaxed max-w-2xl animate-fade-in-scale delay-500">
+                  <p className="text-lg text-white/80 leading-relaxed max-w-2xl animate-fade-in-up delay-500">
                     Dedicated Mobile Engineer crafting user-centric, high-performance applications with expertise in AI, web, and cloud technologies.
                   </p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-scale delay-700">
-                  <Button size="lg" onClick={() => scrollToSection('contact')} className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shimmer">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up delay-700">
+                  <Button size="lg" onClick={() => scrollToSection('contact')} className="btn-modern">
                     <Mail className="w-5 h-5 mr-2" />
                     Get In Touch
                   </Button>
-                  <Button variant="outline" size="lg" className="border-white/20 hover:bg-white/10 text-white transform hover:scale-105 transition-all duration-300">
+                  <Button size="lg" className="glass-card hover:scale-110 transition-all duration-300 text-white neon-border">
                     <Download className="w-5 h-5 mr-2" />
                     Download CV
                   </Button>
                 </div>
               </div>
-              <div className="flex-shrink-0 animate-fade-in-scale delay-1000">
+              <div className="flex-shrink-0 animate-bounce-in delay-1000">
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                  <div className="relative w-80 h-80 rounded-2xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-all duration-500">
+                  <div className="absolute -inset-8 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-all duration-500 animate-glow"></div>
+                  <div className="relative w-80 h-80 rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 neon-border">
                     <img 
                       src="/lovable-uploads/e2880e33-3dfc-496b-b77d-fad52bbb2e34.png" 
                       alt="Charm Thiekshana Perera - Mobile Engineer"
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 to-transparent"></div>
                   </div>
                 </div>
               </div>
@@ -295,23 +295,23 @@ const Index = () => {
           </div>
         </section>
 
-        {/* About Section - Full Page */}
+        {/* About Section */}
         <AboutSection aboutTheme={aboutTheme} aboutThemes={aboutThemes} />
 
-        {/* Skills Section with Icons */}
-        <section id="skills" className="py-20 px-6 bg-muted/30 dark:bg-gray-800/30">
+        {/* Skills Section */}
+        <section id="skills" className="py-20 px-6 bg-gradient-to-br from-slate-900 to-purple-900">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 animate-fade-in-scale">
-              <h2 className="text-4xl font-bold mb-4 text-primary dark:text-blue-400">My Expertise</h2>
-              <p className="text-xl text-muted-foreground dark:text-gray-300">Technical proficiencies across the development stack</p>
+            <div className="text-center mb-16 animate-fade-in-up">
+              <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">My Expertise</h2>
+              <p className="text-xl text-white/80">Technical proficiencies across the development stack</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {Object.entries(skills).map(([category, data], index) => (
-                <Card key={category} className="group hover:shadow-2xl transition-all duration-500 border-0 shadow-lg bg-card/50 dark:bg-gray-800/50 backdrop-blur-sm hover:scale-105 transform animate-fade-in-scale" style={{ animationDelay: `${index * 100}ms` }}>
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-4">
-                      <data.icon className={`w-8 h-8 mr-3 ${data.color}`} />
-                      <h3 className="text-xl font-bold group-hover:text-primary dark:group-hover:text-blue-400 transition-colors text-foreground dark:text-white">
+                <Card key={category} className="glass-card hover:scale-110 transition-all duration-500 group animate-bounce-in" style={{ animationDelay: `${index * 100}ms` }}>
+                  <CardContent className="p-8">
+                    <div className="flex items-center mb-6">
+                      <data.icon className={`w-10 h-10 mr-4 ${data.color} group-hover:scale-125 transition-transform duration-300`} />
+                      <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
                         {category}
                       </h3>
                     </div>
@@ -319,8 +319,7 @@ const Index = () => {
                       {data.skills.map((skill) => (
                         <Badge 
                           key={skill} 
-                          variant="secondary" 
-                          className="bg-primary/10 dark:bg-blue-500/20 text-primary dark:text-blue-400 hover:bg-primary/20 dark:hover:bg-blue-500/30 transition-all duration-300 transform hover:scale-105"
+                          className="glass-card text-purple-400 hover:scale-110 transition-all duration-300"
                         >
                           {skill}
                         </Badge>
@@ -336,7 +335,7 @@ const Index = () => {
         {/* Experience Section */}
         <section id="experience" className="py-20 px-6 bg-background dark:bg-gray-900">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 animate-fade-in-scale">
+            <div className="text-center mb-16 animate-fade-in-up">
               <h2 className="text-4xl font-bold mb-4 text-primary dark:text-blue-400">Professional Experience</h2>
               <p className="text-xl text-muted-foreground dark:text-gray-300">My journey in software development</p>
             </div>
@@ -381,7 +380,7 @@ const Index = () => {
         {/* Projects Section */}
         <section id="projects" className="py-20 px-6 bg-muted/30 dark:bg-gray-800/30">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 animate-fade-in-scale">
+            <div className="text-center mb-16 animate-fade-in-up">
               <h2 className="text-4xl font-bold mb-4 text-primary dark:text-blue-400">My Projects</h2>
               <p className="text-xl text-muted-foreground dark:text-gray-300">Showcasing practical application of skills</p>
             </div>
@@ -465,10 +464,10 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Education Section with Highlighted Coursework */}
+        {/* Education Section */}
         <section id="education" className="py-20 px-6 bg-background dark:bg-gray-900">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 animate-fade-in-scale">
+            <div className="text-center mb-16 animate-fade-in-up">
               <h2 className="text-4xl font-bold mb-4 text-primary dark:text-blue-400">Education</h2>
               <p className="text-xl text-muted-foreground dark:text-gray-300">Academic foundation</p>
             </div>
@@ -499,7 +498,7 @@ const Index = () => {
         {/* Contact Section */}
         <section id="contact" className="py-20 px-6 bg-muted/30 dark:bg-gray-800/30">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 animate-fade-in-scale">
+            <div className="text-center mb-16 animate-fade-in-up">
               <h2 className="text-4xl font-bold mb-4 text-primary dark:text-blue-400">Get In Touch</h2>
               <p className="text-xl text-muted-foreground dark:text-gray-300">Let's collaborate on your next project</p>
             </div>
@@ -519,7 +518,7 @@ const Index = () => {
                 <Card key={contact.title} className="bg-card/50 dark:bg-gray-800/50 backdrop-blur-sm border-0 text-center hover:scale-105 transform transition-all duration-500 hover:shadow-xl animate-fade-in-scale group" style={{ animationDelay: `${index * 100}ms` }}>
                   <CardContent className="p-6">
                     <div className="relative mb-4">
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       <contact.icon className={`w-8 h-8 mx-auto relative z-10 ${contact.color} group-hover:scale-110 transition-transform duration-300`} />
                     </div>
                     <h3 className="font-semibold mb-2 text-primary dark:text-blue-400">{contact.title}</h3>
