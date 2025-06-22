@@ -437,10 +437,18 @@ const Index = () => {
                     <Mail className="w-5 h-5 mr-2" aria-hidden="true" />
                     Get In Touch
                   </Button>
-                  <Button size="lg" className="glass-card hover:scale-110 transition-all duration-300 text-white neon-border" aria-label="Download CV">
-                    <Download className="w-5 h-5 mr-2" aria-hidden="true" />
-                    Download CV
-                  </Button>
+                   <a
+                    href="/CHARM THIEKSHANA PERERA RESUME.pdf"
+                    download="CHARM THIEKSHANA PERERA RESUME.pdf"
+                    aria-label="Download Charm's CV"
+                  >
+                    <Button size="lg" className="glass-card hover:scale-110 transition-all duration-300 text-white neon-border w-full" asChild>
+                      <span>
+                        <Download className="w-5 h-5 mr-2" aria-hidden="true" />
+                        Download CV
+                      </span>
+                    </Button>
+                  </a>
                 </div>
               </div>
               <div className="flex-shrink-0 animate-bounce-in delay-1000">
