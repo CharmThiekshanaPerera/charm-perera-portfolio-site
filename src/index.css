@@ -88,11 +88,12 @@
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: rgb(var(--border));
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
   }
 }
 
@@ -134,8 +135,17 @@
 
 /* Modern Button Styles */
 .btn-modern {
-  @apply relative overflow-hidden rounded-xl px-6 py-3 font-semibold transition-all duration-300;
-  background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-weight: 600;
+  transition-property: all;
+  transition-duration: 300ms;
+  background: linear-gradient(45deg, #6193e4, #bfc0c4);
   box-shadow: 0 4px 15px 0 rgba(59, 130, 246, 0.3);
 }
 
