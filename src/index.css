@@ -6,47 +6,6 @@
 /* Single Color Theme - Blue/Slate */
 @layer base {
   :root {
-    --background: 248 250 252;
-    --foreground: 15 23 42;
-
-    --card: 255 255 255;
-    --card-foreground: 15 23 42;
-
-    --popover: 255 255 255;
-    --popover-foreground: 15 23 42;
-
-    --primary: 59 130 246;
-    --primary-foreground: 255 255 255;
-
-    --secondary: 241 245 249;
-    --secondary-foreground: 15 23 42;
-
-    --muted: 241 245 249;
-    --muted-foreground: 100 116 139;
-
-    --accent: 59 130 246;
-    --accent-foreground: 255 255 255;
-
-    --destructive: 239 68 68;
-    --destructive-foreground: 248 250 252;
-
-    --border: 226 232 240;
-    --input: 226 232 240;
-    --ring: 59 130 246;
-
-    --radius: 1rem;
-
-    --sidebar-background: 255 255 255;
-    --sidebar-foreground: 15 23 42;
-    --sidebar-primary: 59 130 246;
-    --sidebar-primary-foreground: 255 255 255;
-    --sidebar-accent: 241 245 249;
-    --sidebar-accent-foreground: 15 23 42;
-    --sidebar-border: 226 232 240;
-    --sidebar-ring: 59 130 246;
-  }
-
-  .dark {
     --background: 15 23 42;
     --foreground: 248 250 252;
 
@@ -56,13 +15,54 @@
     --popover: 30 41 59;
     --popover-foreground: 248 250 252;
 
-    --primary: 96 165 250;
-    --primary-foreground: 2 6 23;
+    --primary: 59 130 246;
+    --primary-foreground: 15 23 42;
 
     --secondary: 51 65 85;
     --secondary-foreground: 248 250 252;
 
     --muted: 51 65 85;
+    --muted-foreground: 148 163 184;
+
+    --accent: 59 130 246;
+    --accent-foreground: 15 23 42;
+
+    --destructive: 239 68 68;
+    --destructive-foreground: 248 250 252;
+
+    --border: 51 65 85;
+    --input: 51 65 85;
+    --ring: 59 130 246;
+
+    --radius: 1rem;
+
+    --sidebar-background: 30 41 59;
+    --sidebar-foreground: 248 250 252;
+    --sidebar-primary: 59 130 246;
+    --sidebar-primary-foreground: 15 23 42;
+    --sidebar-accent: 51 65 85;
+    --sidebar-accent-foreground: 248 250 252;
+    --sidebar-border: 51 65 85;
+    --sidebar-ring: 59 130 246;
+  }
+
+  .dark {
+    --background: 2 6 23;
+    --foreground: 226 232 240;
+
+    --card: 15 23 42;
+    --card-foreground: 226 232 240;
+
+    --popover: 15 23 42;
+    --popover-foreground: 226 232 240;
+
+    --primary: 96 165 250;
+    --primary-foreground: 2 6 23;
+
+    --secondary: 30 41 59;
+    --secondary-foreground: 226 232 240;
+
+    --muted: 30 41 59;
     --muted-foreground: 148 163 184;
 
     --accent: 96 165 250;
@@ -75,12 +75,12 @@
     --input: 30 41 59;
     --ring: 96 165 250;
     
-    --sidebar-background: 30 41 59;
-    --sidebar-foreground: 248 250 252;
+    --sidebar-background: 15 23 42;
+    --sidebar-foreground: 226 232 240;
     --sidebar-primary: 96 165 250;
     --sidebar-primary-foreground: 2 6 23;
-    --sidebar-accent: 51 65 85;
-    --sidebar-accent-foreground: 248 250 252;
+    --sidebar-accent: 30 41 59;
+    --sidebar-accent-foreground: 226 232 240;
     --sidebar-border: 30 41 59;
     --sidebar-ring: 96 165 250;
   }
@@ -160,82 +160,4 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(45deg, #2563eb, #1e40af);
-}
-
-/* Light mode section backgrounds */
-.light-projects-bg {
-  background: rgb(30 41 59);
-}
-
-.light-contact-bg {
-  background: rgb(51 65 85);
-}
-
-/* Animation utilities */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes bounce-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-  70% {
-    transform: scale(0.9);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes fade-in-scale {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes glow {
-  0%, 100% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
-}
-
-.animate-bounce-in {
-  animation: bounce-in 1s ease-out forwards;
-}
-
-.animate-fade-in-scale {
-  animation: fade-in-scale 0.6s ease-out forwards;
-}
-
-.animate-glow {
-  animation: glow 3s ease-in-out infinite;
-}
-
-.animate-pulse-slow {
-  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
