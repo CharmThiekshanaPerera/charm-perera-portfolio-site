@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Hand } from 'lucide-react';
+import { Hand, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const SocialMediaSlider = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -15,7 +15,7 @@ const SocialMediaSlider = () => {
         </svg>
       ),
       url: 'https://wa.me/94729755955',
-      color: 'text-blue-400'
+      color: 'text-green-400'
     },
     {
       name: 'LinkedIn',
@@ -35,7 +35,7 @@ const SocialMediaSlider = () => {
         </svg>
       ),
       url: 'https://github.com/CharmThiekshanaPerera',
-      color: 'text-blue-300'
+      color: 'text-slate-300'
     },
     {
       name: 'Facebook',
@@ -65,31 +65,40 @@ const SocialMediaSlider = () => {
         </svg>
       ),
       url: 'https://www.youtube.com/channel/UC7npdzqjOKBZlKzxb72SY2Q',
-      color: 'text-blue-500'
+      color: 'text-red-500'
     }
   ];
 
   return (
-    <div className={`fixed right-4 top-1/2 transform -translate-y-1/2 z-[100] transition-all duration-500 ${isVisible ? 'translate-x-0' : 'translate-x-full'}`}>
-      <div className="flex flex-col items-end space-y-3">
-        {/* Hand Handle Button */}
+    <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-[100]">
+      <div className="flex items-center">
+        {/* Hand Handle Button - Always visible */}
         <Button
           onClick={() => setIsVisible(!isVisible)}
-          className="w-12 h-12 rounded-full bg-primary/80 hover:bg-primary text-white shadow-lg hover:scale-110 transition-all duration-300 animate-pulse-slow backdrop-blur-sm border border-primary/30"
+          className={`w-12 h-12 rounded-full bg-primary/90 hover:bg-primary text-white shadow-lg hover:scale-110 transition-all duration-300 backdrop-blur-sm border border-primary/30 ${
+            !isVisible ? 'mr-0' : 'mr-3'
+          }`}
           size="sm"
+          title={isVisible ? "Hide social media" : "Show social media"}
         >
-          <Hand className={`w-5 h-5 transition-transform duration-300 ${!isVisible ? 'rotate-180' : ''}`} />
+          {isVisible ? (
+            <ChevronRight className="w-5 h-5" />
+          ) : (
+            <ChevronLeft className="w-5 h-5" />
+          )}
         </Button>
 
         {/* Social Media Icons */}
-        <div className={`flex flex-col space-y-3 transition-all duration-500 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}`}>
+        <div className={`flex flex-col space-y-3 transition-all duration-500 ${
+          isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full pointer-events-none'
+        }`}>
           {socialLinks.map((social, index) => {
             const IconComponent = social.icon;
             return (
               <Button
                 key={social.name}
                 asChild
-                className={`w-12 h-12 rounded-xl bg-slate-800/90 hover:bg-slate-700 ${social.color} backdrop-blur-sm border border-blue-500/30 shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-fade-in-up`}
+                className={`w-12 h-12 rounded-xl bg-card/90 hover:bg-card ${social.color} backdrop-blur-sm border border-border shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-fade-in-up`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <a

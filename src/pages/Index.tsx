@@ -31,7 +31,7 @@ const Index = () => {
   
   const heroThemes = [
     "gradient-bg-1",
-    "gradient-bg-2",
+    "gradient-bg-2", 
     "gradient-bg-3",
     "gradient-bg-4"
   ];
@@ -191,18 +191,65 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Charm Thiekshana Perera - Mobile Engineer & Full Stack Developer</title>
-        <meta name="description" content="Experienced Mobile Engineer specializing in React Native, AI integration, and full-stack development. 2+ years building high-performance applications." />
-        <meta name="keywords" content="Mobile Engineer, React Native, AI Engineer, Full Stack Developer, Mobile App Development, Sri Lanka Developer" />
+        <title>Charm Thiekshana Perera - Mobile Engineer & Full Stack Developer | React Native Expert</title>
+        <meta name="description" content="Experienced Mobile Engineer specializing in React Native, AI integration, and full-stack development. 2+ years building high-performance mobile applications with expertise in Flask, Node.js, AWS, and machine learning." />
+        <meta name="keywords" content="Mobile Engineer, React Native Developer, AI Engineer, Full Stack Developer, Mobile App Development, Sri Lanka Developer, iOS Android, Machine Learning, Flask API, Node.js, AWS Cloud" />
         <meta name="author" content="Charm Thiekshana Perera" />
-        <meta property="og:title" content="Charm Thiekshana Perera - Mobile Engineer" />
-        <meta property="og:description" content="Experienced Mobile Engineer specializing in React Native, AI integration, and full-stack development." />
+        
+        {/* Enhanced Open Graph tags */}
+        <meta property="og:title" content="Charm Thiekshana Perera - Mobile Engineer & AI Developer" />
+        <meta property="og:description" content="Expert Mobile Engineer with 2+ years experience in React Native, AI integration, and full-stack development. Building innovative mobile solutions." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://charm-perera-portfolio.com" />
+        <meta property="og:image" content="https://charm-perera-portfolio.com/lovable-uploads/e2880e33-3dfc-496b-b77d-fad52bbb2e34.png" />
+        <meta property="og:site_name" content="Charm Thiekshana Perera Portfolio" />
+        <meta property="og:locale" content="en_US" />
+        
+        {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Charm Thiekshana Perera - Mobile Engineer" />
-        <meta name="twitter:description" content="Experienced Mobile Engineer specializing in React Native, AI integration, and full-stack development." />
+        <meta name="twitter:description" content="Expert Mobile Engineer specializing in React Native, AI integration, and full-stack development." />
+        <meta name="twitter:image" content="https://charm-perera-portfolio.com/lovable-uploads/e2880e33-3dfc-496b-b77d-fad52bbb2e34.png" />
+        <meta name="twitter:creator" content="@CharmThiekshana" />
+        
+        {/* Additional SEO tags */}
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow" />
         <link rel="canonical" href="https://charm-perera-portfolio.com" />
+        
+        {/* Schema.org structured data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Charm Thiekshana Perera",
+            "jobTitle": "Mobile Engineer",
+            "description": "Experienced Mobile Engineer specializing in React Native, AI integration, and full-stack development",
+            "url": "https://charm-perera-portfolio.com",
+            "sameAs": [
+              "https://www.linkedin.com/in/charm-thiekshana-644b85346",
+              "https://github.com/CharmThiekshanaPerera",
+              "https://www.facebook.com/Charmz1997SL"
+            ],
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Kalalpitiya, Pasyala",
+              "addressCountry": "Sri Lanka"
+            },
+            "email": "charmthiekshana97@gmail.com",
+            "telephone": "+94729755955",
+            "knowsAbout": [
+              "React Native",
+              "Mobile App Development",
+              "AI Integration",
+              "Full Stack Development",
+              "Flask",
+              "Node.js",
+              "AWS",
+              "Machine Learning"
+            ]
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
@@ -214,7 +261,7 @@ const Index = () => {
         <nav className="fixed top-0 w-full glass-card z-50">
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex justify-between items-center">
-              <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent animate-bounce-in">
+              <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent animate-bounce-in">
                 Charm Thiekshana
               </div>
               <div className="flex items-center gap-6">
@@ -226,8 +273,8 @@ const Index = () => {
                         setActiveSection(item.toLowerCase());
                         scrollToSection(item.toLowerCase());
                       }}
-                      className={`text-foreground hover:text-blue-400 transition-all duration-300 font-medium hover:scale-110 transform ${
-                        activeSection === item.toLowerCase() ? 'text-blue-400 font-bold' : ''
+                      className={`text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-all duration-300 font-medium hover:scale-110 transform ${
+                        activeSection === item.toLowerCase() ? 'text-blue-500 dark:text-blue-300 font-bold scale-110' : ''
                       }`}
                     >
                       {item}
@@ -240,9 +287,9 @@ const Index = () => {
                   scrollToSection={scrollToSection}
                 />
                 <div className="flex items-center space-x-2">
-                  <Sun className="h-4 w-4 text-yellow-400" />
+                  <Sun className="h-4 w-4 text-yellow-500" />
                   <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
-                  <Moon className="h-4 w-4 text-blue-400" />
+                  <Moon className="h-4 w-4 text-blue-500" />
                 </div>
               </div>
             </div>
@@ -309,7 +356,7 @@ const Index = () => {
         <ExperienceSection />
 
         {/* Projects Section */}
-        <section id="projects" className="py-20 px-6 bg-slate-800/30">
+        <section id="projects" className={`py-20 px-6 ${theme === 'light' ? 'light-projects-bg text-white' : 'bg-slate-800/30'}`}>
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16 animate-fade-in-up">
               <h2 className="text-4xl font-bold mb-4 text-blue-400">My Projects</h2>
@@ -399,7 +446,7 @@ const Index = () => {
         <EducationSection />
 
         {/* Contact Section */}
-        <section id="contact" className="py-20 px-6 bg-slate-800/30">
+        <section id="contact" className={`py-20 px-6 ${theme === 'light' ? 'light-contact-bg text-white' : 'bg-slate-800/30'}`}>
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16 animate-fade-in-up">
               <h2 className="text-4xl font-bold mb-4 text-blue-400">Get In Touch</h2>
