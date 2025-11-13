@@ -56,7 +56,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-20 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left: Text Content */}
-          <div className="space-y-6 animate-fade-in">
+          <div className="space-y-4 sm:space-y-6 animate-fade-in order-2 lg:order-1">
             <div className="inline-block">
               <span className="text-primary font-semibold text-sm tracking-wider uppercase bg-primary/10 px-4 py-2 rounded-full">
                 Welcome to my portfolio
@@ -98,58 +98,65 @@ const Hero = () => {
               </Button>
             </div>
 
-            <div className="flex gap-4 pt-4 flex-wrap">
+            <div className="flex gap-3 sm:gap-4 pt-4 flex-wrap">
               <a 
                 href="https://github.com/CharmThiekshanaPerera" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:shadow-gold"
+                className="p-3 rounded-full bg-[#333]/10 border border-[#333]/20 hover:bg-[#333] hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(51,51,51,0.4)] group"
+                aria-label="GitHub"
               >
-                <Github className="w-5 h-5" />
+                <Github className="w-5 h-5 text-[#333] group-hover:text-white transition-colors" />
               </a>
               <a 
                 href="https://www.linkedin.com/in/charmthiekshana/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:shadow-gold"
+                className="p-3 rounded-full bg-[#0077B5]/10 border border-[#0077B5]/20 hover:bg-[#0077B5] hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(0,119,181,0.4)] group"
+                aria-label="LinkedIn"
               >
-                <Linkedin className="w-5 h-5" />
+                <Linkedin className="w-5 h-5 text-[#0077B5] group-hover:text-white transition-colors" />
               </a>
               <a 
                 href="mailto:charmthiekshana97@gmail.com"
-                className="p-3 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:shadow-gold"
+                className="p-3 rounded-full bg-accent/10 border border-accent/20 hover:bg-accent hover:text-accent-foreground transition-all duration-300 hover:scale-110 hover:shadow-gold group"
+                aria-label="Email"
               >
-                <Mail className="w-5 h-5" />
+                <Mail className="w-5 h-5 text-accent group-hover:text-accent-foreground transition-colors" />
               </a>
               <a 
                 href="tel:+94754465955"
-                className="p-3 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:shadow-gold"
+                className="p-3 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:shadow-gold group"
+                aria-label="Phone"
               >
-                <Phone className="w-5 h-5" />
+                <Phone className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
               </a>
               <a 
                 href="https://www.instagram.com/c_h_a_r_m_15"
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:shadow-gold"
+                className="p-3 rounded-full bg-gradient-to-br from-[#E1306C]/10 to-[#FD1D1D]/10 border border-[#E1306C]/30 hover:from-[#E1306C] hover:to-[#FD1D1D] hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(225,48,108,0.4)] group"
+                aria-label="Instagram"
               >
-                <Instagram className="w-5 h-5" />
+                <Instagram className="w-5 h-5 text-[#E1306C] group-hover:text-white transition-colors" />
               </a>
               <a 
                 href="https://twitter.com/CharmThiekshana"
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:shadow-gold"
+                className="p-3 rounded-full bg-[#1DA1F2]/10 border border-[#1DA1F2]/20 hover:bg-[#1DA1F2] hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(29,161,242,0.4)] group"
+                aria-label="Twitter"
               >
-                <Twitter className="w-5 h-5" />
+                <Twitter className="w-5 h-5 text-[#1DA1F2] group-hover:text-white transition-colors" />
               </a>
               <a 
                 href="https://www.facebook.com/charm.thiekshana"
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:shadow-gold"
+                className="p-3 rounded-full bg-[#1877F2]/10 border border-[#1877F2]/20 hover:bg-[#1877F2] hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(24,119,242,0.4)] group"
+                aria-label="Facebook"
               >
-                <Facebook className="w-5 h-5" />
+                <Facebook className="w-5 h-5 text-[#1877F2] group-hover:text-white transition-colors" />
               </a>
               <a 
                 href="https://wa.me/94754465955"
@@ -170,7 +177,7 @@ const Hero = () => {
           </div>
 
           {/* Right: Image */}
-          <div className="relative animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="relative animate-fade-in order-1 lg:order-2" style={{ animationDelay: '0.2s' }}>
             <div className="relative w-full max-w-lg mx-auto">
               <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent rounded-3xl blur-2xl opacity-20 animate-glow" />
               <div className="relative rounded-3xl overflow-hidden border-2 border-primary/30 shadow-elegant">

@@ -136,11 +136,11 @@ const Packages = () => {
           </div>
 
           {/* Packages Grid */}
-          <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20 max-w-7xl mx-auto">
             {packages.map((pkg, index) => (
               <div
                 key={index}
-                className={`relative rounded-3xl border-2 transition-all duration-500 hover:scale-105 animate-fade-in ${
+                className={`relative rounded-3xl border-2 transition-all duration-500 hover:scale-105 animate-fade-in h-full flex flex-col ${
                   pkg.highlighted
                     ? 'border-primary bg-gradient-to-b from-primary/5 to-background shadow-gold'
                     : 'border-border bg-card hover:border-primary/50 hover:shadow-elegant'
@@ -156,7 +156,7 @@ const Packages = () => {
                   </div>
                 )}
 
-                <div className="p-6 sm:p-8">
+                <div className="p-6 sm:p-8 flex flex-col h-full">
                   {/* Icon */}
                   <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${pkg.color} flex items-center justify-center mb-6 shadow-lg`}>
                     <pkg.icon className="w-8 h-8 text-white" />
@@ -184,7 +184,7 @@ const Packages = () => {
                   </p>
 
                   {/* Features */}
-                  <ul className="space-y-4 mb-8">
+                  <ul className="space-y-4 mb-8 flex-grow">
                     {pkg.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-3">
                         <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">

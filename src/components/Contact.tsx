@@ -2,37 +2,18 @@ import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useForm, ValidationError } from '@formspree/react';
 
 const Contact = () => {
-  const [state, handleSubmit] = useForm("xwpwkgqb");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: ""
   });
 
-  // Handle Formspree submission
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Create FormData object for Formspree
-    const formDataForSubmission = new FormData();
-    formDataForSubmission.append('name', formData.name);
-    formDataForSubmission.append('email', formData.email);
-    formDataForSubmission.append('message', formData.message);
-    
-    // Submit to Formspree
-    handleSubmit(e);
-  };
-
-  // Update local form data
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { id, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [id]: value
-    }));
+    toast.success("Thanks for reaching out! I'll get back to you soon.");
+    setFormData({ name: "", email: "", message: "" });
   };
 
   const handleWhatsAppSubmit = (e: React.FormEvent) => {
@@ -43,7 +24,7 @@ const Contact = () => {
       return;
     }
 
-    const phoneNumber = "94754465955";
+    const phoneNumber = "94754465955"; // WhatsApp number without + or spaces
     const message = `Hi, I'm ${formData.name.trim()}.\n\n${formData.message.trim()}`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
@@ -73,48 +54,6 @@ const Contact = () => {
       link: null
     }
   ];
-
-  // Show success message when form is successfully submitted
-  if (state.succeeded) {
-    return (
-      <section id="contact" className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/5 to-background" />
-        
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12 sm:mb-16 animate-fade-in">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-                Hire the <span className="text-gradient">Best Freelance Developer</span>
-              </h2>
-              <p className="text-muted-foreground text-base sm:text-lg">
-                Ready to start your web or mobile app project? Contact Sri Lanka's top freelance web developer today
-              </p>
-            </div>
-
-            <div className="bg-card rounded-2xl border border-border p-12 text-center animate-fade-in">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Send className="w-10 h-10 text-green-600" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Message Sent Successfully!</h3>
-              <p className="text-muted-foreground mb-6">
-                Thanks for reaching out! I've received your message and will get back to you soon.
-              </p>
-              <Button 
-                onClick={() => {
-                  setFormData({ name: "", email: "", message: "" });
-                  // Reset Formspree state by reloading the component
-                  window.location.hash = 'contact';
-                }}
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                Send Another Message
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="contact" className="py-24 relative overflow-hidden">
@@ -169,7 +108,7 @@ const Contact = () => {
 
             {/* Contact Form */}
             <div className="lg:col-span-3 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <form onSubmit={handleFormSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="bg-card rounded-2xl border border-border p-8 hover:border-primary/50 transition-all duration-300">
                   <div className="space-y-6">
                     <div>
@@ -179,19 +118,11 @@ const Contact = () => {
                       <input
                         type="text"
                         id="name"
-                        name="name"
                         value={formData.name}
-                        onChange={handleInputChange}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         required
-                        disabled={state.submitting}
-                        className="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
+                        className="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                         placeholder="John Doe"
-                      />
-                      <ValidationError 
-                        prefix="Name" 
-                        field="name"
-                        errors={state.errors}
-                        className="text-red-500 text-sm mt-1"
                       />
                     </div>
 
@@ -202,19 +133,11 @@ const Contact = () => {
                       <input
                         type="email"
                         id="email"
-                        name="email"
                         value={formData.email}
-                        onChange={handleInputChange}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         required
-                        disabled={state.submitting}
-                        className="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
+                        className="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                         placeholder="john@example.com"
-                      />
-                      <ValidationError 
-                        prefix="Email" 
-                        field="email"
-                        errors={state.errors}
-                        className="text-red-500 text-sm mt-1"
                       />
                     </div>
 
@@ -224,20 +147,12 @@ const Contact = () => {
                       </label>
                       <textarea
                         id="message"
-                        name="message"
                         value={formData.message}
-                        onChange={handleInputChange}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         required
-                        disabled={state.submitting}
                         rows={6}
-                        className="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none disabled:opacity-50"
+                        className="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                         placeholder="Tell me about your project..."
-                      />
-                      <ValidationError 
-                        prefix="Message" 
-                        field="message"
-                        errors={state.errors}
-                        className="text-red-500 text-sm mt-1"
                       />
                     </div>
 
@@ -245,11 +160,10 @@ const Contact = () => {
                       <Button 
                         type="submit"
                         size="lg"
-                        disabled={state.submitting}
-                        className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-gold transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
+                        className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-gold transition-all duration-300 hover:scale-105"
                       >
                         <Send className="w-5 h-5 mr-2" />
-                        {state.submitting ? "Sending..." : "Send Email"}
+                        Send Email
                       </Button>
                       
                       <Button 
@@ -257,8 +171,7 @@ const Contact = () => {
                         onClick={handleWhatsAppSubmit}
                         size="lg"
                         variant="outline"
-                        disabled={state.submitting}
-                        className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
+                        className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105"
                       >
                         <MessageCircle className="w-5 h-5 mr-2" />
                         WhatsApp Me
