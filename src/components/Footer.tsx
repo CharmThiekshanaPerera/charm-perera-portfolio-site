@@ -151,7 +151,7 @@ const Footer = () => {
               © {currentYear} Charm Thiekshana Perera. All rights reserved.
             </p>
             <p className="flex items-center gap-2">
-              Made with <Heart className="w-4 h-4 text-accent fill-accent animate-pulse" /> using React, TypeScript & Vite
+              Made using React, TypeScript & Vite
             </p>
             <p className="text-xs bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
               🚀 Available for freelance opportunities
