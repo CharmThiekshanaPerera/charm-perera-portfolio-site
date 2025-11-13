@@ -189,8 +189,8 @@ const Testimonials = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="border-primary text-primary hover:bg-primary hover:text-primary-foreground" />
-            <CarouselNext className="border-primary text-primary hover:bg-primary hover:text-primary-foreground" />
+            <CarouselPrevious className="bg-primary/20 border-2 border-primary/70 text-primary hover:bg-primary hover:text-primary-foreground shadow-xl backdrop-blur-sm transition-all duration-300 hover:scale-110 w-12 h-12" />
+            <CarouselNext className="bg-primary/20 border-2 border-primary/70 text-primary hover:bg-primary hover:text-primary-foreground shadow-xl backdrop-blur-sm transition-all duration-300 hover:scale-110 w-12 h-12" />
           </Carousel>
         </div>
       </div>

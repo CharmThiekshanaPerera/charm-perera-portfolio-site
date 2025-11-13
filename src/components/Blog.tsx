@@ -7,13 +7,20 @@ import {
   CarouselPrevious,
   CarouselApi,
 } from "./ui/carousel";
-import { Calendar, Clock, ArrowRight, Tag } from "lucide-react";
+import { Calendar, Clock, ArrowRight, Tag, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 
 const Blog = () => {
   const [api, setApi] = useState<CarouselApi>();
+  const [selectedPost, setSelectedPost] = useState<typeof blogPosts[0] | null>(null);
 
   useEffect(() => {
     if (!api) return;
@@ -175,6 +182,7 @@ const Blog = () => {
                           <Button 
                             variant="ghost" 
                             className="w-full justify-between group/btn hover:bg-primary/10 hover:text-primary"
+                            onClick={() => setSelectedPost(post)}
                           >
                             Read More
                             <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
@@ -202,6 +210,100 @@ const Blog = () => {
           </div>
         </div>
       </div>
+
+      {/* Blog Post Expanded View Modal */}
+      <Dialog open={!!selectedPost} onOpenChange={() => setSelectedPost(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          {selectedPost && (
+            <>
+              <DialogHeader>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                  <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-semibold">
+                    {selectedPost.category}
+                  </span>
+                  <div className="flex items-center gap-4">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
+                      {selectedPost.date}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-4 h-4" />
+                      {selectedPost.readTime}
+                    </span>
+                  </div>
+                </div>
+                <DialogTitle className="text-3xl font-bold text-left mb-4">
+                  {selectedPost.title}
+                </DialogTitle>
+              </DialogHeader>
+
+              <div className="space-y-6">
+                <img
+                  src={selectedPost.image}
+                  alt={selectedPost.title}
+                  className="w-full h-64 object-cover rounded-lg"
+                />
+
+                <div className="flex flex-wrap gap-2">
+                  {selectedPost.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="flex items-center gap-1 px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm"
+                    >
+                      <Tag className="w-3 h-3" />
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="prose prose-lg max-w-none">
+                  <p className="text-muted-foreground leading-relaxed text-lg">
+                    {selectedPost.excerpt}
+                  </p>
+                  
+                  <div className="mt-6 space-y-4 text-foreground/90">
+                    <h3 className="text-xl font-semibold text-foreground">Introduction</h3>
+                    <p>
+                      This comprehensive guide will walk you through everything you need to know about {selectedPost.title.toLowerCase()}. 
+                      Whether you're a beginner or an experienced developer, you'll find valuable insights and practical tips to improve your skills.
+                    </p>
+
+                    <h3 className="text-xl font-semibold text-foreground mt-8">Key Takeaways</h3>
+                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                      <li>Understanding core concepts and fundamentals</li>
+                      <li>Best practices and industry standards</li>
+                      <li>Real-world examples and use cases</li>
+                      <li>Common pitfalls and how to avoid them</li>
+                      <li>Performance optimization techniques</li>
+                    </ul>
+
+                    <h3 className="text-xl font-semibold text-foreground mt-8">Detailed Analysis</h3>
+                    <p>
+                      By implementing these strategies and following best practices, you'll be well-equipped to tackle any challenges in this area. 
+                      The key is to maintain consistency, test thoroughly, and always keep the end-user experience in mind.
+                    </p>
+
+                    <h3 className="text-xl font-semibold text-foreground mt-8">Conclusion</h3>
+                    <p>
+                      Remember to keep learning and stay updated with the latest trends and technologies. The tech industry evolves rapidly, 
+                      and staying current with new methodologies and tools is essential for long-term success.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-t pt-6 mt-8">
+                  <h4 className="font-semibold mb-4 text-foreground">Share this article</h4>
+                  <div className="flex gap-3">
+                    <Button variant="outline" size="sm">Twitter</Button>
+                    <Button variant="outline" size="sm">LinkedIn</Button>
+                    <Button variant="outline" size="sm">Facebook</Button>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Decorative gradient */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
