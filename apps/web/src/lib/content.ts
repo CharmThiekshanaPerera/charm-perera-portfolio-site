@@ -54,7 +54,7 @@ const FALLBACK_SETTINGS = {
   availability: "Available for freelance opportunities",
   social: { github: "", linkedin: "", twitter: "", instagram: "", facebook: "" },
   seo: {
-    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://charmperera.com",
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://www.charmthiekshana.com",
     defaultTitle: "Best Freelance Web Developer in Sri Lanka | Charm Perera",
     titleTemplate: "%s | Charm Perera",
     defaultDescription:
@@ -216,6 +216,6 @@ export const getSkillCategories = cache(async (): Promise<SkillCategoryDoc[]> =>
 /** Canonical origin, without a trailing slash. */
 export function getSiteUrl(settings?: SiteSettingsData): string {
   const url =
-    settings?.seo?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "https://charmperera.com";
+    settings?.seo?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "https://www.charmthiekshana.com";
   return url.replace(/\/$/, "");
 }

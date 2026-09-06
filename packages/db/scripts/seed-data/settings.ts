@@ -43,7 +43,7 @@ export const siteSettings: SiteSettingsInput = {
   },
 
   seo: {
-    siteUrl: "https://charmperera.com",
+    siteUrl: "https://www.charmthiekshana.com",
     defaultTitle: "Best Freelance Web Developer in Sri Lanka | Charm Perera",
     titleTemplate: "%s | Charm Perera",
     defaultDescription:

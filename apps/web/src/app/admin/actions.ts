@@ -484,7 +484,7 @@ export async function saveSettings(
       facebook: text(formData, "facebook"),
     },
     seo: {
-      siteUrl: text(formData, "siteUrl") || "https://charmperera.com",
+      siteUrl: text(formData, "siteUrl") || "https://www.charmthiekshana.com",
       defaultTitle: text(formData, "defaultTitle"),
       titleTemplate: text(formData, "titleTemplate") || "%s | Charm Perera",
       defaultDescription: text(formData, "defaultDescription"),

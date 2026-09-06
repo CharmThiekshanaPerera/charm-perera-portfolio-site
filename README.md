@@ -1,4 +1,4 @@
-# charmperera.com
+# charmthiekshana.com
 
 Portfolio site and admin CMS for **Charm Thiekshana Perera** — freelance web &
 mobile developer, Colombo, Sri Lanka.
@@ -152,7 +152,7 @@ every page will fall back to placeholder content.
 > `vercel.json`. Both work; do one or the other, not both.
 
 After the first successful deploy, in Google Search Console submit
-`https://charmperera.com/sitemap.xml` and request re-indexing of the home page —
+`https://www.charmthiekshana.com/sitemap.xml` and request re-indexing of the home page —
 the URL structure has changed substantially and it is worth prompting a recrawl.
 
 ---

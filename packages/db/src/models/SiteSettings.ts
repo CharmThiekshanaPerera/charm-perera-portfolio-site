@@ -50,7 +50,7 @@ const SiteSettingsSchema = new Schema(
 
     // SEO defaults — editable without a redeploy
     seo: {
-      siteUrl: { type: String, default: "https://charmperera.com" },
+      siteUrl: { type: String, default: "https://www.charmthiekshana.com" },
       defaultTitle: { type: String, default: "" },
       titleTemplate: { type: String, default: "%s | Charm Perera" },
       defaultDescription: { type: String, default: "" },

@@ -81,7 +81,7 @@ export default async function AdminDashboard() {
       <header>
         <h1 className="font-display text-3xl font-bold">Dashboard</h1>
         <p className="mt-1 text-muted-foreground">
-          Manage the content that appears on charmperera.com.
+          Manage the content that appears on your public site.
         </p>
       </header>
 

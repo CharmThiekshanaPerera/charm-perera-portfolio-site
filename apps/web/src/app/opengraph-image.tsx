@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { getSiteSettings } from "@/lib/content";
+import { getSiteSettings, getSiteUrl } from "@/lib/content";
 
 /**
  * Generated social card, replacing the old hard-coded lovable.dev image that
@@ -13,6 +13,8 @@ export const revalidate = 86400;
 
 export default async function OpengraphImage() {
   const settings = await getSiteSettings();
+  // Derived, so the card never advertises a domain the site is not served from.
+  const domain = getSiteUrl(settings).replace(/^https?:\/\//, "").replace(/\/$/, "");
 
   return new ImageResponse(
     (
@@ -84,7 +86,7 @@ export default async function OpengraphImage() {
         >
           <div style={{ display: "flex" }}>{settings.location}</div>
           <div style={{ display: "flex", color: "#d6ac63", fontWeight: 600 }}>
-            charmperera.com
+            {domain}
           </div>
         </div>
       </div>
