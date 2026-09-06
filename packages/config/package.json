@@ -1,0 +1,16 @@
+{
+  "name": "@charm/config",
+  "version": "1.0.0",
+  "private": true,
+  "files": ["tsconfig.base.json", "tsconfig.nextjs.json", "tailwind.preset.ts"],
+  "main": "index.js",
+  "scripts": {
+    "lint": "echo \"no lint for config\"",
+    "typecheck": "echo \"no typecheck for config\""
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17",
+    "tailwindcss-animate": "^1.0.7",
+    "@tailwindcss/typography": "^0.5.16"
+  }
+}
