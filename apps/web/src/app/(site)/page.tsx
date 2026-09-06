@@ -64,9 +64,14 @@ export default async function HomePage() {
   ]);
 
   const siteUrl = getSiteUrl(settings);
-  const featuredProjects = projects.filter((project) => project.featured).slice(0, 4);
-  const latestPosts = posts.slice(0, 3);
   const verifiedTestimonials = testimonials.filter((testimonial) => testimonial.verified);
+
+  // Featured projects lead the grid, the rest follow behind the "view all"
+  // toggle, matching the ordering the original site used.
+  const orderedProjects = [
+    ...projects.filter((project) => project.featured),
+    ...projects.filter((project) => !project.featured),
+  ];
 
   return (
     <>
@@ -83,12 +88,9 @@ export default async function HomePage() {
       <AboutSection settings={settings} />
       <ExperienceSection experiences={experiences} />
       <SkillsSection categories={skillCategories} technologies={settings.technologies ?? []} />
-      <FeaturedProjects
-        projects={featuredProjects.length > 0 ? featuredProjects : projects.slice(0, 4)}
-        githubUrl={settings.social?.github}
-      />
+      <FeaturedProjects projects={orderedProjects} githubUrl={settings.social?.github} />
       <PackagesSection packages={packages} addOns={addOns} whatsapp={settings.whatsapp} />
-      <BlogSection posts={latestPosts} />
+      <BlogSection posts={posts} />
       <TestimonialsSection testimonials={testimonials} />
       <FaqSection faqs={settings.faqs ?? []} />
       <ContactSection settings={settings} />
