@@ -41,7 +41,6 @@ export function PackagesSection({
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             as={headingLevel}
-            eyebrow="Flexible pricing"
             title="Freelance"
             highlight="Packages"
             description="Choose the package that fits your project. Every option includes transparent pricing, dedicated support and full source code."
