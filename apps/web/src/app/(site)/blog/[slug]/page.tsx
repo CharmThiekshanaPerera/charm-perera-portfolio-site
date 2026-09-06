@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, Tag } from "lucide-react";
 import { Button } from "@charm/ui/button";
 import { Markdown } from "@/components/site/markdown";
+import { ShareButtons } from "@/components/site/share-buttons";
 import {
   getPostBySlug,
   getPosts,
@@ -144,6 +145,10 @@ export default async function BlogPostPage({ params }: PageProps) {
               ))}
             </ul>
           ) : null}
+
+          <div className="mt-12">
+            <ShareButtons url={`${siteUrl}/blog/${post.slug}`} title={post.title} />
+          </div>
 
           <aside className="mt-12 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 p-8 text-center">
             <h2 className="mb-3 text-2xl font-bold">Need help building this?</h2>
