@@ -5,5 +5,6 @@ export { ServicePackage, type ServicePackageDoc, AddOn, type AddOnDoc } from "./
 export { Experience, type ExperienceDoc } from "./Experience";
 export { SkillCategory, type SkillCategoryDoc } from "./SkillCategory";
 export { Message, type MessageDoc } from "./Message";
+export { PageView, type PageViewDoc } from "./PageView";
 export { AdminUser, type AdminUserDoc } from "./AdminUser";
 export { SiteSettings, type SiteSettingsDoc } from "./SiteSettings";

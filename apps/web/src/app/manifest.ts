@@ -16,9 +16,12 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
     dir: "ltr",
     scope: "/",
     categories: ["business", "portfolio", "technology"],
+    // These paths are produced by the app/favicon.ico, app/icon.png and
+    // app/apple-icon.png file conventions.
     icons: [
-      { src: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
-      { src: "/icon", sizes: "512x512", type: "image/png" },
+      { src: "/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { src: "/icon.png", sizes: "512x512", type: "image/png", purpose: "any" },
+      { src: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],
   };
 }

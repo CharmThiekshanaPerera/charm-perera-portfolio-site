@@ -16,6 +16,7 @@ by MongoDB Atlas and deployed on Vercel.
 - [Everyday commands](#everyday-commands)
 - [Deploying to Vercel](#deploying-to-vercel)
 - [The admin panel](#the-admin-panel)
+- [Analytics](#analytics)
 - [How SEO is handled](#how-seo-is-handled)
 - [Content that needs your review](#content-that-needs-your-review)
 - [Troubleshooting](#troubleshooting)
@@ -163,7 +164,8 @@ the URL structure has changed substantially and it is worth prompting a recrawl.
 
 | Section | What you can do |
 | --- | --- |
-| Dashboard | Content counts and the five most recent enquiries |
+| Dashboard | Content counts, visits in the last 7 days, and recent enquiries |
+| Site visits | First-party analytics: daily chart, top pages, referrers, devices, browsers, countries |
 | Projects | Full CRUD, Markdown case-study body, per-project SEO overrides |
 | Blog posts | Full CRUD, Markdown articles, tags, publish dates |
 | Testimonials | CRUD plus the **verified** flag (see below) |
@@ -181,6 +183,33 @@ middleware on every `/admin` route, a second `requireSession()` check inside
 every server action, per-account lockout after 8 failed logins, per-IP rate
 limiting on login and the contact form, and `X-Robots-Tag: noindex` plus
 `Cache-Control: no-store` on all admin responses.
+
+---
+
+## Analytics
+
+Visits are recorded **first-party**, in your own MongoDB, and shown at
+**/admin/analytics**. No third party receives the data and no cookie is set.
+
+- A client component pings `POST /api/track` on first load and on every
+  client-side navigation. It is fire-and-forget with `keepalive`, and every
+  failure is swallowed - analytics can never affect what a visitor sees.
+- Known crawlers, link previewers, uptime checks and headless browsers are
+  filtered out server-side, so they never count as visits.
+- `/admin` and `/api` are never recorded.
+- Query strings are stripped from the stored path, and a referrer is reduced to
+  its hostname, so no third-party URL is kept.
+- IP addresses are **not stored**. Unique visitors are counted from a SHA-256
+  hash of IP + user agent salted with the day, so the identifier cannot follow
+  anyone across days.
+- Rows expire automatically after 180 days via a TTL index, which keeps the
+  free-tier storage bounded.
+
+Country data comes from Vercel's `x-vercel-ip-country` header, so it is only
+populated on deployed environments, not locally.
+
+This sits alongside Vercel Analytics rather than replacing it - the difference
+is that this data lives in your database and is queryable from your own admin.
 
 ---
 

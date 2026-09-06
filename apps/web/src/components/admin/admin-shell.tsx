@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
+  BarChart3,
   Briefcase,
   ExternalLink,
   FileText,
@@ -23,6 +24,7 @@ import { cn } from "@charm/ui/cn";
 
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { href: "/admin/analytics", label: "Site visits", icon: BarChart3 },
   { href: "/admin/projects", label: "Projects", icon: FolderKanban },
   { href: "/admin/posts", label: "Blog posts", icon: FileText },
   { href: "/admin/testimonials", label: "Testimonials", icon: MessageSquareQuote },

@@ -2,6 +2,7 @@ import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { Chatbot } from "@/components/site/chatbot";
+import { PageViewTracker } from "@/components/site/page-view-tracker";
 import { getSiteSettings } from "@/lib/content";
 
 /**
@@ -29,6 +30,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <SiteFooter settings={settings} />
       <WhatsAppButton number={settings.whatsapp} />
       <Chatbot />
+      <PageViewTracker />
     </>
   );
 }

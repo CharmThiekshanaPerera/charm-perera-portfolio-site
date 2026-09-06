@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  BarChart3,
   Briefcase,
   FileText,
   FolderKanban,
@@ -10,6 +11,7 @@ import {
 import {
   Experience,
   Message,
+  PageView,
   Post,
   Project,
   ServicePackage,
@@ -23,10 +25,17 @@ import { formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
+/** ISO day string for seven days ago, matching PageView.day. */
+function sevenDaysAgo(): string {
+  const d = new Date();
+  d.setUTCDate(d.getUTCDate() - 6);
+  return d.toISOString().slice(0, 10);
+}
+
 async function getStats() {
   try {
     await connectToDatabase();
-    const [projects, drafts, posts, testimonials, packages, experiences, unread, recent] =
+    const [projects, drafts, posts, testimonials, packages, experiences, unread, recent, views7d] =
       await Promise.all([
         Project.countDocuments({ published: true }),
         Project.countDocuments({ published: false }),
@@ -36,6 +45,7 @@ async function getStats() {
         Experience.countDocuments({ published: true }),
         Message.countDocuments({ status: "unread" }),
         Message.find().sort({ createdAt: -1 }).limit(5).lean<MessageDoc[]>(),
+        PageView.countDocuments({ day: { $gte: sevenDaysAgo() } }),
       ]);
 
     return {
@@ -47,6 +57,7 @@ async function getStats() {
       experiences,
       unread,
       recent: serialize(recent),
+      views7d,
       error: null as string | null,
     };
   } catch (error) {
@@ -59,6 +70,7 @@ async function getStats() {
       experiences: 0,
       unread: 0,
       recent: [] as MessageDoc[],
+      views7d: 0,
       error: error instanceof Error ? error.message : "Could not reach the database.",
     };
   }
@@ -74,6 +86,7 @@ export default async function AdminDashboard() {
     { label: "Packages", value: stats.packages, href: "/admin/packages", icon: Sparkles },
     { label: "Roles listed", value: stats.experiences, href: "/admin/experience", icon: Briefcase },
     { label: "Unread messages", value: stats.unread, href: "/admin/messages", icon: Inbox },
+    { label: "Visits (7 days)", value: stats.views7d, href: "/admin/analytics", icon: BarChart3 },
   ];
 
   return (
