@@ -4,6 +4,7 @@ import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { Chatbot } from "@/components/site/chatbot";
 import { PageViewTracker } from "@/components/site/page-view-tracker";
 import { IconSprite } from "@/components/shared/icon";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { getSiteSettings } from "@/lib/content";
 
 /**
@@ -12,9 +13,37 @@ import { getSiteSettings } from "@/lib/content";
  */
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings();
+  const gtmId = settings.seo?.gtmContainerId ?? "";
 
   return (
     <>
+      {/*
+        Tag Manager loads on the public site only - never on /admin, which is
+        noindex and whose traffic would just be noise in your GTM data. The
+        container ID comes from site settings, so it can be changed or emptied
+        from the admin without a deploy; empty renders nothing at all.
+      */}
+      {gtmId ? <GoogleTagManager gtmId={gtmId} /> : null}
+
+      {/*
+        Step 2 of Google's install snippet. @next/third-parties injects the
+        script but not this fallback, which is the only way a visitor with
+        JavaScript disabled registers as a page view. This layout is the first
+        child of <body>, so the iframe sits as near the top as the App Router
+        allows.
+      */}
+      {gtmId ? (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="Google Tag Manager"
+          />
+        </noscript>
+      ) : null}
+
       <IconSprite />
 
       <a

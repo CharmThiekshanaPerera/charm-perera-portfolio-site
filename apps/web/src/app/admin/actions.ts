@@ -493,6 +493,7 @@ export async function saveSettings(
       twitterHandle: text(formData, "twitterHandle"),
       googleSiteVerification: text(formData, "googleSiteVerification"),
       bingSiteVerification: text(formData, "bingSiteVerification"),
+      gtmContainerId: text(formData, "gtmContainerId").toUpperCase(),
     },
     faqs,
     technologies: csv(formData, "technologies"),

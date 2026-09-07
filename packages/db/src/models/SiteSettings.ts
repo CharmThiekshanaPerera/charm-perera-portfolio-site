@@ -58,6 +58,8 @@ const SiteSettingsSchema = new Schema(
       ogImage: { type: String, default: "" },
       twitterHandle: { type: String, default: "" },
       googleSiteVerification: { type: String, default: "" },
+      /** GTM container, e.g. GTM-XXXXXXX. Empty disables the tag entirely. */
+      gtmContainerId: { type: String, default: "" },
       bingSiteVerification: { type: String, default: "" },
     },
 

@@ -64,6 +64,7 @@ const FALLBACK_SETTINGS = {
     twitterHandle: "@CharmThiekshana",
     googleSiteVerification: "",
     bingSiteVerification: "",
+    gtmContainerId: "",
   },
   faqs: [] as { question: string; answer: string; order: number }[],
   technologies: [] as string[],

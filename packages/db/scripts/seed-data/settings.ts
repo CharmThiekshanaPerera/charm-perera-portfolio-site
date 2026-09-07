@@ -64,6 +64,7 @@ export const siteSettings: SiteSettingsInput = {
     twitterHandle: "@CharmThiekshana",
     googleSiteVerification: "JpiWQly_R5kBKk_HP-DzhOsMnh7THUeYn3YAEYJZTkA",
     bingSiteVerification: "",
+    gtmContainerId: "GTM-MH44JG53",
   },
 
   technologies: [

@@ -13,6 +13,7 @@
   "dependencies": {
     "@charm/db": "*",
     "@charm/ui": "*",
+    "@next/third-parties": "^15.5.25",
     "@vercel/analytics": "^1.4.1",
     "@vercel/speed-insights": "^1.1.0",
     "bcryptjs": "^2.4.3",

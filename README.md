@@ -223,6 +223,23 @@ populated on deployed environments, not locally.
 This sits alongside Vercel Analytics rather than replacing it - the difference
 is that this data lives in your database and is queryable from your own admin.
 
+### Google Tag Manager
+
+GTM loads on the public site from the container ID in
+*Site settings -> Google Tag Manager ID*. Clearing that field removes the tag
+entirely on the next cache refresh, with no deploy.
+
+It is deliberately absent from `/admin`: those pages are noindex, and your own
+CMS sessions would only pollute the data.
+
+**This changes the site's privacy posture, and the section above does not
+describe it.** The first-party analytics still sets no cookies and sends
+nothing to a third party. GTM is separate: it loads code from Google, and
+whichever tags you configure inside the container may set cookies and send
+visitor data onward. If you add anything beyond basic page views - GA4,
+advertising or remarketing tags - and you have visitors in the UK or EU, that
+is the point at which you need a consent banner and a privacy policy entry.
+
 ---
 
 ## How SEO is handled

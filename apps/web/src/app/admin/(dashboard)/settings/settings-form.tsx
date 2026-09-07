@@ -295,6 +295,13 @@ export function SettingsForm({ settings }: { settings: SettingsValues }) {
             label="Bing verification token"
             defaultValue={(seo.bingSiteVerification as string) ?? ""}
           />
+          <TextField
+            name="gtmContainerId"
+            label="Google Tag Manager ID"
+            defaultValue={(seo.gtmContainerId as string) ?? ""}
+            error={errors["seo.gtmContainerId"]}
+            hint="e.g. GTM-XXXXXXX. Leave empty to load no tag at all."
+          />
         </div>
       </section>
 

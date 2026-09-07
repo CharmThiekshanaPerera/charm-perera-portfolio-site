@@ -173,6 +173,10 @@ export const siteSettingsSchema = z.object({
       ogImage: z.string().default(""),
       twitterHandle: z.string().default(""),
       googleSiteVerification: z.string().default(""),
+      gtmContainerId: z
+        .string()
+        .regex(/^(GTM-[A-Z0-9]+)?$/, "Must look like GTM-XXXXXXX, or be empty")
+        .default(""),
       bingSiteVerification: z.string().default(""),
     })
     .default({}),
