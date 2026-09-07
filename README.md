@@ -152,6 +152,18 @@ every page will fall back to placeholder content.
 > Alternative: set *Settings → General → Root Directory* to `apps/web` and delete
 > `vercel.json`. Both work; do one or the other, not both.
 
+**Function region.** `regions: ["sin1"]` puts compute in Singapore, next to the
+Atlas cluster, so a database round trip stays in-region instead of crossing the
+Pacific. This project-level key is what actually applies - the region shown in
+*Settings → Functions* is only the dashboard default and does not reflect it.
+Confirm from any response header:
+
+```bash
+curl -sI https://www.charmthiekshana.com/api/track | grep -i x-vercel-id
+# X-Vercel-Id: bom1::sin1::...
+#              ^edge  ^compute region
+```
+
 After the first successful deploy, in Google Search Console submit
 `https://www.charmthiekshana.com/sitemap.xml` and request re-indexing of the home page —
 the URL structure has changed substantially and it is worth prompting a recrawl.

@@ -62,7 +62,7 @@ export const siteSettings: SiteSettingsInput = {
     // branded card from live site settings instead of a hard-coded remote file.
     ogImage: "",
     twitterHandle: "@CharmThiekshana",
-    googleSiteVerification: "",
+    googleSiteVerification: "JpiWQly_R5kBKk_HP-DzhOsMnh7THUeYn3YAEYJZTkA",
     bingSiteVerification: "",
   },
 
