@@ -2,7 +2,7 @@
 
 import Autoplay from "embla-carousel-autoplay";
 import { ExternalLink, Quote } from "lucide-react";
-import type { TestimonialDoc } from "@charm/db";
+import type { TestimonialCardData } from "@/lib/card-data";
 import { Card, CardContent } from "@charm/ui/card";
 import {
   Carousel,
@@ -12,7 +12,11 @@ import {
   CarouselPrevious,
 } from "@charm/ui/carousel";
 
-export function TestimonialsSection({ testimonials }: { testimonials: TestimonialDoc[] }) {
+export function TestimonialsSection({
+  testimonials,
+}: {
+  testimonials: TestimonialCardData[];
+}) {
   if (testimonials.length === 0) return null;
 
   return (
@@ -35,7 +39,7 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
           >
             <CarouselContent>
               {testimonials.map((testimonial) => (
-                <CarouselItem key={testimonial._id} className="md:basis-1/2">
+                <CarouselItem key={testimonial.id} className="md:basis-1/2">
                   <div className="h-full p-2">
                     <Card className="group flex h-full flex-col transition-all duration-300 hover:border-primary/50 hover:shadow-gold">
                       <CardContent className="flex h-full flex-col p-6 sm:p-8">

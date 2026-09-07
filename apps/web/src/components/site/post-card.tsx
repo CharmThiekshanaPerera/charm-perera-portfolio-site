@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Calendar, Clock, Tag } from "lucide-react";
-import type { PostDoc } from "@charm/db";
+import type { PostCardData } from "@/lib/card-data";
 import { formatDate, isoDate } from "@/lib/format";
 
-export function PostCard({ post }: { post: PostDoc }) {
+export function PostCard({ post }: { post: PostCardData }) {
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/50 hover:shadow-gold">
       {post.coverImage ? (

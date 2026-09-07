@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PostCard } from "@/components/site/post-card";
+import { toPostCard } from "@/lib/card-data";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { getPosts, getSiteSettings, getSiteUrl } from "@/lib/content";
 import { JsonLd, breadcrumbSchema } from "@/lib/jsonld";
@@ -70,7 +71,7 @@ export default async function BlogPage() {
             </p>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
+              {posts.map(toPostCard).map((post) => (
                 <PostCard key={post.slug} post={post} />
               ))}
             </div>

@@ -20,6 +20,7 @@ import {
   getSkillCategories,
   getTestimonials,
 } from "@/lib/content";
+import { toPostCard, toProjectCard, toTestimonialCard } from "@/lib/card-data";
 import {
   JsonLd,
   faqSchema,
@@ -68,10 +69,15 @@ export default async function HomePage() {
 
   // Featured projects lead the grid, the rest follow behind the "view all"
   // toggle, matching the ordering the original site used.
+  // Projected to card shape before crossing into client components, so full
+  // Markdown bodies never reach the RSC payload embedded in the HTML.
   const orderedProjects = [
     ...projects.filter((project) => project.featured),
     ...projects.filter((project) => !project.featured),
-  ];
+  ].map(toProjectCard);
+
+  const postCards = posts.map(toPostCard);
+  const testimonialCards = testimonials.map(toTestimonialCard);
 
   return (
     <>
@@ -90,8 +96,8 @@ export default async function HomePage() {
       <SkillsSection categories={skillCategories} technologies={settings.technologies ?? []} />
       <FeaturedProjects projects={orderedProjects} githubUrl={settings.social?.github} />
       <PackagesSection packages={packages} addOns={addOns} whatsapp={settings.whatsapp} />
-      <BlogSection posts={posts} />
-      <TestimonialsSection testimonials={testimonials} />
+      <BlogSection posts={postCards} />
+      <TestimonialsSection testimonials={testimonialCards} />
       <FaqSection faqs={settings.faqs ?? []} />
       <ContactSection settings={settings} />
     </>

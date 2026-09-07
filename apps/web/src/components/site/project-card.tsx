@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
-import type { ProjectDoc } from "@charm/db";
+import type { ProjectCardData } from "@/lib/card-data";
 import { cn } from "@charm/ui/cn";
 
 /**
@@ -13,7 +13,7 @@ export function ProjectCard({
   project,
   wide = false,
 }: {
-  project: ProjectDoc;
+  project: ProjectCardData;
   wide?: boolean;
 }) {
   return (

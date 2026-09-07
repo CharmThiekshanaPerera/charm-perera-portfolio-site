@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Autoplay from "embla-carousel-autoplay";
 import { ArrowRight } from "lucide-react";
-import type { PostDoc } from "@charm/db";
+import type { PostCardData } from "@/lib/card-data";
 import { Button } from "@charm/ui/button";
 import {
   Carousel,
@@ -22,7 +22,7 @@ import { PostCard } from "./post-card";
  * of opening a modal, so the article text exists as its own indexable document
  * rather than only inside a dialog.
  */
-export function BlogSection({ posts }: { posts: PostDoc[] }) {
+export function BlogSection({ posts }: { posts: PostCardData[] }) {
   if (posts.length === 0) return null;
 
   return (

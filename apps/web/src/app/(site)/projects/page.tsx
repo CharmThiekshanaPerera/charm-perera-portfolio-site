@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ProjectCard } from "@/components/site/project-card";
+import { toProjectCard } from "@/lib/card-data";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { getProjects, getSiteSettings, getSiteUrl } from "@/lib/content";
 import { JsonLd, breadcrumbSchema } from "@/lib/jsonld";
@@ -25,8 +26,9 @@ export default async function ProjectsPage() {
   const [settings, projects] = await Promise.all([getSiteSettings(), getProjects()]);
   const siteUrl = getSiteUrl(settings);
 
-  const featured = projects.filter((project) => project.featured);
-  const others = projects.filter((project) => !project.featured);
+  // Card shape only: the listing never renders a case-study body.
+  const featured = projects.filter((p) => p.featured).map(toProjectCard);
+  const others = projects.filter((p) => !p.featured).map(toProjectCard);
 
   return (
     <>

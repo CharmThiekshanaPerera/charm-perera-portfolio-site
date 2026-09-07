@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronDown, ChevronUp, Github } from "lucide-react";
-import type { ProjectDoc } from "@charm/db";
+import type { ProjectCardData } from "@/lib/card-data";
 import { Button } from "@charm/ui/button";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { ProjectCard } from "./project-card";
@@ -22,7 +22,7 @@ export function FeaturedProjects({
   projects,
   githubUrl,
 }: {
-  projects: ProjectDoc[];
+  projects: ProjectCardData[];
   githubUrl?: string;
 }) {
   const [showAll, setShowAll] = useState(false);
