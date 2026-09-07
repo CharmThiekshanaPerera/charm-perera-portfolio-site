@@ -16,7 +16,7 @@ const SiteSettingsSchema = new Schema(
 
     // Identity
     fullName: { type: String, default: "Charm Thiekshana Perera" },
-    shortName: { type: String, default: "Charm Perera" },
+    shortName: { type: String, default: "Charm Thiekshana" },
     initials: { type: String, default: "CT" },
     jobTitle: { type: String, default: "Senior Freelance Web Developer" },
     tagline: { type: String, default: "" },
@@ -52,7 +52,7 @@ const SiteSettingsSchema = new Schema(
     seo: {
       siteUrl: { type: String, default: "https://www.charmthiekshana.com" },
       defaultTitle: { type: String, default: "" },
-      titleTemplate: { type: String, default: "%s | Charm Perera" },
+      titleTemplate: { type: String, default: "%s | Charm Thiekshana" },
       defaultDescription: { type: String, default: "" },
       keywords: { type: [String], default: [] },
       ogImage: { type: String, default: "" },

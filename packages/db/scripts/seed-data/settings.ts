@@ -2,7 +2,7 @@ import type { SiteSettingsInput } from "../../src/schemas";
 
 export const siteSettings: SiteSettingsInput = {
   fullName: "Charm Thiekshana Perera",
-  shortName: "Charm Perera",
+  shortName: "Charm Thiekshana",
   initials: "CT",
   jobTitle: "Senior Freelance Web Developer",
   tagline: "React, iOS & Android development from Colombo, Sri Lanka",
@@ -44,8 +44,8 @@ export const siteSettings: SiteSettingsInput = {
 
   seo: {
     siteUrl: "https://www.charmthiekshana.com",
-    defaultTitle: "Best Freelance Web Developer in Sri Lanka | Charm Perera",
-    titleTemplate: "%s | Charm Perera",
+    defaultTitle: "Best Freelance Web Developer in Sri Lanka | Charm Thiekshana",
+    titleTemplate: "%s | Charm Thiekshana",
     defaultDescription:
       "Top-rated freelance web & mobile developer in Sri Lanka. Specializing in React, iOS/Android apps, and AI integration. 5+ years experience. Contact today!",
     keywords: [

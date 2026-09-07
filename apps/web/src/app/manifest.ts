@@ -6,7 +6,7 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
 
   return {
     name: `${settings.fullName} — Freelance Web Developer`,
-    short_name: settings.shortName || "Charm Perera",
+    short_name: settings.shortName || "Charm Thiekshana",
     description: settings.seo.defaultDescription,
     start_url: "/",
     display: "standalone",

@@ -33,7 +33,7 @@ import {
 /** Fallback used when the database is unreachable, so the site still renders. */
 const FALLBACK_SETTINGS = {
   fullName: "Charm Thiekshana Perera",
-  shortName: "Charm Perera",
+  shortName: "Charm Thiekshana",
   initials: "CT",
   jobTitle: "Senior Freelance Web Developer",
   tagline: "React, iOS & Android development from Colombo, Sri Lanka",
@@ -55,8 +55,8 @@ const FALLBACK_SETTINGS = {
   social: { github: "", linkedin: "", twitter: "", instagram: "", facebook: "" },
   seo: {
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://www.charmthiekshana.com",
-    defaultTitle: "Best Freelance Web Developer in Sri Lanka | Charm Perera",
-    titleTemplate: "%s | Charm Perera",
+    defaultTitle: "Best Freelance Web Developer in Sri Lanka | Charm Thiekshana",
+    titleTemplate: "%s | Charm Thiekshana",
     defaultDescription:
       "Top-rated freelance web & mobile developer in Sri Lanka. Specializing in React, iOS/Android apps, and AI integration.",
     keywords: [] as string[],

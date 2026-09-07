@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
+import { Github } from "lucide-react";
+import { Icon } from "@/components/shared/icon";
 import type { ProjectCardData } from "@/lib/card-data";
 import { cn } from "@charm/ui/cn";
 
@@ -54,7 +55,7 @@ export function ProjectCard({
                 aria-label={`Visit ${project.title} (opens in a new tab)`}
                 className="rounded-full bg-primary/10 p-2 transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
               >
-                <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                <Icon name="external-link" className="h-4 w-4" />
               </a>
             ) : null}
             {project.repoUrl ? (
@@ -87,7 +88,7 @@ export function ProjectCard({
 
         <p className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary">
           Read case study
-          <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <Icon name="arrow-up-right" className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </p>
       </div>
     </article>

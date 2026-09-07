@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Calendar, Clock, Tag } from "lucide-react";
+import { Icon } from "@/components/shared/icon";
 import type { PostCardData } from "@/lib/card-data";
 import { formatDate, isoDate } from "@/lib/format";
 
@@ -25,11 +25,11 @@ export function PostCard({ post }: { post: PostCardData }) {
       <div className="flex flex-1 flex-col gap-4 p-6">
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
           <span className="inline-flex items-center gap-1">
-            <Calendar className="h-4 w-4" aria-hidden="true" />
+            <Icon name="calendar" className="h-4 w-4" />
             <time dateTime={isoDate(post.publishedAt)}>{formatDate(post.publishedAt)}</time>
           </span>
           <span className="inline-flex items-center gap-1">
-            <Clock className="h-4 w-4" aria-hidden="true" />
+            <Icon name="clock" className="h-4 w-4" />
             {post.readTimeMinutes} min read
           </span>
         </div>
@@ -50,7 +50,7 @@ export function PostCard({ post }: { post: PostCardData }) {
               key={tag}
               className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-1 text-xs text-primary"
             >
-              <Tag className="h-3 w-3" aria-hidden="true" />
+              <Icon name="tag" className="h-3 w-3" />
               {tag}
             </li>
           ))}
@@ -58,7 +58,7 @@ export function PostCard({ post }: { post: PostCardData }) {
 
         <p className="inline-flex items-center gap-1 text-sm font-medium text-primary">
           Read article
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <Icon name="arrow-right" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </p>
       </div>
     </article>

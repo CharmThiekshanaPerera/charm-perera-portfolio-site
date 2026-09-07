@@ -167,7 +167,7 @@ export const siteSettingsSchema = z.object({
     .object({
       siteUrl: z.string().url().default("https://www.charmthiekshana.com"),
       defaultTitle: z.string().max(70).default(""),
-      titleTemplate: z.string().default("%s | Charm Perera"),
+      titleTemplate: z.string().default("%s | Charm Thiekshana"),
       defaultDescription: z.string().max(160).default(""),
       keywords: z.array(z.string()).default([]),
       ogImage: z.string().default(""),

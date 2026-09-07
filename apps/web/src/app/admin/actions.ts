@@ -486,7 +486,7 @@ export async function saveSettings(
     seo: {
       siteUrl: text(formData, "siteUrl") || "https://www.charmthiekshana.com",
       defaultTitle: text(formData, "defaultTitle"),
-      titleTemplate: text(formData, "titleTemplate") || "%s | Charm Perera",
+      titleTemplate: text(formData, "titleTemplate") || "%s | Charm Thiekshana",
       defaultDescription: text(formData, "defaultDescription"),
       keywords: csv(formData, "keywords"),
       ogImage: text(formData, "ogImage"),

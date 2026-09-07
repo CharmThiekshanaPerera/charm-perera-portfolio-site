@@ -242,7 +242,7 @@ export function SettingsForm({ settings }: { settings: SettingsValues }) {
           name="titleTemplate"
           label="Title template"
           defaultValue={(seo.titleTemplate as string) ?? ""}
-          hint="Use %s for the page title, e.g. %s | Charm Perera"
+          hint="Use %s for the page title, e.g. %s | Charm Thiekshana"
         />
 
         <TextAreaField

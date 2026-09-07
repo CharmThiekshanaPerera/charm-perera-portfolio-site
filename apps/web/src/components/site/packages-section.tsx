@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check } from "lucide-react";
+import { Icon } from "@/components/shared/icon";
 import type { AddOnDoc, ServicePackageDoc } from "@charm/db";
 import { Button } from "@charm/ui/button";
 import { cn } from "@charm/ui/cn";
@@ -49,7 +49,8 @@ export function PackagesSection({
 
           <div className="mb-16 grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 sm:mb-20">
             {packages.map((pkg) => {
-              const Icon = getIcon(pkg.icon);
+              // Named to avoid shadowing the sprite <Icon> imported above.
+              const PackageIcon = getIcon(pkg.icon);
               return (
                 <article
                   key={pkg.slug}
@@ -74,7 +75,7 @@ export function PackagesSection({
                         getGradient(pkg.gradient),
                       )}
                     >
-                      <Icon className="h-8 w-8 text-white" aria-hidden="true" />
+                      <PackageIcon className="h-8 w-8 text-white" aria-hidden="true" />
                     </span>
 
                     <h3 className="mb-2 text-2xl font-bold sm:text-3xl">{pkg.name}</h3>
@@ -105,7 +106,7 @@ export function PackagesSection({
                             className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/10"
                             aria-hidden="true"
                           >
-                            <Check className="h-3 w-3 text-primary" />
+                            <Icon name="check" className="h-3 w-3 text-primary" />
                           </span>
                           <span className="text-sm text-foreground/90">{feature}</span>
                         </li>

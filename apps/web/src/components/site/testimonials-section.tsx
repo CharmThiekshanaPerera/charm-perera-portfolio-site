@@ -1,7 +1,7 @@
 "use client";
 
 import Autoplay from "embla-carousel-autoplay";
-import { ExternalLink, Quote } from "lucide-react";
+import { Icon } from "@/components/shared/icon";
 import type { TestimonialCardData } from "@/lib/card-data";
 import { Card, CardContent } from "@charm/ui/card";
 import {
@@ -43,9 +43,9 @@ export function TestimonialsSection({
                   <div className="h-full p-2">
                     <Card className="group flex h-full flex-col transition-all duration-300 hover:border-primary/50 hover:shadow-gold">
                       <CardContent className="flex h-full flex-col p-6 sm:p-8">
-                        <Quote
+                        <Icon
+                          name="quote"
                           className="mb-4 h-10 w-10 flex-shrink-0 text-primary opacity-50 transition-opacity group-hover:opacity-100"
-                          aria-hidden="true"
                         />
                         <blockquote className="mb-6 flex-grow text-sm italic leading-relaxed text-foreground/90 sm:text-base">
                           {testimonial.content}
@@ -71,7 +71,7 @@ export function TestimonialsSection({
                                 className="mt-1 inline-flex items-center gap-1 text-xs text-primary hover:underline"
                               >
                                 Visit website
-                                <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                                <Icon name="external-link" className="h-3 w-3" />
                               </a>
                             ) : null}
                           </div>
