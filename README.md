@@ -177,7 +177,7 @@ the URL structure has changed substantially and it is worth prompting a recrawl.
 | Section | What you can do |
 | --- | --- |
 | Dashboard | Content counts, visits in the last 7 days, and recent enquiries |
-| Site visits | First-party analytics: daily chart, top pages, referrers, devices, browsers, countries |
+| Site visits | First-party analytics: daily chart, top pages, referrers, devices, browsers, countries, plus optional Google Search Console performance |
 | Projects | Full CRUD, Markdown case-study body, per-project SEO overrides |
 | Blog posts | Full CRUD, Markdown articles, tags, publish dates |
 | Testimonials | CRUD plus the **verified** flag (see below) |
@@ -239,6 +239,47 @@ whichever tags you configure inside the container may set cookies and send
 visitor data onward. If you add anything beyond basic page views - GA4,
 advertising or remarketing tags - and you have visitors in the UK or EU, that
 is the point at which you need a consent banner and a privacy policy entry.
+
+### Search Console data
+
+`/admin/analytics` can show Google Search Console data (clicks, impressions,
+CTR, average position, top queries, top pages) below the first-party section,
+sourced straight from Google rather than your own database. It is optional -
+without it, that part of the page just shows setup instructions instead of
+breaking.
+
+It authenticates with a **service account**, not your Google login, so the
+admin panel can query it server-to-server with nothing interactive:
+
+1. In [Google Cloud Console](https://console.cloud.google.com), create a
+   project (or reuse one) and enable the **Search Console API**
+   (APIs & Services -> Library -> search for it -> Enable).
+2. **IAM & Admin -> Service Accounts -> Create Service Account.** Any name is
+   fine; it needs no project role.
+3. Open the new service account -> **Keys -> Add Key -> Create new key -> JSON**.
+   This downloads a JSON file - keep it out of the repo.
+4. In [Search Console](https://search.google.com/search-console), open your
+   property -> **Settings -> Users and permissions -> Add user**. Paste the
+   service account's `client_email` (from the JSON file) and grant it
+   **Restricted** access. Full or Owner access is not needed for read-only
+   reporting.
+5. From the JSON file, set:
+
+   | Variable | From the JSON file |
+   | --- | --- |
+   | `GSC_CLIENT_EMAIL` | the `client_email` field |
+   | `GSC_PRIVATE_KEY` | the `private_key` field, quotes and `
+` included |
+   | `GSC_SITE_URL` | optional - defaults to `NEXT_PUBLIC_SITE_URL` with a trailing slash. Only set this if your Search Console property is a **Domain** property, in which case it must read `sc-domain:yourdomain.com`. A **URL-prefix** property (the kind HTML-tag verification creates) doesn't need it. |
+
+`GSC_PRIVATE_KEY` is the fussy one: paste it exactly as the JSON file has it,
+literal `
+` sequences and all - the app converts them back to real newlines
+itself. In Vercel's dashboard, paste the whole multi-line value directly into
+the field; it handles the newlines correctly without extra escaping.
+
+Search Console reports 2-3 days behind real time, so the chart's most recent
+days are simply excluded rather than shown as a misleading zero.
 
 ---
 

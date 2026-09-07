@@ -9,6 +9,7 @@ import {
   type RankedItem,
 } from "@/components/admin/analytics-charts";
 import { getSiteSettings, getSiteUrl } from "@/lib/content";
+import { getSearchConsoleSummary, isSearchConsoleConfigured } from "@/lib/search-console";
 
 export const dynamic = "force-dynamic";
 
@@ -152,7 +153,12 @@ export default async function AnalyticsPage({
   const parsed = Number(params.range);
   const days: Range = (RANGES as readonly number[]).includes(parsed) ? (parsed as Range) : 30;
 
-  const [stats, settings] = await Promise.all([getAnalytics(days), getSiteSettings()]);
+  const gscConfigured = isSearchConsoleConfigured();
+  const [stats, settings, gsc] = await Promise.all([
+    getAnalytics(days),
+    getSiteSettings(),
+    gscConfigured ? getSearchConsoleSummary(days) : Promise.resolve(null),
+  ]);
   const siteUrl = getSiteUrl(settings);
 
   const perDay = stats.daily.length
@@ -185,6 +191,22 @@ export default async function AnalyticsPage({
     label: countryName(row._id),
     value: row.count,
   }));
+
+  const gscDaily: DailyPoint[] = gsc?.ok
+    ? gsc.data.daily.map((d) => ({ day: d.day, views: d.clicks }))
+    : [];
+
+  const gscQueries: RankedItem[] = gsc?.ok
+    ? gsc.data.topQueries.map((q) => ({ label: q.query, value: q.clicks }))
+    : [];
+
+  const gscPages: RankedItem[] = gsc?.ok
+    ? gsc.data.topPages.map((p) => ({
+        label: p.page.replace(siteUrl, "") || "/",
+        value: p.clicks,
+        href: p.page,
+      }))
+    : [];
 
   return (
     <div className="space-y-6">
@@ -279,6 +301,92 @@ export default async function AnalyticsPage({
         a salt that rotates daily, which is enough to count unique visitors without being
         able to follow anyone across days. Rows older than 180 days delete themselves.
       </p>
+
+      <section className="space-y-4 border-t border-border pt-6">
+        <div>
+          <h2 className="font-display text-2xl font-bold">Search performance</h2>
+          <p className="mt-1 text-muted-foreground">
+            How the site is doing in Google Search — separate from the on-site traffic
+            above, and sourced from Google, not your own database.
+          </p>
+        </div>
+
+        {!gscConfigured ? (
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <p className="text-sm">
+              Not connected yet. Search Console data needs a service account with read
+              access to your property —{" "}
+              <span className="text-muted-foreground">
+                see &ldquo;Search Console data&rdquo; in the README
+              </span>{" "}
+              for the three environment variables and the one-time step of adding the
+              service account as a Restricted user in Search Console.
+            </p>
+          </div>
+        ) : !gsc?.ok ? (
+          <p
+            role="alert"
+            className="rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+          >
+            Could not load Search Console data: {gsc?.error ?? "unknown error"}
+          </p>
+        ) : (
+          <>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <StatTile
+                label={`Clicks (${days}d)`}
+                value={gsc.data.totals.clicks.toLocaleString()}
+                hint="Visits that started from a Google search"
+              />
+              <StatTile
+                label={`Impressions (${days}d)`}
+                value={gsc.data.totals.impressions.toLocaleString()}
+                hint="Times a page appeared in results"
+              />
+              <StatTile
+                label="Click-through rate"
+                value={`${(gsc.data.totals.ctr * 100).toFixed(1)}%`}
+                hint="Clicks ÷ impressions"
+              />
+              <StatTile
+                label="Average position"
+                value={gsc.data.totals.position.toFixed(1)}
+                hint="Lower is better — 1 is the top result"
+              />
+            </div>
+
+            <TimelineChart
+              data={gscDaily}
+              days={days}
+              title="Search clicks per day"
+              unitLabel="click"
+              emptyLabel="No search clicks in this period yet."
+            />
+
+            <div className="grid gap-4 lg:grid-cols-2">
+              <RankedBars
+                title="Top search queries"
+                description="The searches that led people to the site."
+                items={gscQueries}
+                valueLabel="Clicks"
+                emptyLabel="No query data in this period yet."
+              />
+              <RankedBars
+                title="Top pages in search"
+                description="Which pages get clicked in Google results."
+                items={gscPages}
+                valueLabel="Clicks"
+                emptyLabel="No page data in this period yet."
+              />
+            </div>
+
+            <p className="text-xs text-muted-foreground">
+              Google Search Console typically reports with a 2–3 day delay, so the most
+              recent days are excluded from this range rather than shown as zero.
+            </p>
+          </>
+        )}
+      </section>
     </div>
   );
 }

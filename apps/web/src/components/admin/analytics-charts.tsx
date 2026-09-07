@@ -39,11 +39,25 @@ export type DailyPoint = { day: string; views: number };
  * only the first, last and peak days are labelled, so the axis never turns
  * into a wall of text.
  */
-export function TimelineChart({ data, days }: { data: DailyPoint[]; days: number }) {
+export function TimelineChart({
+  data,
+  days,
+  title = "Visits per day",
+  unitLabel = "view",
+  emptyLabel = "No visits recorded yet.",
+}: {
+  data: DailyPoint[];
+  days: number;
+  /** Figure caption. Defaults preserve the original page-view chart's copy. */
+  title?: string;
+  /** Singular noun used in tooltips and the aria-label ("view" -> "3 views"). */
+  unitLabel?: string;
+  emptyLabel?: string;
+}) {
   if (data.length === 0) {
     return (
       <p className="rounded-2xl border border-border bg-card p-8 text-center text-sm text-muted-foreground">
-        No visits recorded yet.
+        {emptyLabel}
       </p>
     );
   }
@@ -70,14 +84,14 @@ export function TimelineChart({ data, days }: { data: DailyPoint[]; days: number
 
   return (
     <figure className="rounded-2xl border border-border bg-card p-6">
-      <figcaption className="mb-1 font-semibold">Visits per day</figcaption>
+      <figcaption className="mb-1 font-semibold">{title}</figcaption>
       <p className="mb-5 text-sm text-muted-foreground">Last {days} days</p>
 
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className="h-56 w-full"
         role="img"
-        aria-label={`Daily visits for the last ${days} days. Peak of ${max} on ${shortDate(
+        aria-label={`Daily ${unitLabel}s for the last ${days} days. Peak of ${max} on ${shortDate(
           data[peakIndex]!.day,
         )}.`}
       >
@@ -108,7 +122,7 @@ export function TimelineChart({ data, days }: { data: DailyPoint[]; days: number
                   fill="hsl(var(--primary))"
                   opacity={index === peakIndex ? 1 : 0.75}
                 >
-                  <title>{`${shortDate(point.day)}: ${point.views} view${point.views === 1 ? "" : "s"}`}</title>
+                  <title>{`${shortDate(point.day)}: ${point.views} ${unitLabel}${point.views === 1 ? "" : "s"}`}</title>
                 </rect>
               ) : (
                 // A 2px stub keeps zero-days visible as days rather than gaps.
@@ -119,7 +133,7 @@ export function TimelineChart({ data, days }: { data: DailyPoint[]; days: number
                   height="2"
                   fill="hsl(var(--border))"
                 >
-                  <title>{`${shortDate(point.day)}: no views`}</title>
+                  <title>{`${shortDate(point.day)}: no ${unitLabel}s`}</title>
                 </rect>
               )}
             </g>
@@ -149,7 +163,7 @@ export function TimelineChart({ data, days }: { data: DailyPoint[]; days: number
       </svg>
 
       <p className="mt-2 text-xs text-muted-foreground">
-        Peak {max} view{max === 1 ? "" : "s"} on {shortDate(data[peakIndex]!.day)}
+        Peak {max} {unitLabel}{max === 1 ? "" : "s"} on {shortDate(data[peakIndex]!.day)}
       </p>
     </figure>
   );
