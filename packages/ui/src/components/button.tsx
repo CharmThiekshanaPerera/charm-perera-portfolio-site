@@ -18,6 +18,10 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent/10 hover:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         gold: "bg-gradient-to-r from-primary to-amber-400 text-primary-foreground hover:shadow-gold",
+        // Brand green, not the theme's gold/primary — reserved for WhatsApp
+        // contact actions specifically, so it reads as "this opens WhatsApp"
+        // rather than as another themed call-to-action.
+        whatsapp: "bg-[#25D366] text-white hover:bg-[#20bd5a] shadow-[0_10px_30px_-10px_rgba(37,211,102,0.5)]",
       },
       size: {
         default: "h-10 px-4 py-2",

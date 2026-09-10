@@ -28,7 +28,7 @@ export function Hero({ settings }: { settings: SiteSettingsData }) {
   return (
     <section
       id="home"
-      className="relative flex min-h-[calc(100vh-5rem)] items-center justify-center overflow-hidden pt-20"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden pt-20"
     >
       <div
         className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/20"

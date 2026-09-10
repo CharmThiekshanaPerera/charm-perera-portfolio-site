@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Icon } from "@/components/shared/icon";
+import { WhatsAppIcon } from "@/components/shared/whatsapp-icon";
 import type { AddOnDoc, ServicePackageDoc } from "@charm/db";
 import { Button } from "@charm/ui/button";
 import { cn } from "@charm/ui/cn";
@@ -177,7 +178,7 @@ export function PackagesSection({
                 a scope, timeline and price that fits.
               </p>
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <Button asChild size="lg" variant="gold">
+                <Button asChild size="lg" variant="whatsapp">
                   <a
                     href={whatsappLink(
                       whatsapp,
@@ -186,6 +187,7 @@ export function PackagesSection({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
+                    <WhatsAppIcon className="h-4 w-4" />
                     WhatsApp me
                   </a>
                 </Button>

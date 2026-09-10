@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { MessageCircle, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { Button } from "@charm/ui/button";
 import { Input } from "@charm/ui/input";
 import { Label } from "@charm/ui/label";
 import { Textarea } from "@charm/ui/textarea";
 import { toast } from "@charm/ui/sonner";
+import { WhatsAppIcon } from "@/components/shared/whatsapp-icon";
 import { whatsappLink } from "@/lib/format";
 
 type FieldErrors = Partial<Record<"name" | "email" | "message", string>>;
@@ -181,9 +182,9 @@ export function ContactForm({ whatsapp }: { whatsapp: string }) {
             {isSubmitting ? "Sending..." : "Send message"}
           </Button>
 
-          <Button asChild size="lg" variant="outline" className="w-full">
+          <Button asChild size="lg" variant="whatsapp" className="w-full">
             <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              <WhatsAppIcon className="h-4 w-4" />
               WhatsApp me
             </a>
           </Button>
