@@ -94,6 +94,14 @@ const preset = {
           "0%, 100%": { filter: "drop-shadow(0 0 20px hsl(38 55% 60% / 0.3))" },
           "50%": { filter: "drop-shadow(0 0 40px hsl(38 55% 60% / 0.6))" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        "marquee-reverse": {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -101,6 +109,8 @@ const preset = {
         "fade-in": "fade-in 0.5s ease-out both",
         float: "float 6s ease-in-out infinite",
         glow: "glow 3s ease-in-out infinite",
+        marquee: "marquee 32s linear infinite",
+        "marquee-reverse": "marquee-reverse 32s linear infinite",
       },
       typography: {
         DEFAULT: {

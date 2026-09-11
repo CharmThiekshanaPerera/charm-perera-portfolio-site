@@ -1,5 +1,6 @@
 import type { SkillCategoryDoc } from "@charm/db";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { TechMarquee } from "./tech-marquee";
 import { getIcon } from "@/lib/icons";
 
 export function SkillsSection({
@@ -56,20 +57,11 @@ export function SkillsSection({
           </div>
 
           {technologies.length > 0 ? (
-            <div className="animate-fade-in">
+            <div>
               <h3 className="mb-6 text-center text-xl font-bold sm:text-2xl">
                 Technologies &amp; Tools
               </h3>
-              <ul className="flex flex-wrap justify-center gap-2 sm:gap-3">
-                {technologies.map((tech) => (
-                  <li
-                    key={tech}
-                    className="rounded-full border border-border bg-card px-4 py-2 text-xs font-medium transition-all duration-300 hover:scale-110 hover:border-primary hover:bg-primary/10 sm:px-5 sm:py-2.5 sm:text-sm"
-                  >
-                    {tech}
-                  </li>
-                ))}
-              </ul>
+              <TechMarquee technologies={technologies} />
             </div>
           ) : null}
         </div>
