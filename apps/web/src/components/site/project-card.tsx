@@ -2,7 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Github } from "lucide-react";
 import { Icon } from "@/components/shared/icon";
+import { LivePreviewFrame } from "./live-preview-frame";
 import type { ProjectCardData } from "@/lib/card-data";
+import { isLikelyEmbeddable } from "@/lib/live-preview";
 import { cn } from "@charm/ui/cn";
 
 /**
@@ -34,6 +36,13 @@ export function ProjectCard({
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
+      ) : project.liveUrl && isLikelyEmbeddable(project.liveUrl) ? (
+        <LivePreviewFrame
+          url={project.liveUrl}
+          title={project.title}
+          className="aspect-[16/9]"
+          href={`/projects/${project.slug}`}
+        />
       ) : null}
 
       <div className="flex flex-1 flex-col p-6 sm:p-8">

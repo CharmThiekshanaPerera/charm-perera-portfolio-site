@@ -5,9 +5,11 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import { Button } from "@charm/ui/button";
 import { Markdown } from "@/components/site/markdown";
+import { LivePreviewFrame } from "@/components/site/live-preview-frame";
 import { getProjectBySlug, getProjects, getSiteSettings, getSiteUrl } from "@/lib/content";
 import { JsonLd, breadcrumbSchema, projectSchema } from "@/lib/jsonld";
 import { formatDate } from "@/lib/format";
+import { isLikelyEmbeddable } from "@/lib/live-preview";
 
 export const revalidate = 3600;
 /** Any slug not pre-rendered is generated on first request, then cached. */
@@ -162,6 +164,12 @@ export default async function ProjectPage({ params }: PageProps) {
                 className="object-cover"
               />
             </div>
+          ) : project.liveUrl && isLikelyEmbeddable(project.liveUrl) ? (
+            <LivePreviewFrame
+              url={project.liveUrl}
+              title={project.title}
+              className="mb-10 aspect-[16/9] rounded-2xl border border-border"
+            />
           ) : null}
 
           {project.body ? (
