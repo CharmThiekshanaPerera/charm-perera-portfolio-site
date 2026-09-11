@@ -80,20 +80,21 @@ export function SiteFooter({ settings }: { settings: SiteSettingsData }) {
               Follow along for updates, tech insights and new work.
             </p>
             <ul className="flex flex-wrap gap-3">
-              {socials.map(({ href, label, Icon, color }) => (
+              {socials.map(({ href, label, Icon, color, contrast }) => (
                 <li key={label}>
                   <a
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="inline-flex rounded-full border p-3 transition-all duration-300 hover:scale-110 hover:bg-[var(--brand)] hover:text-white hover:shadow-gold"
+                    className="inline-flex rounded-full border p-3 transition-all duration-300 hover:scale-110 hover:bg-[var(--brand)] hover:text-[var(--brand-contrast)] hover:shadow-gold"
                     style={
                       {
-                        borderColor: `${color}33`,
-                        backgroundColor: `${color}1a`,
+                        borderColor: `color-mix(in srgb, ${color} 25%, transparent)`,
+                        backgroundColor: `color-mix(in srgb, ${color} 12%, transparent)`,
                         color,
                         "--brand": color,
+                        "--brand-contrast": contrast,
                       } as CSSProperties
                     }
                   >
