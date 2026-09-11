@@ -482,6 +482,12 @@ export async function saveSettings(
       twitter: text(formData, "twitter"),
       instagram: text(formData, "instagram"),
       facebook: text(formData, "facebook"),
+      youtube: text(formData, "youtube"),
+      tiktok: text(formData, "tiktok"),
+      behance: text(formData, "behance"),
+      dribbble: text(formData, "dribbble"),
+      upwork: text(formData, "upwork"),
+      fiverr: text(formData, "fiverr"),
     },
     seo: {
       siteUrl: text(formData, "siteUrl") || "https://www.charmthiekshana.com",

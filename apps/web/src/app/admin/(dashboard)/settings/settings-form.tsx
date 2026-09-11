@@ -13,6 +13,7 @@ import {
   TextAreaField,
   TextField,
 } from "@/components/admin/form-fields";
+import { SOCIAL_PLATFORMS } from "@/lib/social";
 import { saveSettings, type ActionState } from "../../actions";
 
 type Faq = { question: string; answer: string };
@@ -205,11 +206,11 @@ export function SettingsForm({ settings }: { settings: SettingsValues }) {
         </p>
 
         <div className="grid gap-4 md:grid-cols-2">
-          {(["github", "linkedin", "twitter", "instagram", "facebook"] as const).map((key) => (
+          {SOCIAL_PLATFORMS.map(({ key, label }) => (
             <TextField
               key={key}
               name={key}
-              label={key.charAt(0).toUpperCase() + key.slice(1)}
+              label={label}
               type="url"
               defaultValue={socialValue(key)}
               error={errors[`social.${key}`]}

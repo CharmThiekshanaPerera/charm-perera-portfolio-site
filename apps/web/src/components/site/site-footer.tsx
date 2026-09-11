@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { Facebook, Github, Instagram, Linkedin, Mail, Phone, Twitter } from "lucide-react";
+import type { CSSProperties } from "react";
+import { Mail, Phone } from "lucide-react";
 import { WhatsAppIcon } from "@/components/shared/whatsapp-icon";
 import { whatsappLink } from "@/lib/format";
+import { getSocialLinks } from "@/lib/social";
 import type { SiteSettingsData } from "@/lib/content";
 
 const FOOTER_LINKS = [
@@ -17,15 +19,7 @@ const FOOTER_LINKS = [
 export function SiteFooter({ settings }: { settings: SiteSettingsData }) {
   const year = new Date().getFullYear();
 
-  const socials = [
-    { href: settings.social?.github, label: "GitHub", Icon: Github },
-    { href: settings.social?.linkedin, label: "LinkedIn", Icon: Linkedin },
-    { href: settings.social?.twitter, label: "Twitter", Icon: Twitter },
-    { href: settings.social?.instagram, label: "Instagram", Icon: Instagram },
-    { href: settings.social?.facebook, label: "Facebook", Icon: Facebook },
-  ].filter((item): item is { href: string; label: string; Icon: typeof Github } =>
-    Boolean(item.href),
-  );
+  const socials = getSocialLinks(settings.social);
 
   return (
     <footer className="relative overflow-hidden border-t border-border bg-gradient-to-b from-background to-secondary/10">
@@ -86,14 +80,22 @@ export function SiteFooter({ settings }: { settings: SiteSettingsData }) {
               Follow along for updates, tech insights and new work.
             </p>
             <ul className="flex flex-wrap gap-3">
-              {socials.map(({ href, label, Icon }) => (
+              {socials.map(({ href, label, Icon, color }) => (
                 <li key={label}>
                   <a
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="inline-flex rounded-full border border-primary/20 bg-primary/10 p-3 transition-all duration-300 hover:scale-110 hover:bg-primary hover:text-primary-foreground hover:shadow-gold"
+                    className="inline-flex rounded-full border p-3 transition-all duration-300 hover:scale-110 hover:bg-[var(--brand)] hover:text-white hover:shadow-gold"
+                    style={
+                      {
+                        borderColor: `${color}33`,
+                        backgroundColor: `${color}1a`,
+                        color,
+                        "--brand": color,
+                      } as CSSProperties
+                    }
                   >
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </a>

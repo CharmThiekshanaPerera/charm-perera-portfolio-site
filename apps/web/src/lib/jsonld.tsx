@@ -20,6 +20,12 @@ function sameAs(settings: SiteSettingsData): string[] {
     settings.social?.twitter,
     settings.social?.instagram,
     settings.social?.facebook,
+    settings.social?.youtube,
+    settings.social?.tiktok,
+    settings.social?.behance,
+    settings.social?.dribbble,
+    settings.social?.upwork,
+    settings.social?.fiverr,
   ].filter((url): url is string => Boolean(url));
 }
 

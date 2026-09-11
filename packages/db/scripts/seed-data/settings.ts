@@ -40,6 +40,13 @@ export const siteSettings: SiteSettingsInput = {
     twitter: "https://twitter.com/CharmThiekshana",
     instagram: "https://www.instagram.com/c_h_a_r_m_15",
     facebook: "https://www.facebook.com/charm.thiekshana",
+    // Filled in from the admin panel once real profile URLs exist.
+    youtube: "",
+    tiktok: "",
+    behance: "",
+    dribbble: "",
+    upwork: "",
+    fiverr: "",
   },
 
   seo: {

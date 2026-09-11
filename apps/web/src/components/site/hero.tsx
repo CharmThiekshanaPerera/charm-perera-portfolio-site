@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, Facebook, Github, Instagram, Linkedin, Mail, Phone, Twitter } from "lucide-react";
+import type { CSSProperties } from "react";
+import { ArrowDown, Mail, Phone } from "lucide-react";
 import { Button } from "@charm/ui/button";
 import { WhatsAppIcon } from "@/components/shared/whatsapp-icon";
 import { RoleTyper } from "./role-typer";
 import { whatsappLink } from "@/lib/format";
+import { getSocialLinks } from "@/lib/social";
 import type { SiteSettingsData } from "@/lib/content";
 
 /**
@@ -12,18 +14,7 @@ import type { SiteSettingsData } from "@/lib/content";
  * initial HTML. Only the small typewriter is hydrated.
  */
 export function Hero({ settings }: { settings: SiteSettingsData }) {
-  const socials = [
-    { href: settings.social?.github, label: "GitHub", Icon: Github, tint: "text-foreground" },
-    { href: settings.social?.linkedin, label: "LinkedIn", Icon: Linkedin, tint: "text-[#0077B5]" },
-    { href: settings.social?.twitter, label: "Twitter", Icon: Twitter, tint: "text-[#1DA1F2]" },
-    {
-      href: settings.social?.instagram,
-      label: "Instagram",
-      Icon: Instagram,
-      tint: "text-[#E1306C]",
-    },
-    { href: settings.social?.facebook, label: "Facebook", Icon: Facebook, tint: "text-[#1877F2]" },
-  ].filter((item) => Boolean(item.href));
+  const socials = getSocialLinks(settings.social);
 
   return (
     <section
@@ -75,14 +66,15 @@ export function Hero({ settings }: { settings: SiteSettingsData }) {
             </div>
 
             <ul className="flex flex-wrap gap-3 pt-4">
-              {socials.map(({ href, label, Icon, tint }) => (
+              {socials.map(({ href, label, Icon, color }) => (
                 <li key={label}>
                   <a
-                    href={href as string}
+                    href={href}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className={`inline-flex rounded-full border border-border bg-card p-3 transition-all duration-300 hover:scale-110 hover:border-primary hover:shadow-gold ${tint}`}
+                    className="inline-flex rounded-full border border-border bg-card p-3 transition-all duration-300 hover:scale-110 hover:border-[var(--brand)] hover:text-[var(--brand)] hover:shadow-gold"
+                    style={{ color, "--brand": color } as CSSProperties}
                   >
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </a>

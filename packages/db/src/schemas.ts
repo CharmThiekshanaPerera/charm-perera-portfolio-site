@@ -167,6 +167,12 @@ export const siteSettingsSchema = z.object({
       twitter: optionalUrl,
       instagram: optionalUrl,
       facebook: optionalUrl,
+      youtube: optionalUrl,
+      tiktok: optionalUrl,
+      behance: optionalUrl,
+      dribbble: optionalUrl,
+      upwork: optionalUrl,
+      fiverr: optionalUrl,
     })
     .default({}),
   seo: z

@@ -46,6 +46,12 @@ const SiteSettingsSchema = new Schema(
       twitter: { type: String, default: "" },
       instagram: { type: String, default: "" },
       facebook: { type: String, default: "" },
+      youtube: { type: String, default: "" },
+      tiktok: { type: String, default: "" },
+      behance: { type: String, default: "" },
+      dribbble: { type: String, default: "" },
+      upwork: { type: String, default: "" },
+      fiverr: { type: String, default: "" },
     },
 
     // SEO defaults — editable without a redeploy
