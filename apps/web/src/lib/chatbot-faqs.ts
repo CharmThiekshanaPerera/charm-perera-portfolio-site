@@ -1,116 +1,181 @@
+import type { ChatbotContext } from "./chatbot-context";
+
 /**
  * Knowledge base for the on-site assistant.
  *
- * Migrated verbatim from the previous Chatbot.tsx. This is deliberately a
- * keyword matcher, not a language model: it is instant, costs nothing to run,
- * needs no API key, and can never invent a claim about your business.
+ * Deliberately a keyword matcher, not a language model: it is instant, costs
+ * nothing to run, needs no API key, and can never invent a claim about the
+ * business — every `answer` is a small function of the live `ChatbotContext`
+ * fetched from /api/chatbot/context, not hardcoded prose, so it can never
+ * drift from what's actually in the CMS (and can never fabricate a
+ * testimonial that doesn't exist).
  */
 export type Faq = {
   keywords: string[];
-  answer: string;
   category: string;
+  answer: (ctx: ChatbotContext) => string;
 };
+
+/** Shared by the "contact" and "availability" answers so the channel list only lives once. */
+function contactLines(ctx: ChatbotContext): string {
+  const lines = [`📧 Email: ${ctx.email}`];
+  if (ctx.phone) lines.push(`📱 Phone/WhatsApp: ${ctx.phone}`);
+  if (ctx.social.linkedin) lines.push(`💼 [LinkedIn](${ctx.social.linkedin})`);
+  if (ctx.social.github) lines.push(`💻 [GitHub](${ctx.social.github})`);
+  if (ctx.location) lines.push(`🌐 Location: ${ctx.location}`);
+  return lines.join("\n");
+}
 
 export const chatbotFaqs: Faq[] = [
   {
-    keywords: ["who", "about", "yourself", "you", "charm", "introduce"],
-    answer: "I'm Charm Thiekshana Perera, the best freelance web developer in Sri Lanka! I'm a Senior Frontend Developer with 5+ years of experience specializing in React, iOS & Android development, and AI integration. I hold a BSc (Honours) in Information Technology from SLIIT and currently work at Phyxle while running my own startup, Nesture Labs.",
+    keywords: [
+      "who",
+      "about",
+      "yourself",
+      "charm",
+      "introduce",
+      "education",
+      "degree",
+      "qualification",
+      "university",
+      "sliit",
+    ],
     category: "about",
+    answer: (ctx) => {
+      const bio = ctx.about.length
+        ? ctx.about.join(" ")
+        : `I'm ${ctx.fullName}, ${ctx.jobTitle}. ${ctx.tagline}.`;
+      return `${bio}\n\nI have ${ctx.yearsExperience}+ years of experience. Want to see what I've [built](/projects), or learn more [about me](/about)?`;
+    },
   },
   {
-    keywords: ["services", "offer", "do", "provide", "development"],
-    answer: "I offer comprehensive web and mobile development services including: ✓ Custom React Web Applications ✓ iOS & Android Mobile Apps ✓ React Native Development ✓ AI Integration & Chatbots ✓ E-commerce Solutions ✓ UI/UX Design & Implementation ✓ API Development & Integration ✓ Performance Optimization ✓ Full-Stack Development. All services are tailored to your business needs with competitive Sri Lankan rates!",
+    keywords: ["services", "offer", "provide", "development"],
     category: "services",
+    answer: () =>
+      "I offer comprehensive web and mobile development services including: ✓ Custom React Web Applications ✓ iOS & Android Mobile Apps ✓ React Native Development ✓ AI Integration & Chatbots ✓ E-commerce Solutions ✓ UI/UX Design & Implementation ✓ API Development & Integration ✓ Performance Optimization ✓ Full-Stack Development. Every project is scoped to your specific needs — [tell me about yours](/start).",
   },
   {
-    keywords: ["experience", "work", "worked", "background", "career"],
-    answer: "I have 5+ years of professional experience. Currently, I'm a Senior Frontend Developer at Phyxle and Founder of Nesture Labs. My expertise includes developing high-performance mobile apps (with apps on Google Play Store like Lifesaylor), React web applications, and AI-powered solutions. I've successfully delivered 20+ projects for clients worldwide.",
+    keywords: ["experience", "work", "worked", "background", "career", "startup", "company", "business"],
     category: "experience",
+    answer: (ctx) => {
+      if (ctx.experiences.length === 0) {
+        return `I have ${ctx.yearsExperience}+ years of professional experience building web and mobile products. Take a look at my [projects](/projects) to see what I've shipped.`;
+      }
+      const lines = ctx.experiences.map((exp) => {
+        const period = [exp.period, exp.current ? "current" : ""].filter(Boolean).join(", ");
+        return `- **${exp.role}** at ${exp.company}${period ? ` (${period})` : ""}`;
+      });
+      return `Here's my background:\n\n${lines.join("\n")}\n\nWant to see the work itself? Check out my [projects](/projects).`;
+    },
   },
   {
     keywords: ["projects", "portfolio", "work samples", "examples", "built"],
-    answer: "I've built 20+ projects including: 🚀 Lifesaylor - Daily motivation mobile app on Google Play Store 📱 E-Commerce Platforms with payment integration 🏥 Healthcare Management Systems 🤖 AI-Powered Analytics Dashboards 🍽️ Restaurant Management Suites 🏠 Real Estate Portals 💪 Fitness Tracker Apps. Check out the Projects section on my website to see detailed case studies!",
     category: "projects",
+    answer: (ctx) => {
+      if (ctx.projects.length === 0) {
+        return "Take a look at my [projects page](/projects) for detailed case studies of what I've built.";
+      }
+      const lines = ctx.projects
+        .slice(0, 6)
+        .map((p) => `- [${p.title}](/projects/${p.slug})${p.category ? ` — ${p.category}` : ""}`);
+      return `Some of what I've built:\n\n${lines.join("\n")}\n\nSee the full list on my [projects page](/projects).`;
+    },
   },
   {
     keywords: ["skills", "technologies", "tech stack", "tools", "programming"],
-    answer: "My technical expertise includes: Frontend: React, TypeScript, JavaScript, Vite, HTML5, CSS3, Tailwind CSS | Mobile: React Native, Android (Java/Kotlin), iOS (Swift) | Backend: Node.js, Python, API Integration | Database: MongoDB, PostgreSQL, Firebase | Cloud: AWS, CI/CD, Web Hosting | AI: Machine Learning integration, ChatGPT, AI-powered features | Tools: Git, Agile/Scrum, Testing frameworks",
     category: "skills",
+    answer: (ctx) => {
+      if (ctx.technologies.length === 0) {
+        return "My technical expertise includes: Frontend: React, TypeScript, JavaScript, Tailwind CSS | Mobile: React Native, Android, iOS | Backend: Node.js, Python, API Integration | Database: MongoDB | AI: machine learning integration and AI-powered features.";
+      }
+      return `My technical toolkit includes: ${ctx.technologies.join(", ")}.\n\nWant specifics on mobile, web or AI work? Just ask!`;
+    },
   },
   {
     keywords: ["cost", "price", "pricing", "rate", "charge", "budget", "affordable"],
-    answer: "As a freelance developer in Sri Lanka, I offer highly competitive rates without compromising quality! Pricing varies based on project complexity, timeline, and requirements. I provide: 💰 Cost-effective solutions compared to Western developers 🎯 Transparent pricing with no hidden costs ⚡ Flexible packages for startups to enterprises 📊 Free initial consultation and project estimation. Contact me to discuss your specific needs and get a customized quote!",
     category: "pricing",
+    answer: () =>
+      "As a freelance developer in Sri Lanka, I offer highly competitive rates without compromising quality! Pricing varies based on project complexity, timeline, and requirements — every project gets a custom quote, no generic packages.\n\n[Start a project →](/start) and I'll put together a scope, timeline and quote tailored to you.",
   },
   {
     keywords: ["hire", "available", "availability", "freelance", "remote"],
-    answer: "Yes, I'm available for freelance projects! I'm based in Colombo, Sri Lanka, and work with clients globally. I offer: ✅ Remote collaboration (flexible timezone) ✅ Full-time or part-time engagements ✅ Project-based or ongoing retainer arrangements ✅ Quick turnaround times. Contact me via email (charmthiekshana97@gmail.com), phone (+94 754 465 955), or WhatsApp to discuss your project!",
     category: "availability",
+    answer: (ctx) =>
+      `${ctx.availability}\n\nI'm based in ${ctx.location} and work with clients globally, with flexible remote collaboration across timezones.\n\n${contactLines(ctx)}`,
   },
   {
     keywords: ["contact", "reach", "email", "phone", "whatsapp", "message"],
-    answer: "You can reach me through multiple channels: 📧 Email: charmthiekshana97@gmail.com 📱 Phone/WhatsApp: +94 754 465 955 💼 LinkedIn: linkedin.com/in/charmthiekshana 💻 GitHub: github.com/CharmThiekshanaPerera 🌐 Location: Colombo, Sri Lanka. I typically respond within 24 hours. For urgent inquiries, WhatsApp is the fastest way to reach me!",
     category: "contact",
+    answer: (ctx) =>
+      `You can reach me through:\n\n${contactLines(ctx)}\n\nI typically respond within 24 hours. Or just [start a project](/start) and I'll get right back to you!`,
   },
   {
     keywords: ["mobile app", "ios", "android", "app development", "react native"],
-    answer: "Mobile app development is one of my core specialties! I build native iOS and Android apps as well as cross-platform solutions using React Native. My apps feature: 📱 Beautiful, intuitive UI/UX design 🚀 High performance and smooth animations ✅ App Store & Google Play Store deployment 🔔 Push notifications & real-time features 💾 Offline functionality 🔐 Secure authentication. I have multiple apps live on Google Play Store, including Lifesaylor with thousands of users!",
     category: "mobile",
+    answer: () =>
+      "Mobile app development is one of my core specialties! I build native iOS and Android apps as well as cross-platform solutions using React Native. My apps feature: 📱 Beautiful, intuitive UI/UX design 🚀 High performance and smooth animations ✅ App Store & Google Play Store deployment 🔔 Push notifications & real-time features 💾 Offline functionality 🔐 Secure authentication.",
   },
   {
     keywords: ["react", "web", "website", "web development", "frontend"],
-    answer: "I'm a React expert with extensive experience building modern web applications! I create: 🎨 Responsive, mobile-first designs ⚡ Lightning-fast performance with Vite 🎯 SEO-optimized websites 🛠️ Component-based architecture 🔄 State management (Redux, Context) 📊 Data visualization & dashboards 🌐 Progressive Web Apps (PWA) 🎭 Smooth animations & transitions. Whether you need a landing page, e-commerce site, or complex SaaS application, I've got you covered!",
     category: "web",
+    answer: () =>
+      "I'm a React expert with extensive experience building modern web applications! I create: 🎨 Responsive, mobile-first designs ⚡ Lightning-fast performance 🎯 SEO-optimized websites 🛠️ Component-based architecture 📊 Data visualization & dashboards 🌐 Progressive Web Apps. Whether you need a landing page, e-commerce site, or complex SaaS application, I've got you covered!",
   },
   {
     keywords: ["ai", "artificial intelligence", "machine learning", "chatbot", "gpt"],
-    answer: "I integrate cutting-edge AI features into applications! My AI services include: 🤖 ChatGPT & GPT-4 integration 💬 Custom chatbots & virtual assistants 🧠 Machine learning model integration 📊 AI-powered analytics & predictions 🎯 Recommendation systems 🔍 Natural language processing 🖼️ Image recognition & processing. I can help you leverage AI to automate workflows, enhance user experience, and gain business insights!",
     category: "ai",
-  },
-  {
-    keywords: ["education", "degree", "qualification", "university", "sliit"],
-    answer: "I hold a Bachelor of Science (Honours) in Information Technology from the Sri Lanka Institute of Information Technology (SLIIT), one of Sri Lanka's premier IT universities. This strong academic foundation, combined with 5+ years of hands-on industry experience, gives me both theoretical knowledge and practical expertise to tackle complex development challenges.",
-    category: "education",
+    answer: () =>
+      "I integrate practical AI features into real applications! My AI services include: 🤖 LLM & chatbot integration 🧠 Machine learning model integration 📊 AI-powered analytics & predictions 🎯 Recommendation systems 🔍 Natural language processing. I can help you leverage AI to automate workflows, enhance user experience, and gain business insights!",
   },
   {
     keywords: ["sri lanka", "location", "colombo", "local", "country"],
-    answer: "I'm proudly based in Colombo, Sri Lanka 🇱🇰! As the best freelance web developer in Sri Lanka, I offer several advantages: 💰 Competitive rates compared to Western developers ⏰ Flexible working hours across timezones 🗣️ Excellent English communication skills 🌏 Experience working with international clients 📍 Available for local meetups in Colombo 🚀 Fast delivery with Sri Lankan work ethic. I serve both local Sri Lankan businesses and international clients worldwide!",
     category: "location",
-  },
-  {
-    keywords: ["startup", "nesture", "nesturelabs", "company", "business"],
-    answer: "I'm the Founder & Lead Developer of Nesture Labs, my own software development startup! Through Nesture Labs, I've delivered numerous successful projects including e-commerce platforms, healthcare systems, and AI-powered applications. Running my own startup gives me valuable experience in understanding business needs, meeting deadlines, and delivering solutions that drive real business value. I bring this entrepreneurial mindset to every project I work on!",
-    category: "startup",
+    answer: (ctx) =>
+      `I'm based in ${ctx.location} 🇱🇰! Working from Sri Lanka means: 💰 Competitive rates compared to Western developers ⏰ Flexible working hours across timezones 🗣️ Excellent English communication 🌏 Experience with international clients. I serve both local Sri Lankan businesses and international clients worldwide!`,
   },
   {
     keywords: ["timeline", "time", "duration", "how long", "delivery"],
-    answer: "Project timelines vary based on complexity and requirements: ⚡ Simple landing pages: 1-2 weeks 📱 Mobile apps: 4-12 weeks 🌐 Complex web applications: 8-16 weeks 🏢 Enterprise solutions: 3-6 months. I provide detailed project timelines during consultation and maintain transparent communication throughout development. I'm committed to meeting deadlines while ensuring quality. For urgent projects, I can accommodate rush timelines with priority scheduling!",
     category: "timeline",
+    answer: () =>
+      "Project timelines vary based on complexity and requirements: ⚡ Simple landing pages: 1-2 weeks 📱 Mobile apps: 4-12 weeks 🌐 Complex web applications: 8-16 weeks 🏢 Enterprise solutions: 3-6 months. I provide a detailed timeline during consultation and maintain transparent communication throughout — [tell me about your project](/start) for a real estimate.",
   },
   {
-    keywords: ["process", "workflow", "how", "methodology", "approach"],
-    answer: "My development process ensures quality and transparency: 1️⃣ Discovery Call: Understand your requirements and goals 2️⃣ Proposal & Quote: Detailed scope and timeline 3️⃣ Design Phase: UI/UX mockups for approval 4️⃣ Development: Agile sprints with regular updates 5️⃣ Testing: Comprehensive QA and bug fixes 6️⃣ Deployment: Launch to production 7️⃣ Support: Post-launch maintenance and updates. I use Agile/Scrum methodology with weekly progress reports and constant communication!",
+    keywords: ["process", "workflow", "methodology", "approach", "how do you work"],
     category: "process",
+    answer: () =>
+      "My development process ensures quality and transparency: 1️⃣ Discovery Call 2️⃣ Proposal & Quote 3️⃣ Design Phase 4️⃣ Development (Agile sprints, regular updates) 5️⃣ Testing 6️⃣ Deployment 7️⃣ Support. I use Agile/Scrum methodology with weekly progress reports and constant communication!",
   },
   {
     keywords: ["payment", "pay", "invoice", "billing", "terms"],
-    answer: "I offer flexible payment terms for your convenience: 💳 Payment methods: Bank transfer, PayPal, Wise, Payoneer 📋 Standard terms: 50% upfront, 50% on completion 🔄 For ongoing work: Monthly retainer arrangements 💰 For large projects: Milestone-based payments. All payments are secure and invoiced properly. I'm transparent about costs with no hidden fees. Let's discuss the payment structure that works best for your project!",
     category: "payment",
+    answer: () =>
+      "I offer flexible payment terms: 💳 Bank transfer, PayPal, Wise, Payoneer 📋 Standard terms: 50% upfront, 50% on completion 🔄 Monthly retainers for ongoing work 💰 Milestone-based payments for larger projects. All payments are invoiced properly, with no hidden fees.",
   },
   {
     keywords: ["maintenance", "support", "updates", "after", "post-launch"],
-    answer: "I provide comprehensive post-launch support: 🛠️ Bug fixes and technical support 🔄 Feature updates and enhancements 📈 Performance monitoring and optimization 🔐 Security updates 📊 Analytics and reporting 💾 Regular backups 📱 App store management (for mobile apps). I offer both one-time fixes and ongoing monthly maintenance packages. Your project's success doesn't end at launch - I'm here for the long term!",
     category: "support",
+    answer: () =>
+      "I provide comprehensive post-launch support: 🛠️ Bug fixes and technical support 🔄 Feature updates 📈 Performance monitoring 🔐 Security updates 💾 Regular backups. I offer both one-time fixes and ongoing monthly maintenance — your project's success doesn't end at launch!",
   },
   {
     keywords: ["testimonial", "review", "client", "feedback", "reference"],
-    answer: "I've worked with numerous satisfied clients worldwide! Check the Testimonials section on my website to see reviews from clients like: Sarah Johnson (CEO, TechStart Inc), Michael Chen (Founder, HealthHub), Emma Williams (Director, E-Shop Plus), and many more. Clients praise my technical expertise, communication, deadline adherence, and problem-solving abilities. I can also provide direct references upon request!",
     category: "testimonials",
+    answer: (ctx) => {
+      if (ctx.testimonials.length === 0) {
+        return "You can check the [testimonials section](/#testimonials) on my homepage for client feedback — or feel free to ask me directly for references.";
+      }
+      const quotes = ctx.testimonials.map((t) => {
+        const who = [t.role, t.company].filter(Boolean).join(", ");
+        return `> "${t.content}"\n> — **${t.name}**${who ? `, ${who}` : ""}`;
+      });
+      return `Here's what clients have said:\n\n${quotes.join("\n\n")}\n\nMore in the [testimonials section](/#testimonials).`;
+    },
   },
   {
     keywords: ["why", "choose", "different", "better", "advantage"],
-    answer: "Here's why clients choose me: ⭐ 5+ years of proven expertise in React & mobile development 🏆 Best freelance web developer in Sri Lanka 💼 Successfully delivered 20+ projects 🎓 SLIIT graduate with strong technical foundation 💰 Competitive rates with Western-quality work 🗣️ Excellent communication in English ⚡ Fast turnaround and deadline-oriented 🔄 Agile methodology with regular updates 🤝 Dedicated support and long-term partnership approach 🚀 Passionate about technology and client success. I don't just code - I solve business problems!",
     category: "why",
+    answer: (ctx) =>
+      `Here's why clients choose me: ⭐ ${ctx.yearsExperience}+ years of proven expertise in React & mobile development 💰 Competitive rates with Western-quality work 🗣️ Excellent communication in English ⚡ Fast turnaround and deadline-oriented 🔄 Agile methodology with regular updates 🤝 Dedicated support and long-term partnership. I don't just code — I solve business problems!`,
   },
 ];
 
@@ -120,3 +185,97 @@ export const quickOptions = [
   { label: "Availability", query: "Are you available for hire?" },
   { label: "Contact Info", query: "How can I contact you?" },
 ];
+
+/** Contextual chips shown after a bot reply, keyed by the FAQ category that
+ *  just matched — a lighter, more relevant menu than always repeating the
+ *  same 4 starter chips. Falls back to `quickOptions` when there's no entry. */
+export const followUps: Record<string, { label: string; query: string }[]> = {
+  about: [
+    { label: "See projects", query: "Show me your projects" },
+    { label: "Experience", query: "Tell me about your work experience" },
+  ],
+  services: [
+    { label: "Pricing", query: "How much does it cost?" },
+    { label: "View projects", query: "Show me your projects" },
+  ],
+  experience: [
+    { label: "See projects", query: "Show me your projects" },
+    { label: "Skills & tech", query: "What technologies do you use?" },
+  ],
+  projects: [
+    { label: "Skills & tech", query: "What technologies do you use?" },
+    { label: "Start a project", query: "I want to start a project" },
+  ],
+  skills: [
+    { label: "See projects", query: "Show me your projects" },
+    { label: "Services", query: "What services do you offer?" },
+  ],
+  pricing: [
+    { label: "Timeline", query: "How long does a project take?" },
+    { label: "Contact", query: "How can I contact you?" },
+  ],
+  availability: [
+    { label: "Services", query: "What services do you offer?" },
+    { label: "Contact", query: "How can I contact you?" },
+  ],
+  contact: [
+    { label: "Availability", query: "Are you available for hire?" },
+    { label: "Services", query: "What services do you offer?" },
+  ],
+  testimonials: [
+    { label: "View projects", query: "Show me your projects" },
+    { label: "Contact", query: "How can I contact you?" },
+  ],
+};
+
+/** Split on anything that isn't a letter/digit, drop short/common words. */
+const STOPWORDS = new Set([
+  "what",
+  "which",
+  "who",
+  "how",
+  "does",
+  "do",
+  "is",
+  "are",
+  "the",
+  "your",
+  "you",
+  "about",
+  "can",
+  "will",
+  "have",
+  "with",
+  "for",
+]);
+
+function tokenize(text: string): string[] {
+  return text
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((word) => word.length >= 4 && !STOPWORDS.has(word));
+}
+
+/**
+ * Supplementary knowledge base: admin-authored Q&A from Site settings
+ * (`SiteSettings.faqs`), matched by token overlap between the visitor's
+ * question and each FAQ's question text. Only runs when the static
+ * `chatbotFaqs` matcher above scores zero, so an admin can extend what the
+ * bot knows without a code deploy.
+ */
+export function matchSettingsFaq(ctx: ChatbotContext, input: string): string | null {
+  const inputTokens = new Set(tokenize(input));
+  if (inputTokens.size === 0) return null;
+
+  let best: { answer: string; score: number } | null = null;
+  for (const faq of ctx.faqs) {
+    let score = 0;
+    for (const token of tokenize(faq.question)) {
+      if (inputTokens.has(token)) score += 1;
+    }
+    if (score >= 2 && (!best || score > best.score)) {
+      best = { answer: faq.answer, score };
+    }
+  }
+  return best ? best.answer : null;
+}

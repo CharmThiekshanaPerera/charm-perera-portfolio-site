@@ -2,8 +2,8 @@ import { Schema, model, models, type InferSchemaType, type Model } from "mongoos
 
 const MessageSchema = new Schema(
   {
-    /** Which form submitted this: the general contact form, or /start's project intake. */
-    kind: { type: String, enum: ["contact", "project"], default: "contact", index: true },
+    /** Which form submitted this: the general contact form, /start's project intake, or the chatbot's inline lead form. */
+    kind: { type: String, enum: ["contact", "project", "chatbot"], default: "contact", index: true },
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, lowercase: true },
     subject: { type: String, default: "" },

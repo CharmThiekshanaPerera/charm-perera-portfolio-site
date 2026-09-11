@@ -111,7 +111,7 @@ export const skillCategorySchema = z.object({
 
 /** Public-facing contact form. Deliberately strict — this endpoint is unauthenticated. */
 export const contactSchema = z.object({
-  kind: z.enum(["contact", "project"]).default("contact"),
+  kind: z.enum(["contact", "project", "chatbot"]).default("contact"),
   name: z.string().min(2, "Please enter your name").max(120),
   email: z.string().email("Please enter a valid email address").max(200),
   subject: z.string().max(200).default(""),

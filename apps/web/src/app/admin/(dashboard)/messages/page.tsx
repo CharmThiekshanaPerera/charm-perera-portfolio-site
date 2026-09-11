@@ -95,6 +95,11 @@ export default async function AdminMessagesPage({
                       Project inquiry
                     </Badge>
                   ) : null}
+                  {message.kind === "chatbot" ? (
+                    <Badge variant="outline" className="border-emerald-500/40 text-emerald-600 dark:text-emerald-400">
+                      Chatbot lead
+                    </Badge>
+                  ) : null}
                   <Badge variant={message.status === "unread" ? "default" : "secondary"}>
                     {message.status}
                   </Badge>
