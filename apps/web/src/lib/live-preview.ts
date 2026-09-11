@@ -17,21 +17,30 @@ const UNEMBEDDABLE_HOSTS = new Set([
   "www.twitter.com",
   "x.com",
   "www.x.com",
-  // This site's own domain: one of the seeded projects *is* this portfolio,
-  // with its own URL as the "live" link. Embedding it would nest the site
-  // inside itself, which nests its own Featured Projects section inside
-  // itself again, and so on — a self-referential recursion with no natural
-  // stopping point.
-  "charmthiekshana.com",
-  "www.charmthiekshana.com",
 ]);
+
+/** This site's own domain: one of the seeded projects *is* this portfolio,
+ * with its own URL as the "live" link. Embedding it is fine on the project's
+ * own case-study page (a single level — the embedded homepage's project grid
+ * still refuses to embed itself, see `allowSelf` below), but MUST stay
+ * excluded on the home page / project grid: that grid embedding itself would
+ * embed its own grid again inside the embed, and again inside that, with no
+ * natural stopping point. */
+const SELF_HOSTS = new Set(["charmthiekshana.com", "www.charmthiekshana.com"]);
 
 /** Best-effort check — there's no reliable client-side way to know a site
  * blocks framing until you actually try, so this only filters the known
- * worst offenders. Everything else gets attempted as a live preview. */
-export function isLikelyEmbeddable(url: string): boolean {
+ * worst offenders. Everything else gets attempted as a live preview.
+ *
+ * `allowSelf` opts a specific call site into embedding this site's own
+ * domain — only safe where the embedded page can't itself recurse (i.e. NOT
+ * the project grid; see the comment on SELF_HOSTS above). Defaults to false. */
+export function isLikelyEmbeddable(url: string, { allowSelf = false } = {}): boolean {
   try {
-    return !UNEMBEDDABLE_HOSTS.has(new URL(url).hostname.toLowerCase());
+    const hostname = new URL(url).hostname.toLowerCase();
+    if (UNEMBEDDABLE_HOSTS.has(hostname)) return false;
+    if (!allowSelf && SELF_HOSTS.has(hostname)) return false;
+    return true;
   } catch {
     return false;
   }

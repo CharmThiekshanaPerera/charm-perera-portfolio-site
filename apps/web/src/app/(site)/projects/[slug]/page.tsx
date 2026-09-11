@@ -164,7 +164,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 className="object-cover"
               />
             </div>
-          ) : project.liveUrl && isLikelyEmbeddable(project.liveUrl) ? (
+          ) : project.liveUrl && isLikelyEmbeddable(project.liveUrl, { allowSelf: true }) ? (
             <LivePreviewFrame
               url={project.liveUrl}
               title={project.title}
