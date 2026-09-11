@@ -18,7 +18,7 @@ const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
-  { label: "Services", href: "/services" },
+  { label: "Start a Project", href: "/start" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
@@ -113,7 +113,7 @@ export function SiteHeader({ initials }: { initials: string }) {
             )}
 
             <Button asChild>
-              <Link href="/contact">Hire Me</Link>
+              <Link href="/start">Hire Me</Link>
             </Button>
           </nav>
 
@@ -165,7 +165,7 @@ export function SiteHeader({ initials }: { initials: string }) {
             ) : null}
 
             <Button asChild className="w-full">
-              <Link href="/contact">Hire Me</Link>
+              <Link href="/start">Hire Me</Link>
             </Button>
           </nav>
         </div>

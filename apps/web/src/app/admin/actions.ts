@@ -80,7 +80,7 @@ function toFieldErrors(error: {
 
 /** Purges every public surface that could be showing the edited content. */
 function revalidatePublic() {
-  for (const path of ["/", "/about", "/projects", "/services", "/blog", "/contact"]) {
+  for (const path of ["/", "/about", "/projects", "/blog", "/contact", "/privacy", "/start"]) {
     revalidatePath(path);
   }
   revalidatePath("/projects/[slug]", "page");
@@ -497,6 +497,7 @@ export async function saveSettings(
     },
     faqs,
     technologies: csv(formData, "technologies"),
+    privacyPolicy: text(formData, "privacyPolicy"),
   };
 
   const parsed = siteSettingsSchema.safeParse(raw);

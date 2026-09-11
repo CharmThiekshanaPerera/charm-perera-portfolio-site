@@ -4,17 +4,14 @@ import { AboutSection } from "@/components/site/about-section";
 import { ExperienceSection } from "@/components/site/experience-section";
 import { SkillsSection } from "@/components/site/skills-section";
 import { FeaturedProjects } from "@/components/site/featured-projects";
-import { PackagesSection } from "@/components/site/packages-section";
 import { BlogSection } from "@/components/site/blog-section";
 import { TestimonialsSection } from "@/components/site/testimonials-section";
 import { FaqSection } from "@/components/site/faq-section";
 import { ContactSection } from "@/components/site/contact-section";
 import {
-  getAddOns,
   getExperiences,
   getPosts,
   getProjects,
-  getServicePackages,
   getSiteSettings,
   getSiteUrl,
   getSkillCategories,
@@ -44,25 +41,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [
-    settings,
-    projects,
-    posts,
-    testimonials,
-    packages,
-    addOns,
-    experiences,
-    skillCategories,
-  ] = await Promise.all([
-    getSiteSettings(),
-    getProjects(),
-    getPosts(),
-    getTestimonials(),
-    getServicePackages(),
-    getAddOns(),
-    getExperiences(),
-    getSkillCategories(),
-  ]);
+  const [settings, projects, posts, testimonials, experiences, skillCategories] =
+    await Promise.all([
+      getSiteSettings(),
+      getProjects(),
+      getPosts(),
+      getTestimonials(),
+      getExperiences(),
+      getSkillCategories(),
+    ]);
 
   const siteUrl = getSiteUrl(settings);
   const verifiedTestimonials = testimonials.filter((testimonial) => testimonial.verified);
@@ -85,7 +72,7 @@ export default async function HomePage() {
         data={[
           personSchema(settings, siteUrl),
           websiteSchema(settings, siteUrl),
-          professionalServiceSchema(settings, siteUrl, packages, verifiedTestimonials),
+          professionalServiceSchema(settings, siteUrl, [], verifiedTestimonials),
           faqSchema(settings.faqs ?? []),
         ].filter((schema): schema is Record<string, unknown> => schema !== null)}
       />
@@ -95,7 +82,6 @@ export default async function HomePage() {
       <ExperienceSection experiences={experiences} />
       <SkillsSection categories={skillCategories} technologies={settings.technologies ?? []} />
       <FeaturedProjects projects={orderedProjects} githubUrl={settings.social?.github} />
-      <PackagesSection packages={packages} addOns={addOns} whatsapp={settings.whatsapp} />
       <BlogSection posts={postCards} />
       <TestimonialsSection testimonials={testimonialCards} />
       <FaqSection faqs={settings.faqs ?? []} />

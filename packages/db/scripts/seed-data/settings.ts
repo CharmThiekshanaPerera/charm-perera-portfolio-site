@@ -124,4 +124,41 @@ export const siteSettings: SiteSettingsInput = {
         "Project timelines vary based on complexity. Starter packages typically take 7-10 days, Professional packages 3-4 weeks, and Enterprise packages 6-8 weeks. Timelines are discussed and agreed upon during the initial consultation.",
     },
   ],
+
+  privacyPolicy: `## Who we are
+
+This website (charmthiekshana.com) is operated by Charm Thiekshana Perera, a freelance web and mobile developer based in Colombo, Sri Lanka. For any privacy questions, contact **charmthiekshana97@gmail.com**.
+
+## Information we collect
+
+- **Contact and project inquiry forms** — name, email address, and any details you choose to share (company, project type, budget, timeline, message).
+- **Analytics** — with your consent, Google Analytics collects anonymised usage data (pages visited, device/browser type, approximate location) via Google Tag Manager, to understand how visitors use this site.
+- **Server logs** — like most websites, our hosting provider automatically logs IP addresses and basic request metadata for security and abuse prevention. IP addresses submitted through forms are stored as a one-way hash, never in plain text.
+
+## How we use it
+
+- To respond to your inquiry or contact request.
+- To understand and improve the site's content and performance (analytics, only with consent).
+- To detect and prevent spam or abuse.
+
+We do not sell your personal data, and we do not share it with third parties except the service providers that help us run this site (e.g. our hosting provider, email delivery, and Google Analytics/Tag Manager — each bound by their own privacy terms).
+
+## Cookies & consent
+
+This site uses Google Tag Manager and Google Analytics, which may set cookies to measure site usage. These are only activated after you accept the cookie notice shown on your first visit. You can change your choice at any time by clearing your browser's local storage for this site and reloading the page.
+
+## Your rights
+
+Depending on your location, you may have the right to request access to, correction of, or deletion of your personal data. To exercise any of these rights, email **charmthiekshana97@gmail.com**.
+
+## Data retention
+
+Contact and project inquiry messages are retained only as long as needed to respond to you and for reasonable record-keeping, after which they may be deleted.
+
+## Changes to this policy
+
+This policy may be updated from time to time to reflect changes in how the site operates. The version published here is always the current one.
+
+*Last updated: September 2026.*
+`,
 };

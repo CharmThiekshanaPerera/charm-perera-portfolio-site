@@ -111,12 +111,18 @@ export const skillCategorySchema = z.object({
 
 /** Public-facing contact form. Deliberately strict — this endpoint is unauthenticated. */
 export const contactSchema = z.object({
+  kind: z.enum(["contact", "project"]).default("contact"),
   name: z.string().min(2, "Please enter your name").max(120),
   email: z.string().email("Please enter a valid email address").max(200),
   subject: z.string().max(200).default(""),
   message: z.string().min(10, "Please tell me a little more about your project").max(5000),
   budget: z.string().max(100).default(""),
   interestedIn: z.string().max(120).default(""),
+  // Structured fields, filled in only by the /start project-intake form.
+  company: z.string().max(160).default(""),
+  projectType: z.string().max(80).default(""),
+  timeline: z.string().max(80).default(""),
+  currentUrl: z.union([z.string().url(), z.literal("")]).default(""),
   /**
    * Honeypot. Bots fill hidden fields; humans never see it.
    *
@@ -190,6 +196,7 @@ export const siteSettingsSchema = z.object({
     )
     .default([]),
   technologies: z.array(z.string()).default([]),
+  privacyPolicy: z.string().default(""),
 });
 
 /**

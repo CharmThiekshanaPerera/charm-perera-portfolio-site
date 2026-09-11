@@ -2,13 +2,21 @@ import { Schema, model, models, type InferSchemaType, type Model } from "mongoos
 
 const MessageSchema = new Schema(
   {
+    /** Which form submitted this: the general contact form, or /start's project intake. */
+    kind: { type: String, enum: ["contact", "project"], default: "contact", index: true },
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, lowercase: true },
     subject: { type: String, default: "" },
     message: { type: String, required: true },
     budget: { type: String, default: "" },
-    /** Which package the visitor was looking at, when they came from /services. */
+    /** Free-text summary shown in the inbox list, e.g. a package name or project type. */
     interestedIn: { type: String, default: "" },
+    // Structured fields from the /start project-intake form. Empty on plain
+    // contact-form submissions.
+    company: { type: String, default: "" },
+    projectType: { type: String, default: "" },
+    timeline: { type: String, default: "" },
+    currentUrl: { type: String, default: "" },
     status: {
       type: String,
       enum: ["unread", "read", "replied", "archived"],

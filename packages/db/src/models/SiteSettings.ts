@@ -65,6 +65,9 @@ const SiteSettingsSchema = new Schema(
 
     faqs: { type: [FaqSchema], default: [] },
     technologies: { type: [String], default: [] },
+
+    /** Markdown body for /privacy, editable from Site settings. */
+    privacyPolicy: { type: String, default: "" },
   },
   { timestamps: true, collection: "siteSettings", minimize: false },
 );

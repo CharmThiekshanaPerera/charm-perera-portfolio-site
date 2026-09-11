@@ -48,6 +48,7 @@ type SettingsValues = {
   seo?: Nullable<Record<string, unknown>>;
   faqs?: Nullable<Faq[]>;
   technologies?: Nullable<string[]>;
+  privacyPolicy?: Nullable<string>;
 };
 
 export function SettingsForm({ settings }: { settings: SettingsValues }) {
@@ -320,9 +321,9 @@ export function SettingsForm({ settings }: { settings: SettingsValues }) {
         </div>
 
         <p className="text-sm text-muted-foreground">
-          These render visibly on the home page, /about and /services, and are published as
-          FAQPage structured data. Google requires the markup to match visible content, so the
-          two are always generated from this one list.
+          These render visibly on the home page and /about, and are published as FAQPage
+          structured data. Google requires the markup to match visible content, so the two are
+          always generated from this one list.
         </p>
 
         <div className="space-y-4">
@@ -358,6 +359,19 @@ export function SettingsForm({ settings }: { settings: SettingsValues }) {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
+        <h2 className="text-lg font-semibold">Privacy Policy</h2>
+        <p className="text-sm text-muted-foreground">
+          Markdown, published at /privacy and linked from the footer and cookie notice.
+        </p>
+        <TextAreaField
+          name="privacyPolicy"
+          label="Policy content"
+          defaultValue={settings.privacyPolicy ?? ""}
+          rows={16}
+        />
       </section>
 
       <SubmitButton>Save settings</SubmitButton>

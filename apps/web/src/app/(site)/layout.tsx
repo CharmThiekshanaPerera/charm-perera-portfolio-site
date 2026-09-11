@@ -4,6 +4,8 @@ import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { Chatbot } from "@/components/site/chatbot";
 import { PageViewTracker } from "@/components/site/page-view-tracker";
 import { IconSprite } from "@/components/shared/icon";
+import { ConsentDefaultScript } from "@/components/site/consent-default-script";
+import { CookieConsent } from "@/components/site/cookie-consent";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { getSiteSettings } from "@/lib/content";
 
@@ -23,7 +25,12 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         container ID comes from site settings, so it can be changed or emptied
         from the admin without a deploy; empty renders nothing at all.
       */}
-      {gtmId ? <GoogleTagManager gtmId={gtmId} /> : null}
+      {gtmId ? (
+        <>
+          <ConsentDefaultScript />
+          <GoogleTagManager gtmId={gtmId} />
+        </>
+      ) : null}
 
       {/*
         Step 2 of Google's install snippet. @next/third-parties injects the
@@ -63,6 +70,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <WhatsAppButton number={settings.whatsapp} />
       <Chatbot />
       <PageViewTracker />
+      {gtmId ? <CookieConsent /> : null}
     </>
   );
 }

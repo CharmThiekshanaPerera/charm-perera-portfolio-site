@@ -89,13 +89,59 @@ export default async function AdminMessagesPage({
                     {message.interestedIn ? ` · interested in ${message.interestedIn}` : ""}
                   </p>
                 </div>
-                <Badge variant={message.status === "unread" ? "default" : "secondary"}>
-                  {message.status}
-                </Badge>
+                <div className="flex flex-shrink-0 items-center gap-2">
+                  {message.kind === "project" ? (
+                    <Badge variant="outline" className="border-primary/40 text-primary">
+                      Project inquiry
+                    </Badge>
+                  ) : null}
+                  <Badge variant={message.status === "unread" ? "default" : "secondary"}>
+                    {message.status}
+                  </Badge>
+                </div>
               </div>
 
               {message.subject ? (
                 <p className="mb-2 font-medium">{message.subject}</p>
+              ) : null}
+
+              {message.kind === "project" &&
+              (message.company || message.projectType || message.timeline || message.currentUrl) ? (
+                <dl className="mb-3 grid grid-cols-2 gap-x-4 gap-y-1 rounded-xl bg-muted/50 p-3 text-xs sm:grid-cols-4">
+                  {message.company ? (
+                    <div>
+                      <dt className="text-muted-foreground">Company</dt>
+                      <dd className="font-medium">{message.company}</dd>
+                    </div>
+                  ) : null}
+                  {message.projectType ? (
+                    <div>
+                      <dt className="text-muted-foreground">Project type</dt>
+                      <dd className="font-medium">{message.projectType}</dd>
+                    </div>
+                  ) : null}
+                  {message.timeline ? (
+                    <div>
+                      <dt className="text-muted-foreground">Timeline</dt>
+                      <dd className="font-medium">{message.timeline}</dd>
+                    </div>
+                  ) : null}
+                  {message.currentUrl ? (
+                    <div>
+                      <dt className="text-muted-foreground">Current site</dt>
+                      <dd className="truncate font-medium">
+                        <a
+                          href={message.currentUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-primary"
+                        >
+                          {message.currentUrl}
+                        </a>
+                      </dd>
+                    </div>
+                  ) : null}
+                </dl>
               ) : null}
 
               <p className="whitespace-pre-wrap text-sm leading-relaxed text-foreground/90">

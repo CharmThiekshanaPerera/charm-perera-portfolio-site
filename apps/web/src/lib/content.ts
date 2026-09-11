@@ -68,6 +68,7 @@ const FALLBACK_SETTINGS = {
   },
   faqs: [] as { question: string; answer: string; order: number }[],
   technologies: [] as string[],
+  privacyPolicy: "" as string,
 };
 
 export type SiteSettingsData = typeof FALLBACK_SETTINGS;

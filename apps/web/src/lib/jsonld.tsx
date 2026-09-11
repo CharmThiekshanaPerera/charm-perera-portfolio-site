@@ -83,7 +83,13 @@ export function professionalServiceSchema(
     ],
     founder: { "@id": `${siteUrl}/#person` },
     sameAs: sameAs(settings),
-    hasOfferCatalog: {
+  };
+
+  // Packages are no longer shown on any public page, so a catalog referencing
+  // them (and a dead /services#slug anchor) would be undeclared structured
+  // data — a Google policy violation. Only emit it when packages are visible.
+  if (packages.length > 0) {
+    schema.hasOfferCatalog = {
       "@type": "OfferCatalog",
       name: "Web & Mobile Development Packages",
       itemListElement: packages.map((pkg) => ({
@@ -92,15 +98,15 @@ export function professionalServiceSchema(
         description: pkg.description,
         price: pkg.priceValue || undefined,
         priceCurrency: pkg.currency || "USD",
-        url: `${siteUrl}/services#${pkg.slug}`,
+        url: `${siteUrl}/start`,
         itemOffered: {
           "@type": "Service",
           name: `${pkg.name} Web Development Package`,
           description: pkg.description,
         },
       })),
-    },
-  };
+    };
+  }
 
   /**
    * Review and AggregateRating markup is emitted ONLY for testimonials flagged

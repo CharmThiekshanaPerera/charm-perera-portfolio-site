@@ -8,7 +8,7 @@ const FOOTER_LINKS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
-  { label: "Services", href: "/services" },
+  { label: "Start a Project", href: "/start" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
@@ -121,7 +121,12 @@ export function SiteFooter({ settings }: { settings: SiteSettingsData }) {
             <p>
               © {year} {settings.fullName}. All rights reserved.
             </p>
-            <p>Built with Next.js, TypeScript &amp; MongoDB</p>
+            <p className="flex items-center gap-3">
+              <span>Built with Next.js, TypeScript &amp; MongoDB</span>
+              <Link href="/privacy" className="transition-colors hover:text-primary">
+                Privacy Policy
+              </Link>
+            </p>
             {settings.availability ? (
               <p className="rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-xs">
                 {settings.availability}

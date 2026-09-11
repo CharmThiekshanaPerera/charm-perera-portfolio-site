@@ -20,6 +20,11 @@ async function sendNotificationEmail(payload: {
   subject: string;
   message: string;
   interestedIn: string;
+  kind: string;
+  company: string;
+  projectType: string;
+  timeline: string;
+  currentUrl: string;
 }) {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_NOTIFY_EMAIL;
@@ -39,10 +44,16 @@ async function sendNotificationEmail(payload: {
         reply_to: payload.email,
         subject: payload.subject
           ? `Portfolio enquiry: ${payload.subject}`
-          : `New portfolio enquiry from ${payload.name}`,
+          : payload.kind === "project"
+            ? `New project inquiry from ${payload.name}`
+            : `New portfolio enquiry from ${payload.name}`,
         text: [
           `Name: ${payload.name}`,
           `Email: ${payload.email}`,
+          payload.company ? `Company: ${payload.company}` : "",
+          payload.projectType ? `Project type: ${payload.projectType}` : "",
+          payload.timeline ? `Timeline: ${payload.timeline}` : "",
+          payload.currentUrl ? `Current site: ${payload.currentUrl}` : "",
           payload.interestedIn ? `Interested in: ${payload.interestedIn}` : "",
           "",
           payload.message,
@@ -100,12 +111,17 @@ export async function POST(request: Request) {
   try {
     await connectToDatabase();
     await Message.create({
+      kind: data.kind,
       name: data.name,
       email: data.email,
       subject: data.subject,
       message: data.message,
       budget: data.budget,
       interestedIn: data.interestedIn,
+      company: data.company,
+      projectType: data.projectType,
+      timeline: data.timeline,
+      currentUrl: data.currentUrl,
       status: "unread",
       ipHash: hashIp(request.headers),
       userAgent: request.headers.get("user-agent")?.slice(0, 300) || "",
@@ -125,6 +141,11 @@ export async function POST(request: Request) {
     subject: data.subject,
     message: data.message,
     interestedIn: data.interestedIn,
+    kind: data.kind,
+    company: data.company,
+    projectType: data.projectType,
+    timeline: data.timeline,
+    currentUrl: data.currentUrl,
   });
 
   return NextResponse.json({ ok: true });
