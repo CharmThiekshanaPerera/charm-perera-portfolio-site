@@ -882,4 +882,148 @@ export const projects: ProjectInput[] = [
     seoDescription:
       "Quiet is a minimalist, fully on-device Android launcher for intentional phone use — no ads, no tracking, no analytics.",
   },
+
+  // ---------------------------------------------------------------------
+  // Verified via live fetch of each site (meta author/designer/developer
+  // tags where noted) — draft (published: false) until the flagged open
+  // items below are confirmed: tech stack, and for #14/#15/#16 the
+  // client-vs-personal / real-name-vs-anonymized decisions.
+  // ---------------------------------------------------------------------
+  {
+    title: "FBV Down",
+    slug: "fbv-down",
+    description:
+      "A free online tool for downloading Facebook videos in HD or SD quality, no login or software required.",
+    fullDescription:
+      "A free online tool for downloading Facebook videos in HD or SD quality, no login or software required.",
+    body: [
+      "## Overview",
+      "",
+      "A free online tool for downloading Facebook videos in HD or SD quality, no login or software required.",
+    ].join("\n"),
+    // Stack not yet confirmed — do not guess.
+    technologies: ["[CONFIRM STACK]"],
+    coverImage: "",
+    liveUrl: "https://www.fbvdown.com",
+    repoUrl: "",
+    // Own project, not client work — confirmed via the site's own meta author tag.
+    client: "Own project (not client work)",
+    category: "Web / Tool",
+    featured: false,
+    published: false,
+    order: 29,
+    completedAt: null, // no build date confirmed — do not invent one
+    seoTitle: "",
+    seoDescription: "",
+  },
+  {
+    title: "Austin House",
+    slug: "austin-house",
+    description:
+      "Website for Austin House, an aesthetic and beauty centre in Colombo offering facials, laser treatments, manicures, and wellness services.",
+    fullDescription:
+      "Website for Austin House, an aesthetic and beauty centre in Colombo offering facials, laser treatments, manicures, and wellness services. Also available at austinhouse.com.lk.",
+    body: [
+      "## Overview",
+      "",
+      "Website for Austin House, an aesthetic and beauty centre in Colombo offering facials, laser treatments, manicures, and wellness services. Also available at austinhouse.com.lk.",
+    ].join("\n"),
+    // Stack not yet confirmed — do not guess.
+    technologies: ["[CONFIRM STACK]"],
+    coverImage: "",
+    liveUrl: "https://austinhouse.lk",
+    repoUrl: "",
+    client: "Austin House Aesthetic Centre",
+    category: "Web / Business site",
+    featured: false,
+    published: false,
+    order: 30,
+    completedAt: null,
+    seoTitle: "",
+    seoDescription: "",
+  },
+  {
+    title: "Tech Agent Labs",
+    slug: "tech-agent-labs",
+    description:
+      "A marketplace and custom-development studio for production-ready AI agents — plug-and-play automation bots for sales, support, and business operations.",
+    fullDescription:
+      "A marketplace and custom-development studio for production-ready AI agents — plug-and-play automation bots for sales, support, and business operations.",
+    body: [
+      "## Overview",
+      "",
+      "A marketplace and custom-development studio for production-ready AI agents — plug-and-play automation bots for sales, support, and business operations.",
+    ].join("\n"),
+    // Stack not yet confirmed — do not guess.
+    technologies: ["[CONFIRM STACK]"],
+    coverImage: "",
+    liveUrl: "https://techagentlabs.com",
+    repoUrl: "",
+    // No authorship meta-tag confirmation available for this one — client vs
+    // personal project is unresolved, unlike FBV Down/Austin House above.
+    client: "[CONFIRM: client project or personal/own project]",
+    category: "Web / SaaS marketplace",
+    featured: false,
+    published: false,
+    order: 31,
+    completedAt: null,
+    seoTitle: "",
+    seoDescription: "",
+  },
+  {
+    title: "Kavini & Nuwan Wedding Invitation",
+    slug: "kavini-nuwan-wedding-invitation",
+    description:
+      "A digital wedding invitation for Kavini & Nuwan, featuring RSVP collection via WhatsApp, event countdown, embedded map/calendar integration, and a couple's-story section.",
+    fullDescription:
+      "A digital wedding invitation for Kavini & Nuwan, featuring RSVP collection via WhatsApp, event countdown, embedded map/calendar integration, and a couple's-story section.",
+    body: [
+      "## Overview",
+      "",
+      "A digital wedding invitation for Kavini & Nuwan, featuring RSVP collection via WhatsApp, event countdown, embedded map/calendar integration, and a couple's-story section.",
+    ].join("\n"),
+    // Next.js/Vercel confirmed by hosting; any other stack pieces unconfirmed.
+    technologies: ["Next.js", "Vercel", "[CONFIRM any others]"],
+    coverImage: "",
+    liveUrl: "https://kavini-nuwan-wedding.vercel.app",
+    repoUrl: "",
+    // Real vs. anonymized naming for a private client is unresolved — using
+    // the given names as a working placeholder until confirmed.
+    client: "Kavini & Nuwan [CONFIRM: real names OK, or anonymize to \"Private client\"?]",
+    // Same category string as the Homecoming Reception entry below, on
+    // purpose — "related projects" is an exact category match, so this is
+    // what makes the two companion sites cross-link to each other.
+    category: "Web / Event",
+    featured: false,
+    published: false,
+    order: 32,
+    completedAt: null,
+    seoTitle: "",
+    seoDescription: "",
+  },
+  {
+    title: "Nuwan & Kavini Homecoming Reception",
+    slug: "nuwan-kavini-homecoming-reception",
+    description:
+      "A companion invitation site for the couple's homecoming reception, reusing the wedding invitation's design system for a second event.",
+    fullDescription:
+      "A companion invitation site for the couple's homecoming reception, reusing the wedding invitation's design system for a second event.",
+    body: [
+      "## Overview",
+      "",
+      "A companion invitation site for the couple's homecoming reception, reusing the wedding invitation's design system for a second event.",
+    ].join("\n"),
+    technologies: ["Next.js", "Vercel", "[CONFIRM any others]"],
+    coverImage: "",
+    liveUrl: "https://homecoming-reception.vercel.app",
+    repoUrl: "",
+    client: "Kavini & Nuwan [CONFIRM: real names OK, or anonymize to \"Private client\"?]",
+    category: "Web / Event", // same string as #15 — see comment there
+    featured: false,
+    published: false,
+    order: 33,
+    completedAt: null,
+    seoTitle: "",
+    seoDescription: "",
+  },
 ];
