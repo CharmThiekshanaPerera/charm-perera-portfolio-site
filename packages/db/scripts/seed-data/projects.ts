@@ -55,29 +55,32 @@ export const projects: ProjectInput[] = [
   {
     title: "Lifesaylor Affirmation",
     slug: "lifesaylor-affirmation",
+    // Content replaced 2026-09 with verified Play Store listing data supplied
+    // directly by the user — including a corrected liveUrl package ID
+    // (previously com.lifesaylor.affirmation). The prior voice-recording /
+    // background-audio description was superseded, not merged, since the
+    // verified listing describes a curated affirmation library instead.
     description:
-      "A companion app focused on personal growth and positive mindset reinforcement. Features engaging UI/UX design and comprehensive testing for optimal performance.",
+      "A companion app to Lifesaylor focused on daily affirmations across self-love, success, gratitude, and stress relief, helping users build a consistent positive-thinking practice.",
     fullDescription:
-      "This companion app takes personal growth further with an advanced affirmation system. Users can create custom affirmations, set personalized goals, and track their journey with detailed analytics. The app features voice recording for self-affirmations, background audio support, and integration with wellness tracking.",
+      "A companion app to Lifesaylor focused on daily affirmations across self-love, success, gratitude, and stress relief, helping users build a consistent positive-thinking practice.",
     body: [
       "## Overview",
       "",
-      "A companion product to Lifesaylor, built around user-authored affirmations rather than curated content. The premise: an affirmation in your own voice is more effective than one written by a stranger.",
+      "A companion app to Lifesaylor focused on daily affirmations across self-love, success, gratitude, and stress relief, helping users build a consistent positive-thinking practice.",
       "",
-      "## Key features",
+      "## What I built",
       "",
-      "- Custom affirmation authoring with categories and scheduling",
-      "- Voice recording, so users can play affirmations back in their own voice",
-      "- Background audio support that survives app backgrounding and screen lock",
-      "- Goal setting with journey analytics",
+      "- A curated affirmation library organized by life area (self-love, success, gratitude, stress relief)",
+      "- A simple, distraction-free interface for daily affirmation browsing",
       "",
-      "## Engineering focus",
+      "## Outcome",
       "",
-      "Audio was the hard part. Recording, storing and reliably playing user audio in the background across both iOS and Android meant handling platform audio-session differences, interruption events (calls, other media) and storage permissions carefully. Extensive device testing covered the fragmentation that automated tests cannot reach.",
+      "Published to the Google Play Store with a 4.9-star rating across 15 reviews.",
     ].join("\n"),
-    technologies: ["Mobile App", "React Native", "UI/UX", "Audio", "Personal Growth"],
+    technologies: ["React Native", "Android", "iOS"],
     coverImage: "",
-    liveUrl: "https://play.google.com/store/apps/details?id=com.lifesaylor.affirmation",
+    liveUrl: "https://play.google.com/store/apps/details?id=life.saylor.affirmation",
     repoUrl: "",
     client: "Space IT Labs",
     category: "Mobile",
@@ -85,9 +88,9 @@ export const projects: ProjectInput[] = [
     published: true,
     order: 1,
     completedAt: new Date("2024-02-01"),
-    seoTitle: "Lifesaylor Affirmation — Personal Growth App Case Study",
+    seoTitle: "Lifesaylor Affirmation — Daily Affirmations App Case Study",
     seoDescription:
-      "Building a voice-enabled affirmation app for iOS and Android, with background audio and journey analytics.",
+      "A companion app to Lifesaylor delivering daily affirmations across self-love, success, gratitude, and stress relief.",
   },
   {
     title: "E-Commerce Platform",
@@ -866,7 +869,11 @@ export const projects: ProjectInput[] = [
     // Personal project under Charm's own company, not client work — the schema
     // has no dedicated field for that distinction, so it's noted in `client`.
     client: "Nesture Labs (own project — founder: Charm Thiekshana Perera)",
-    category: "Mobile / Productivity",
+    // Set to plain "Mobile" (not "Mobile / Productivity" as given) so it
+    // exact-matches Lifesaylor/Lifesaylor Affirmation's category — "related
+    // projects" is a strict string match, so this is what makes the three
+    // mobile apps actually cross-link to each other.
+    category: "Mobile",
     featured: false,
     published: true,
     order: 28,
