@@ -4,7 +4,7 @@ import { Github } from "lucide-react";
 import { Icon } from "@/components/shared/icon";
 import { LivePreviewFrame } from "./live-preview-frame";
 import type { ProjectCardData } from "@/lib/card-data";
-import { isLikelyEmbeddable } from "@/lib/live-preview";
+import { isAppIcon, isLikelyEmbeddable } from "@/lib/live-preview";
 import { cn } from "@charm/ui/cn";
 
 /**
@@ -27,13 +27,26 @@ export function ProjectCard({
       )}
     >
       {project.coverImage ? (
-        <div className="relative aspect-[16/9] overflow-hidden">
+        <div
+          className={cn(
+            "relative aspect-[16/9] overflow-hidden",
+            // App icons (mobile projects) are square and look distorted/
+            // oversized when cropped edge-to-edge into a wide card — show
+            // them whole, centered, on a neutral backdrop instead. Real
+            // website screenshots still crop to fill, which is what makes
+            // them read as a photo of the actual site.
+            isAppIcon(project.category) && "bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10",
+          )}
+        >
           <Image
             src={project.coverImage}
-            alt={`${project.title} — project screenshot`}
+            alt={`${project.title} — ${isAppIcon(project.category) ? "app icon" : "project screenshot"}`}
             fill
             sizes={wide ? "(max-width: 640px) 100vw, 66vw" : "(max-width: 640px) 100vw, 33vw"}
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className={cn(
+              "transition-transform duration-500 group-hover:scale-105",
+              isAppIcon(project.category) ? "object-contain p-10 sm:p-12" : "object-cover",
+            )}
           />
         </div>
       ) : project.liveUrl && isLikelyEmbeddable(project.liveUrl) ? (

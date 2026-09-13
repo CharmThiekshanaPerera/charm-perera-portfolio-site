@@ -45,3 +45,11 @@ export function isLikelyEmbeddable(url: string, { allowSelf = false } = {}): boo
     return false;
   }
 }
+
+/** True for project categories whose `coverImage` is a square app icon
+ * (from a Play/App Store listing) rather than a landscape website
+ * screenshot — those need `object-contain` on a padded backdrop instead of
+ * `object-cover`, or they render as a distorted, oversized crop. */
+export function isAppIcon(category: string): boolean {
+  return category.toLowerCase().includes("mobile");
+}

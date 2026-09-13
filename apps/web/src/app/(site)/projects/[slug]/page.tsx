@@ -4,12 +4,13 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import { Button } from "@charm/ui/button";
+import { cn } from "@charm/ui/cn";
 import { Markdown } from "@/components/site/markdown";
 import { LivePreviewFrame } from "@/components/site/live-preview-frame";
 import { getProjectBySlug, getProjects, getSiteSettings, getSiteUrl } from "@/lib/content";
 import { JsonLd, breadcrumbSchema, projectSchema } from "@/lib/jsonld";
 import { formatDate } from "@/lib/format";
-import { isLikelyEmbeddable } from "@/lib/live-preview";
+import { isAppIcon, isLikelyEmbeddable } from "@/lib/live-preview";
 
 export const revalidate = 3600;
 /** Any slug not pre-rendered is generated on first request, then cached. */
@@ -154,14 +155,20 @@ export default async function ProjectPage({ params }: PageProps) {
           </header>
 
           {project.coverImage ? (
-            <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-2xl border border-border">
+            <div
+              className={cn(
+                "relative mb-10 aspect-[16/9] overflow-hidden rounded-2xl border border-border",
+                isAppIcon(project.category) &&
+                  "bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10",
+              )}
+            >
               <Image
                 src={project.coverImage}
-                alt={`${project.title} screenshot`}
+                alt={`${project.title} — ${isAppIcon(project.category) ? "app icon" : "screenshot"}`}
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 768px"
-                className="object-cover"
+                className={isAppIcon(project.category) ? "object-contain p-12 sm:p-16" : "object-cover"}
               />
             </div>
           ) : project.liveUrl && isLikelyEmbeddable(project.liveUrl, { allowSelf: true }) ? (

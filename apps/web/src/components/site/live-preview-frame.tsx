@@ -60,21 +60,33 @@ export function LivePreviewFrame({
       )}
     >
       {scale > 0 ? (
-        <iframe
-          src={url}
-          title={`${title} — live preview`}
-          loading="lazy"
-          sandbox="allow-scripts allow-same-origin"
-          referrerPolicy="no-referrer"
-          tabIndex={-1}
-          aria-hidden="true"
-          className="pointer-events-none absolute left-0 top-0 origin-top-left border-0"
-          style={{
-            width: REFERENCE_WIDTH,
-            height: REFERENCE_HEIGHT,
-            transform: `scale(${scale})`,
-          }}
-        />
+        <>
+          <iframe
+            src={url}
+            title={`${title} — live preview`}
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin"
+            referrerPolicy="no-referrer"
+            tabIndex={-1}
+            aria-hidden="true"
+            className="pointer-events-none absolute left-0 top-0 origin-top-left border-0"
+            style={{
+              width: REFERENCE_WIDTH,
+              height: REFERENCE_HEIGHT,
+              transform: `scale(${scale})`,
+            }}
+          />
+          {/*
+            A site that refuses to be framed (X-Frame-Options/CSP) still
+            paints its own blank white document canvas inside the iframe's
+            bounds — there is no way to detect this or make it transparent
+            from here. A fixed dark tint, independent of theme, turns that
+            jarring white box into a muted, deliberate-looking thumbnail
+            instead, while still letting a real successful preview show
+            through underneath.
+          */}
+          <div className="pointer-events-none absolute inset-0 bg-black/25" aria-hidden="true" />
+        </>
       ) : null}
       {href ? (
         <Link

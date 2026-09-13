@@ -22,6 +22,7 @@ export type ProjectCardData = {
   liveUrl: string;
   repoUrl: string;
   featured: boolean;
+  category: string;
 };
 
 export type PostCardData = {
@@ -55,6 +56,7 @@ export function toProjectCard(project: ProjectDoc): ProjectCardData {
     liveUrl: project.liveUrl ?? "",
     repoUrl: project.repoUrl ?? "",
     featured: Boolean(project.featured),
+    category: project.category ?? "",
   };
 }
 
