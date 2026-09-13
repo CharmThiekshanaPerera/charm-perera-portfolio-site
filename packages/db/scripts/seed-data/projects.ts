@@ -79,7 +79,11 @@ export const projects: ProjectInput[] = [
       "Published to the Google Play Store with a 4.9-star rating across 15 reviews.",
     ].join("\n"),
     technologies: ["React Native", "Android", "iOS"],
-    coverImage: "",
+    // Real app icon, sourced directly from the Play Store listing's own
+    // og:image meta tag (play-lh.googleusercontent.com is Google's own CDN,
+    // already an allowed image host — not a guess or a third-party mirror).
+    coverImage:
+      "https://play-lh.googleusercontent.com/LB0sB8HwCE7PIjLTYZ2PEXohF0DFSVwDCHYXuev86EbtfVw1iz-K1-g1zHjMRTOITjaCf_HiQpqBIq_4JTI3=s0-br30",
     liveUrl: "https://play.google.com/store/apps/details?id=life.saylor.affirmation",
     repoUrl: "",
     client: "Space IT Labs",
@@ -537,8 +541,12 @@ export const projects: ProjectInput[] = [
   {
     title: "Lanka Pass Travel",
     slug: "lanka-pass-travel",
-    description: "[TODO: short one-line summary]",
-    fullDescription: "[TODO: describe what you actually built here]",
+    // description/category confirmed 2026-09 via live fetch of the site's own
+    // <title>/meta description — "what I built" below is still unconfirmed.
+    description:
+      "A travel agency website for Lanka Pass, offering premium travel services and tour planning across Sri Lanka.",
+    fullDescription:
+      "A travel agency website for Lanka Pass, offering premium travel services and tour planning across Sri Lanka.",
     body: [
       "## Overview",
       "",
@@ -561,20 +569,25 @@ export const projects: ProjectInput[] = [
     liveUrl: "https://lankapasstravel.com",
     repoUrl: "",
     client: "[CLIENT NAME]",
-    // Guess from the domain name ("travel") — confirm or correct.
+    // Confirmed via live fetch, not a domain-name guess.
     category: "Travel",
     featured: false,
     published: false,
     order: 20,
     completedAt: new Date("2026-08-01"), // ~Aug 2026, approximate (file timestamp)
-    seoTitle: "",
-    seoDescription: "",
+    seoTitle: "Lanka Pass — Sri Lanka Travel Agency Website",
+    seoDescription:
+      "Website for Lanka Pass, a premium travel agency offering tours and accommodation booking across Sri Lanka.",
   },
   {
     title: "Lynk Facility",
     slug: "lynk-facility",
-    description: "[TODO: short one-line summary]",
-    fullDescription: "[TODO: describe what you actually built here]",
+    // description/category confirmed 2026-09 via live fetch of the site's own
+    // <title>/meta description — "what I built" below is still unconfirmed.
+    description:
+      "A business website for Lynk Facility Services, a professional commercial, residential and construction cleaning company operating in Australia.",
+    fullDescription:
+      "A business website for Lynk Facility Services, a professional commercial, residential and construction cleaning company operating in Australia.",
     body: [
       "## Overview",
       "",
@@ -597,20 +610,28 @@ export const projects: ProjectInput[] = [
     liveUrl: "https://lynkfacility.com.au",
     repoUrl: "",
     client: "[CLIENT NAME]",
-    // Guess from the domain name ("facility") — confirm or correct.
-    category: "Business Site",
+    // Confirmed via live fetch: professional cleaning services company.
+    category: "Cleaning Services",
     featured: false,
     published: false,
     order: 21,
     completedAt: new Date("2025-12-01"), // ~Dec 2025, approximate (file timestamp)
-    seoTitle: "",
-    seoDescription: "",
+    seoTitle: "Lynk Facility Services — Professional Cleaning Company Website",
+    seoDescription:
+      "Website for Lynk Facility Services, providing commercial, residential and construction cleaning across Australia.",
   },
   {
     title: "Amazon College",
     slug: "amazon-college",
-    description: "[TODO: short one-line summary]",
-    fullDescription: "[TODO: describe what you actually built here]",
+    // description/category confirmed 2026-09 via live fetch of the site's own
+    // <title>/meta description — "what I built" below is still unconfirmed.
+    // Note: live preview will not render for this one — amazoncollege.lk
+    // sends X-Frame-Options: SAMEORIGIN, which blocks embedding entirely
+    // (confirmed by direct fetch); not a bug in the preview feature.
+    description:
+      "A website for Amazon College International Campus, offering diploma programs, language courses, and teacher training with global university transfer pathways.",
+    fullDescription:
+      "A website for Amazon College International Campus, offering diploma programs, language courses, and teacher training with global university transfer pathways.",
     body: [
       "## Overview",
       "",
@@ -634,20 +655,24 @@ export const projects: ProjectInput[] = [
     liveUrl: "https://amazoncollege.lk",
     repoUrl: "",
     client: "[CLIENT NAME]",
-    // "College" in the name — reasonably confident this is Education.
     category: "Education",
     featured: false,
     published: false,
     order: 22,
     completedAt: new Date("2026-04-01"), // ~Apr 2026, approximate (file timestamp)
-    seoTitle: "",
-    seoDescription: "",
+    seoTitle: "Amazon College — International Campus Website",
+    seoDescription:
+      "Website for Amazon College, an international campus offering diploma programs, language courses and teacher training in Sri Lanka.",
   },
   {
     title: "Christech",
     slug: "christech",
-    description: "[TODO: short one-line summary]",
-    fullDescription: "[TODO: describe what you actually built here]",
+    // description/category confirmed 2026-09 via live fetch of the site's own
+    // <title>/meta description — "what I built" below is still unconfirmed.
+    description:
+      "A business website for ChrisTech Security Solutions, a professional security services company based in Negombo, Sri Lanka.",
+    fullDescription:
+      "A business website for ChrisTech Security Solutions, a professional security services company based in Negombo, Sri Lanka.",
     body: [
       "## Overview",
       "",
@@ -670,20 +695,26 @@ export const projects: ProjectInput[] = [
     liveUrl: "https://christech.lk",
     repoUrl: "",
     client: "[CLIENT NAME]",
-    // No confident signal from the name — generic placeholder, please correct.
-    category: "Business Site",
+    // Confirmed via live fetch: security services company.
+    category: "Security Services",
     featured: false,
     published: false,
     order: 23,
     completedAt: new Date("2022-02-01"), // ~Feb 2022, approximate (file timestamp) — the oldest of this batch
-    seoTitle: "",
-    seoDescription: "",
+    seoTitle: "ChrisTech Security Solutions — Company Website",
+    seoDescription:
+      "Website for ChrisTech Security Solutions, a professional security services provider in Negombo, Sri Lanka.",
   },
   {
-    title: "HigenIQ",
+    title: "Higeniq",
     slug: "higeniq",
-    description: "[TODO: short one-line summary]",
-    fullDescription: "[TODO: describe what you actually built here]",
+    // description/category confirmed 2026-09 via live fetch of the site's own
+    // <title>/meta description ("Higeniq Cleaning Supplies") — corrects the
+    // earlier "HigenIQ" title guess. "What I built" below is still unconfirmed.
+    description:
+      "A business website for Higeniq Cleaning Supplies, providing hygiene products, disinfectants and commercial cleaning solutions.",
+    fullDescription:
+      "A business website for Higeniq Cleaning Supplies, providing hygiene products, disinfectants and commercial cleaning solutions.",
     body: [
       "## Overview",
       "",
@@ -706,20 +737,31 @@ export const projects: ProjectInput[] = [
     liveUrl: "https://higeniq.phyxle.com.au",
     repoUrl: "",
     client: "[CLIENT NAME]",
-    // No confident signal from the name — generic placeholder, please correct.
-    category: "Business Site",
+    // Confirmed via live fetch: cleaning supplies business. Same category as
+    // Cleany Glow below — possibly related businesses, worth confirming.
+    category: "Cleaning Supplies",
     featured: false,
     published: false,
     order: 24,
     completedAt: new Date("2026-03-01"), // ~Mar 2026, approximate (file timestamp)
-    seoTitle: "",
-    seoDescription: "",
+    seoTitle: "Higeniq Cleaning Supplies — Company Website",
+    seoDescription:
+      "Website for Higeniq, a supplier of hygiene products, disinfectants and commercial cleaning solutions.",
   },
   {
     title: "Lynk Facility Onboarding",
     slug: "lynk-facility-onboarding",
-    description: "[TODO: short one-line summary]",
-    fullDescription: "[TODO: describe what you actually built here]",
+    // description confirmed 2026-09 via live fetch — the page itself is
+    // literally titled "Onboarding Process", confirming this is an internal
+    // staff/contractor onboarding portal, not a public marketing page.
+    // seoTitle/seoDescription deliberately left empty: an internal tool
+    // probably shouldn't compete for public search terms the way the other
+    // sites should — worth confirming whether this project should even be
+    // publicly indexed once published.
+    description:
+      "An onboarding portal for Lynk Facility Services staff and contractors, hosted as a subdomain of the main Lynk Facility site.",
+    fullDescription:
+      "An onboarding portal for Lynk Facility Services staff and contractors, hosted as a subdomain of the main Lynk Facility site.",
     body: [
       "## Overview",
       "",
@@ -754,8 +796,12 @@ export const projects: ProjectInput[] = [
   {
     title: "Aerotek",
     slug: "aerotek",
-    description: "[TODO: short one-line summary]",
-    fullDescription: "[TODO: describe what you actually built here]",
+    // description/category confirmed 2026-09 via live fetch of the site's own
+    // <title>/meta description — "what I built" below is still unconfirmed.
+    description:
+      "A business website for Aerotek Lanka, providing industrial, commercial and domestic ventilation and HVAC solutions across Sri Lanka.",
+    fullDescription:
+      "A business website for Aerotek Lanka, providing industrial, commercial and domestic ventilation and HVAC solutions across Sri Lanka.",
     body: [
       "## Overview",
       "",
@@ -778,20 +824,25 @@ export const projects: ProjectInput[] = [
     liveUrl: "https://aerotek.lk",
     repoUrl: "",
     client: "[CLIENT NAME]",
-    // No confident signal from the name — generic placeholder, please correct.
-    category: "Business Site",
+    // Confirmed via live fetch: ventilation/HVAC solutions provider.
+    category: "HVAC / Ventilation Solutions",
     featured: false,
     published: false,
     order: 26,
     completedAt: new Date("2026-02-01"), // ~Feb 2026, approximate (file timestamp)
-    seoTitle: "",
-    seoDescription: "",
+    seoTitle: "Aerotek Lanka — Ventilation & HVAC Solutions Website",
+    seoDescription:
+      "Website for Aerotek Lanka, delivering industrial, commercial and domestic ventilation and HVAC solutions.",
   },
   {
     title: "Cleany Glow",
     slug: "cleanyglow",
-    description: "[TODO: short one-line summary]",
-    fullDescription: "[TODO: describe what you actually built here]",
+    // category confirmed 2026-09 via live fetch — the site's own meta
+    // description is just "CleanyGlow Cleaning Supplies", so this summary is
+    // necessarily thin; there's nothing more specific confirmed to add yet.
+    // Same category as Higeniq above — possibly related businesses.
+    description: "A business website for CleanyGlow Cleaning Supplies.",
+    fullDescription: "A business website for CleanyGlow Cleaning Supplies.",
     body: [
       "## Overview",
       "",
@@ -815,14 +866,13 @@ export const projects: ProjectInput[] = [
     liveUrl: "https://cleanyglow.com.au",
     repoUrl: "",
     client: "[CLIENT NAME]",
-    // Guess from the name ("cleany") — confirm or correct.
-    category: "Business Site",
+    category: "Cleaning Supplies",
     featured: false,
     published: false,
     order: 27,
     completedAt: new Date("2026-03-01"), // ~Mar 2026, approximate (file timestamp)
-    seoTitle: "",
-    seoDescription: "",
+    seoTitle: "CleanyGlow Cleaning Supplies — Company Website",
+    seoDescription: "Website for CleanyGlow, a cleaning supplies business.",
   },
 
   // ---------------------------------------------------------------------
@@ -863,7 +913,11 @@ export const projects: ProjectInput[] = [
     ].join("\n"),
     // Stack not yet confirmed — do not guess Kotlin/Java/Flutter for an Android launcher.
     technologies: ["[CONFIRM STACK]"],
-    coverImage: "",
+    // Real app icon, sourced directly from the Play Store listing's own
+    // og:image meta tag (play-lh.googleusercontent.com is Google's own CDN,
+    // already an allowed image host — not a guess or a third-party mirror).
+    coverImage:
+      "https://play-lh.googleusercontent.com/rBD4kFLqvU9P-ly4NPkqyqj15wKMtf8TEoZdF1_Zg_ZFXDUM2uPWttFUcZI0zMezhsYB_yaMuRSHvFQZt1G22Q=s0-br30",
     liveUrl: "https://play.google.com/store/apps/details?id=com.nexturelabs.quiet",
     repoUrl: "",
     // Personal project under Charm's own company, not client work — the schema
@@ -1025,5 +1079,52 @@ export const projects: ProjectInput[] = [
     completedAt: null,
     seoTitle: "",
     seoDescription: "",
+  },
+  {
+    title: "CeylonEat",
+    slug: "ceyloneat",
+    // Verified via live fetch: <title>, meta description and the site's own
+    // JSON-LD Organization/WebSite structured data (name, description,
+    // founding year). No author/designer meta tag confirming authorship —
+    // unlike Austin House/FBV Down — so double-check this one before
+    // publishing. The linked /logo.png did not actually serve an image
+    // (returned Content-Type: text/html, likely blocked by the site's WAF),
+    // so no coverImage could be sourced; live preview is also blocked
+    // (X-Frame-Options: SAMEORIGIN, confirmed by direct fetch).
+    description:
+      "CeylonEat is Sri Lanka's digital dining platform connecting diners with restaurants, hotels, resorts, cafés and premium dining experiences.",
+    fullDescription:
+      "CeylonEat is Sri Lanka's digital dining platform connecting diners with restaurants, hotels, resorts, cafés and premium dining experiences. Restaurants and hospitality partners can join CeylonEat to grow their digital presence.",
+    body: [
+      "## Overview",
+      "",
+      "CeylonEat is Sri Lanka's digital dining platform connecting diners with restaurants, hotels, resorts, cafés and premium dining experiences.",
+      "",
+      "## What I built",
+      "",
+      "[TODO: describe what you actually built here]",
+      "",
+      "## Technical notes",
+      "",
+      "[TODO: describe what you actually built here]",
+      "",
+      "## Outcome",
+      "",
+      "[TODO: describe what you actually built here]",
+    ].join("\n"),
+    // Stack not yet confirmed — do not guess.
+    technologies: ["[CONFIRM STACK]"],
+    coverImage: "",
+    liveUrl: "https://www.ceyloneat.lk",
+    repoUrl: "",
+    client: "Ceylon Eat Global (PVT) LTD [CONFIRM: client work, no authorship meta tag found]",
+    category: "Web / Booking Platform",
+    featured: false,
+    published: false,
+    order: 34,
+    completedAt: null, // company's 2025 founding year is confirmed, but that is not the same fact as the site's build date
+    seoTitle: "CeylonEat — Dining Reservations Platform Case Study",
+    seoDescription:
+      "CeylonEat is a digital dining and reservations platform connecting diners with restaurants, hotels, resorts and cafés across Sri Lanka.",
   },
 ];
