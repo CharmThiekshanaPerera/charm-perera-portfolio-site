@@ -58,10 +58,12 @@ export default async function HomePage() {
   // toggle, matching the ordering the original site used.
   // Projected to card shape before crossing into client components, so full
   // Markdown bodies never reach the RSC payload embedded in the HTML.
-  const orderedProjects = [
-    ...projects.filter((project) => project.featured),
-    ...projects.filter((project) => !project.featured),
-  ].map(toProjectCard);
+  const orderedProjects = await Promise.all(
+    [
+      ...projects.filter((project) => project.featured),
+      ...projects.filter((project) => !project.featured),
+    ].map(toProjectCard),
+  );
 
   const postCards = posts.map(toPostCard);
   const testimonialCards = testimonials.map(toTestimonialCard);

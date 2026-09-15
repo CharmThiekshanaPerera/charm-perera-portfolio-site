@@ -1,4 +1,5 @@
 import type { PostDoc, ProjectDoc, TestimonialDoc } from "@charm/db";
+import { checkFrameable, isLikelyEmbeddable } from "./live-preview";
 
 /**
  * Narrow shapes for the cards rendered inside client components.
@@ -23,6 +24,10 @@ export type ProjectCardData = {
   repoUrl: string;
   featured: boolean;
   category: string;
+  /** Resolved server-side (see live-preview.ts) — whether liveUrl's own
+   *  response headers actually allow it to be embedded in an iframe. Ready
+   *  to render as-is; ProjectCard never needs to do this check itself. */
+  previewEmbeddable: boolean;
 };
 
 export type PostCardData = {
@@ -46,17 +51,29 @@ export type TestimonialCardData = {
   website: string;
 };
 
-export function toProjectCard(project: ProjectDoc): ProjectCardData {
+/**
+ * Async because it may do a real network round-trip (checkFrameable) — call
+ * sites must `Promise.all(projects.map(toProjectCard))`, not a plain `.map`.
+ * Only actually fetches when there's no coverImage to prefer instead and the
+ * URL isn't already excluded by the cheap host-based check.
+ */
+export async function toProjectCard(project: ProjectDoc): Promise<ProjectCardData> {
+  const coverImage = project.coverImage ?? "";
+  const liveUrl = project.liveUrl ?? "";
+  const previewEmbeddable =
+    !coverImage && liveUrl && isLikelyEmbeddable(liveUrl) ? await checkFrameable(liveUrl) : false;
+
   return {
     slug: project.slug,
     title: project.title,
     description: project.description,
     technologies: project.technologies ?? [],
-    coverImage: project.coverImage ?? "",
-    liveUrl: project.liveUrl ?? "",
+    coverImage,
+    liveUrl,
     repoUrl: project.repoUrl ?? "",
     featured: Boolean(project.featured),
     category: project.category ?? "",
+    previewEmbeddable,
   };
 }
 

@@ -10,7 +10,7 @@ import { LivePreviewFrame } from "@/components/site/live-preview-frame";
 import { getProjectBySlug, getProjects, getSiteSettings, getSiteUrl } from "@/lib/content";
 import { JsonLd, breadcrumbSchema, projectSchema } from "@/lib/jsonld";
 import { formatDate } from "@/lib/format";
-import { isAppIcon, isLikelyEmbeddable } from "@/lib/live-preview";
+import { checkFrameable, isAppIcon, isLikelyEmbeddable } from "@/lib/live-preview";
 
 export const revalidate = 3600;
 /** Any slug not pre-rendered is generated on first request, then cached. */
@@ -60,6 +60,11 @@ export default async function ProjectPage({ params }: PageProps) {
   const related = allProjects
     .filter((item) => item.slug !== project.slug && item.category === project.category)
     .slice(0, 3);
+
+  const previewEmbeddable =
+    !project.coverImage && project.liveUrl && isLikelyEmbeddable(project.liveUrl, { allowSelf: true })
+      ? await checkFrameable(project.liveUrl)
+      : false;
 
   return (
     <>
@@ -171,7 +176,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 className={isAppIcon(project.category) ? "object-contain p-12 sm:p-16" : "object-cover"}
               />
             </div>
-          ) : project.liveUrl && isLikelyEmbeddable(project.liveUrl, { allowSelf: true }) ? (
+          ) : previewEmbeddable ? (
             <LivePreviewFrame
               url={project.liveUrl}
               title={project.title}

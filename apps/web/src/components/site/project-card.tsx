@@ -4,7 +4,7 @@ import { Github } from "lucide-react";
 import { Icon } from "@/components/shared/icon";
 import { LivePreviewFrame } from "./live-preview-frame";
 import type { ProjectCardData } from "@/lib/card-data";
-import { isAppIcon, isLikelyEmbeddable } from "@/lib/live-preview";
+import { isAppIcon } from "@/lib/live-preview";
 import { cn } from "@charm/ui/cn";
 
 /**
@@ -49,7 +49,7 @@ export function ProjectCard({
             )}
           />
         </div>
-      ) : project.liveUrl && isLikelyEmbeddable(project.liveUrl) ? (
+      ) : project.liveUrl && project.previewEmbeddable ? (
         <LivePreviewFrame
           url={project.liveUrl}
           title={project.title}

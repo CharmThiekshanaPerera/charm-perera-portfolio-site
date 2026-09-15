@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 /**
  * Hosts known to always refuse to be embedded in an iframe (they send
  * X-Frame-Options / CSP frame-ancestors that block it). Filtering these out
@@ -53,3 +55,49 @@ export function isLikelyEmbeddable(url: string, { allowSelf = false } = {}): boo
 export function isAppIcon(category: string): boolean {
   return category.toLowerCase().includes("mobile");
 }
+
+/**
+ * Server-side, header-based check for whether a site actually allows being
+ * framed — the only fully reliable way to know. A client-side check (inspect
+ * the iframe after it loads) turns out NOT to work: tested directly against
+ * a real X-Frame-Options: sameorigin response, Chromium throws the exact
+ * same cross-origin SecurityError for a genuinely blocked frame as it does
+ * for a real successful load, so the two cases can't be told apart that way.
+ *
+ * This runs server-side instead, before the iframe is ever rendered: fetch
+ * the URL and read its own X-Frame-Options / CSP frame-ancestors headers
+ * directly. A network failure (including a host that doesn't resolve at
+ * all) is treated the same as "blocked" — either way there's nothing to
+ * preview. Call sites should cache/memoize this per request; it does a real
+ * network round-trip.
+ */
+export const checkFrameable = cache(async (url: string): Promise<boolean> => {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+    const response = await fetch(url, {
+      redirect: "follow",
+      signal: controller.signal,
+      headers: { "user-agent": "Mozilla/5.0 (compatible; PortfolioPreviewCheck/1.0)" },
+    }).finally(() => clearTimeout(timeoutId));
+
+    const xFrameOptions = response.headers.get("x-frame-options")?.toLowerCase().trim();
+    if (xFrameOptions === "deny" || xFrameOptions === "sameorigin") return false;
+
+    const csp = response.headers.get("content-security-policy")?.toLowerCase();
+    const frameAncestors = csp?.match(/frame-ancestors\s+([^;]+)/)?.[1]?.trim();
+    if (frameAncestors) {
+      // A wildcard is the only case that's unambiguously fine; anything
+      // else ('none', 'self', or a specific allowlist) doesn't include an
+      // arbitrary third-party origin like this portfolio.
+      if (!frameAncestors.includes("*")) return false;
+    }
+
+    return true;
+  } catch {
+    // Timed out, refused to connect, DNS never resolved, etc. — nothing a
+    // live preview could show either way.
+    return false;
+  }
+});

@@ -9,14 +9,26 @@ import { cn } from "@charm/ui/cn";
 const REFERENCE_WIDTH = 1280;
 const REFERENCE_HEIGHT = 800;
 
+/** Safety net for a load that never fires at all (e.g. the connection just
+ *  hangs) — the real filtering happens server-side, see below. */
+const LOAD_TIMEOUT_MS = 8000;
+
 /**
  * A small, always-live preview of a real site, scaled to fit its container.
  *
  * A `ResizeObserver` measures the container's actual rendered width and
  * recomputes the scale on every resize/breakpoint change — genuinely
- * responsive, no hardcoded media queries. The gradient background is the
- * fallback for the (undetectable, client-side) case where the target site
- * refuses to be framed and the iframe renders blank.
+ * responsive, no hardcoded media queries.
+ *
+ * Callers are expected to have already checked `checkFrameable()`
+ * (lib/live-preview.ts) server-side before rendering this at all — that's
+ * the actually-reliable way to know a site allows being framed. A
+ * client-side check *after* the iframe loads was tried and doesn't work:
+ * tested directly against a real X-Frame-Options: sameorigin response,
+ * Chromium throws the exact same cross-origin SecurityError for a
+ * genuinely blocked frame as it does for a real successful load, so the two
+ * can't be told apart that way. The timeout here is only a last-resort net
+ * for a load that never fires at all.
  */
 export function LivePreviewFrame({
   url,
@@ -38,6 +50,7 @@ export function LivePreviewFrame({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
+  const [timedOut, setTimedOut] = useState(false);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -50,6 +63,14 @@ export function LivePreviewFrame({
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (scale <= 0) return;
+    const timeoutId = window.setTimeout(() => setTimedOut(true), LOAD_TIMEOUT_MS);
+    return () => window.clearTimeout(timeoutId);
+  }, [scale]);
+
+  if (timedOut) return null;
 
   return (
     <div
@@ -69,6 +90,7 @@ export function LivePreviewFrame({
             referrerPolicy="no-referrer"
             tabIndex={-1}
             aria-hidden="true"
+            onLoad={() => setTimedOut(false)}
             className="pointer-events-none absolute left-0 top-0 origin-top-left border-0"
             style={{
               width: REFERENCE_WIDTH,
@@ -76,15 +98,7 @@ export function LivePreviewFrame({
               transform: `scale(${scale})`,
             }}
           />
-          {/*
-            A site that refuses to be framed (X-Frame-Options/CSP) still
-            paints its own blank white document canvas inside the iframe's
-            bounds — there is no way to detect this or make it transparent
-            from here. A fixed dark tint, independent of theme, turns that
-            jarring white box into a muted, deliberate-looking thumbnail
-            instead, while still letting a real successful preview show
-            through underneath.
-          */}
+          {/* A slight dim reads as deliberate styling rather than an accident. */}
           <div className="pointer-events-none absolute inset-0 bg-black/25" aria-hidden="true" />
         </>
       ) : null}

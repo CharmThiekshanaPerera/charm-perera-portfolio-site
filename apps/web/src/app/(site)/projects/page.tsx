@@ -27,8 +27,10 @@ export default async function ProjectsPage() {
   const siteUrl = getSiteUrl(settings);
 
   // Card shape only: the listing never renders a case-study body.
-  const featured = projects.filter((p) => p.featured).map(toProjectCard);
-  const others = projects.filter((p) => !p.featured).map(toProjectCard);
+  const [featured, others] = await Promise.all([
+    Promise.all(projects.filter((p) => p.featured).map(toProjectCard)),
+    Promise.all(projects.filter((p) => !p.featured).map(toProjectCard)),
+  ]);
 
   return (
     <>
