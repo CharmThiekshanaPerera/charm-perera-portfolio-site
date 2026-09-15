@@ -39,8 +39,14 @@ export const projects: ProjectInput[] = [
       "Shipped to the Google Play Store and adopted across healthcare settings, where it supports patients and staff in maintaining daily motivation.",
     ].join("\n"),
     technologies: ["Mobile App", "Android", "iOS", "React Native", "Healthcare"],
-    coverImage: "",
-    liveUrl: "https://play.google.com/store/apps/details?id=com.lifesaylor",
+    // Real app icon, sourced directly from the Play Store listing's own
+    // og:image meta tag (play-lh.googleusercontent.com is Google's own CDN,
+    // already an allowed image host — not a guess or a third-party mirror).
+    coverImage:
+      "https://play-lh.googleusercontent.com/l1LXaImgA0rx5tn3i6hnT2FG-uxj1nS6Mt_kQSnmuNVzuGuVdzypy3nQQO-aWMJqoPgP-U02Doh5nW9h5_QfvQ=s0-br30",
+    // Corrected package ID — the old id=com.lifesaylor 404s (app doesn't
+    // exist under that ID; verified separately). This is the real listing.
+    liveUrl: "https://play.google.com/store/apps/details?id=life.saylor.daily.motivation",
     repoUrl: "",
     client: "Space IT Labs",
     category: "Mobile",
@@ -550,29 +556,17 @@ export const projects: ProjectInput[] = [
     body: [
       "## Overview",
       "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## What I built",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Technical notes",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Outcome",
-      "",
-      "[TODO: describe what you actually built here]",
+      "A travel agency website for Lanka Pass, offering premium travel services and tour planning across Sri Lanka.",
     ].join("\n"),
     technologies: ["Static Site"],
     coverImage: "",
     liveUrl: "https://lankapasstravel.com",
     repoUrl: "",
-    client: "[CLIENT NAME]",
+    client: "Lanka Pass",
     // Confirmed via live fetch, not a domain-name guess.
     category: "Travel",
     featured: false,
-    published: false,
+    published: true,
     order: 20,
     completedAt: new Date("2026-08-01"), // ~Aug 2026, approximate (file timestamp)
     seoTitle: "Lanka Pass — Sri Lanka Travel Agency Website",
@@ -591,29 +585,17 @@ export const projects: ProjectInput[] = [
     body: [
       "## Overview",
       "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## What I built",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Technical notes",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Outcome",
-      "",
-      "[TODO: describe what you actually built here]",
+      "A business website for Lynk Facility Services, a professional commercial, residential and construction cleaning company operating in Australia.",
     ].join("\n"),
     technologies: ["Static Site"],
     coverImage: "",
     liveUrl: "https://lynkfacility.com.au",
     repoUrl: "",
-    client: "[CLIENT NAME]",
+    client: "Lynk Facility Services",
     // Confirmed via live fetch: professional cleaning services company.
     category: "Cleaning Services",
     featured: false,
-    published: false,
+    published: true,
     order: 21,
     completedAt: new Date("2025-12-01"), // ~Dec 2025, approximate (file timestamp)
     seoTitle: "Lynk Facility Services — Professional Cleaning Company Website",
@@ -635,29 +617,16 @@ export const projects: ProjectInput[] = [
     body: [
       "## Overview",
       "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## What I built",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Technical notes",
-      "",
-      // Flagged so the shared-docroot detail isn't lost before you write this up.
-      "[TODO: describe what you actually built here — note: shares a docroot with amazon.phyxle.com.au]",
-      "",
-      "## Outcome",
-      "",
-      "[TODO: describe what you actually built here]",
+      "A website for Amazon College International Campus, offering diploma programs, language courses, and teacher training with global university transfer pathways. Shares a docroot with amazon.phyxle.com.au.",
     ].join("\n"),
     technologies: ["Static Site"],
     coverImage: "",
     liveUrl: "https://amazoncollege.lk",
     repoUrl: "",
-    client: "[CLIENT NAME]",
+    client: "Amazon College International Campus",
     category: "Education",
     featured: false,
-    published: false,
+    published: true,
     order: 22,
     completedAt: new Date("2026-04-01"), // ~Apr 2026, approximate (file timestamp)
     seoTitle: "Amazon College — International Campus Website",
@@ -676,29 +645,17 @@ export const projects: ProjectInput[] = [
     body: [
       "## Overview",
       "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## What I built",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Technical notes",
-      "",
-      "[TODO: describe what you actually built here — has a legacy PHP backend]",
-      "",
-      "## Outcome",
-      "",
-      "[TODO: describe what you actually built here]",
+      "A business website for ChrisTech Security Solutions, a professional security services company based in Negombo, Sri Lanka. Has a legacy PHP backend.",
     ].join("\n"),
     technologies: ["Static Site", "PHP"],
     coverImage: "",
     liveUrl: "https://christech.lk",
     repoUrl: "",
-    client: "[CLIENT NAME]",
+    client: "ChrisTech Security Solutions",
     // Confirmed via live fetch: security services company.
     category: "Security Services",
     featured: false,
-    published: false,
+    published: true,
     order: 23,
     completedAt: new Date("2022-02-01"), // ~Feb 2022, approximate (file timestamp) — the oldest of this batch
     seoTitle: "ChrisTech Security Solutions — Company Website",
@@ -718,30 +675,18 @@ export const projects: ProjectInput[] = [
     body: [
       "## Overview",
       "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## What I built",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Technical notes",
-      "",
-      "[TODO: describe what you actually built here — largest site of this batch, PHP backend]",
-      "",
-      "## Outcome",
-      "",
-      "[TODO: describe what you actually built here]",
+      "A business website for Higeniq Cleaning Supplies, providing hygiene products, disinfectants and commercial cleaning solutions. Largest site of this batch, with a PHP backend.",
     ].join("\n"),
     technologies: ["Static Site", "PHP"],
     coverImage: "",
     liveUrl: "https://higeniq.phyxle.com.au",
     repoUrl: "",
-    client: "[CLIENT NAME]",
+    client: "Higeniq Cleaning Supplies",
     // Confirmed via live fetch: cleaning supplies business. Same category as
     // Cleany Glow below — possibly related businesses, worth confirming.
     category: "Cleaning Supplies",
     featured: false,
-    published: false,
+    published: true,
     order: 24,
     completedAt: new Date("2026-03-01"), // ~Mar 2026, approximate (file timestamp)
     seoTitle: "Higeniq Cleaning Supplies — Company Website",
@@ -765,29 +710,17 @@ export const projects: ProjectInput[] = [
     body: [
       "## Overview",
       "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## What I built",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Technical notes",
-      "",
-      "[TODO: describe what you actually built here — Node.js + PHP backend]",
-      "",
-      "## Outcome",
-      "",
-      "[TODO: describe what you actually built here]",
+      "An onboarding portal for Lynk Facility Services staff and contractors, hosted as a subdomain of the main Lynk Facility site. Built with a Node.js + PHP backend.",
     ].join("\n"),
     technologies: ["Static Site", "Node.js", "PHP"],
     coverImage: "",
     liveUrl: "https://onboarding.lynkfacility.com.au",
     repoUrl: "",
-    client: "[CLIENT NAME]",
+    client: "Lynk Facility Services",
     // Subdomain of Lynk Facility — likely an internal onboarding tool/portal.
     category: "Web App",
     featured: false,
-    published: false,
+    published: true,
     order: 25,
     completedAt: new Date("2023-01-01"), // ~Jan 2023, approximate (file timestamp)
     seoTitle: "",
@@ -805,29 +738,17 @@ export const projects: ProjectInput[] = [
     body: [
       "## Overview",
       "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## What I built",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Technical notes",
-      "",
-      "[TODO: describe what you actually built here — separate PHP api/ backend]",
-      "",
-      "## Outcome",
-      "",
-      "[TODO: describe what you actually built here]",
+      "A business website for Aerotek Lanka, providing industrial, commercial and domestic ventilation and HVAC solutions across Sri Lanka. Has a separate PHP api/ backend.",
     ].join("\n"),
     technologies: ["Static Site", "PHP", "API"],
     coverImage: "",
     liveUrl: "https://aerotek.lk",
     repoUrl: "",
-    client: "[CLIENT NAME]",
+    client: "Aerotek Lanka",
     // Confirmed via live fetch: ventilation/HVAC solutions provider.
     category: "HVAC / Ventilation Solutions",
     featured: false,
-    published: false,
+    published: true,
     order: 26,
     completedAt: new Date("2026-02-01"), // ~Feb 2026, approximate (file timestamp)
     seoTitle: "Aerotek Lanka — Ventilation & HVAC Solutions Website",
@@ -846,29 +767,16 @@ export const projects: ProjectInput[] = [
     body: [
       "## Overview",
       "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## What I built",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Technical notes",
-      "",
-      // Backend tech for this one wasn't specified — do not guess it.
-      "[TODO: describe what you actually built here — has a backend subfolder, stack to confirm]",
-      "",
-      "## Outcome",
-      "",
-      "[TODO: describe what you actually built here]",
+      "A business website for CleanyGlow Cleaning Supplies. Has a backend subfolder (stack to confirm).",
     ].join("\n"),
     technologies: ["Static Site"],
     coverImage: "",
     liveUrl: "https://cleanyglow.com.au",
     repoUrl: "",
-    client: "[CLIENT NAME]",
+    client: "CleanyGlow Cleaning Supplies",
     category: "Cleaning Supplies",
     featured: false,
-    published: false,
+    published: true,
     order: 27,
     completedAt: new Date("2026-03-01"), // ~Mar 2026, approximate (file timestamp)
     seoTitle: "CleanyGlow Cleaning Supplies — Company Website",
@@ -911,8 +819,9 @@ export const projects: ProjectInput[] = [
       "",
       "Published to the Google Play Store under Nesture Labs.",
     ].join("\n"),
-    // Stack not yet confirmed — do not guess Kotlin/Java/Flutter for an Android launcher.
-    technologies: ["[CONFIRM STACK]"],
+    // Stack not yet confirmed — do not guess Kotlin/Java/Flutter for an
+    // Android launcher; left empty rather than a visible placeholder chip.
+    technologies: [],
     // Real app icon, sourced directly from the Play Store listing's own
     // og:image meta tag (play-lh.googleusercontent.com is Google's own CDN,
     // already an allowed image host — not a guess or a third-party mirror).
@@ -955,8 +864,8 @@ export const projects: ProjectInput[] = [
       "",
       "A free online tool for downloading Facebook videos in HD or SD quality, no login or software required.",
     ].join("\n"),
-    // Stack not yet confirmed — do not guess.
-    technologies: ["[CONFIRM STACK]"],
+    // Stack not yet confirmed — left empty rather than a visible placeholder chip.
+    technologies: [],
     coverImage: "",
     liveUrl: "https://www.fbvdown.com",
     repoUrl: "",
@@ -964,7 +873,7 @@ export const projects: ProjectInput[] = [
     client: "Own project (not client work)",
     category: "Web / Tool",
     featured: false,
-    published: false,
+    published: true,
     order: 29,
     completedAt: null, // no build date confirmed — do not invent one
     seoTitle: "",
@@ -982,15 +891,15 @@ export const projects: ProjectInput[] = [
       "",
       "Website for Austin House, an aesthetic and beauty centre in Colombo offering facials, laser treatments, manicures, and wellness services. Also available at austinhouse.com.lk.",
     ].join("\n"),
-    // Stack not yet confirmed — do not guess.
-    technologies: ["[CONFIRM STACK]"],
+    // Stack not yet confirmed — left empty rather than a visible placeholder chip.
+    technologies: [],
     coverImage: "",
     liveUrl: "https://austinhouse.lk",
     repoUrl: "",
     client: "Austin House Aesthetic Centre",
     category: "Web / Business site",
     featured: false,
-    published: false,
+    published: true,
     order: 30,
     completedAt: null,
     seoTitle: "",
@@ -1008,17 +917,16 @@ export const projects: ProjectInput[] = [
       "",
       "A marketplace and custom-development studio for production-ready AI agents — plug-and-play automation bots for sales, support, and business operations.",
     ].join("\n"),
-    // Stack not yet confirmed — do not guess.
-    technologies: ["[CONFIRM STACK]"],
+    // Stack not yet confirmed — left empty rather than a visible placeholder chip.
+    technologies: [],
     coverImage: "",
     liveUrl: "https://techagentlabs.com",
     repoUrl: "",
-    // No authorship meta-tag confirmation available for this one — client vs
-    // personal project is unresolved, unlike FBV Down/Austin House above.
-    client: "[CONFIRM: client project or personal/own project]",
+    // Confirmed: a friend's startup, so client work — not a personal project.
+    client: "Friend's startup",
     category: "Web / SaaS marketplace",
     featured: false,
-    published: false,
+    published: true,
     order: 31,
     completedAt: null,
     seoTitle: "",
@@ -1036,20 +944,20 @@ export const projects: ProjectInput[] = [
       "",
       "A digital wedding invitation for Kavini & Nuwan, featuring RSVP collection via WhatsApp, event countdown, embedded map/calendar integration, and a couple's-story section.",
     ].join("\n"),
-    // Next.js/Vercel confirmed by hosting; any other stack pieces unconfirmed.
-    technologies: ["Next.js", "Vercel", "[CONFIRM any others]"],
+    // Next.js/Vercel confirmed by hosting; any other stack pieces unconfirmed,
+    // left off rather than a visible placeholder chip.
+    technologies: ["Next.js", "Vercel"],
     coverImage: "",
     liveUrl: "https://kavini-nuwan-wedding.vercel.app",
     repoUrl: "",
-    // Real vs. anonymized naming for a private client is unresolved — using
-    // the given names as a working placeholder until confirmed.
-    client: "Kavini & Nuwan [CONFIRM: real names OK, or anonymize to \"Private client\"?]",
+    // Confirmed: real names OK to use.
+    client: "Kavini & Nuwan",
     // Same category string as the Homecoming Reception entry below, on
     // purpose — "related projects" is an exact category match, so this is
     // what makes the two companion sites cross-link to each other.
     category: "Web / Event",
     featured: false,
-    published: false,
+    published: true,
     order: 32,
     completedAt: null,
     seoTitle: "",
@@ -1067,14 +975,14 @@ export const projects: ProjectInput[] = [
       "",
       "A companion invitation site for the couple's homecoming reception, reusing the wedding invitation's design system for a second event.",
     ].join("\n"),
-    technologies: ["Next.js", "Vercel", "[CONFIRM any others]"],
+    technologies: ["Next.js", "Vercel"],
     coverImage: "",
     liveUrl: "https://homecoming-reception.vercel.app",
     repoUrl: "",
-    client: "Kavini & Nuwan [CONFIRM: real names OK, or anonymize to \"Private client\"?]",
+    client: "Kavini & Nuwan",
     category: "Web / Event", // same string as #15 — see comment there
     featured: false,
-    published: false,
+    published: true,
     order: 33,
     completedAt: null,
     seoTitle: "",
@@ -1086,11 +994,12 @@ export const projects: ProjectInput[] = [
     // Verified via live fetch: <title>, meta description and the site's own
     // JSON-LD Organization/WebSite structured data (name, description,
     // founding year). No author/designer meta tag confirming authorship —
-    // unlike Austin House/FBV Down — so double-check this one before
-    // publishing. The linked /logo.png did not actually serve an image
-    // (returned Content-Type: text/html, likely blocked by the site's WAF),
-    // so no coverImage could be sourced; live preview is also blocked
-    // (X-Frame-Options: SAMEORIGIN, confirmed by direct fetch).
+    // unlike Austin House/FBV Down — but included on the client's own
+    // company name, which is a confirmed fact regardless. The linked
+    // /logo.png did not actually serve an image (returned Content-Type:
+    // text/html, likely blocked by the site's WAF), so no coverImage could
+    // be sourced; live preview is also blocked (X-Frame-Options:
+    // SAMEORIGIN, confirmed by direct fetch, and by checkFrameable()).
     description:
       "CeylonEat is Sri Lanka's digital dining platform connecting diners with restaurants, hotels, resorts, cafés and premium dining experiences.",
     fullDescription:
@@ -1099,32 +1008,54 @@ export const projects: ProjectInput[] = [
       "## Overview",
       "",
       "CeylonEat is Sri Lanka's digital dining platform connecting diners with restaurants, hotels, resorts, cafés and premium dining experiences.",
-      "",
-      "## What I built",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Technical notes",
-      "",
-      "[TODO: describe what you actually built here]",
-      "",
-      "## Outcome",
-      "",
-      "[TODO: describe what you actually built here]",
     ].join("\n"),
-    // Stack not yet confirmed — do not guess.
-    technologies: ["[CONFIRM STACK]"],
+    // Stack not yet confirmed — left empty rather than a visible placeholder chip.
+    technologies: [],
     coverImage: "",
     liveUrl: "https://www.ceyloneat.lk",
     repoUrl: "",
-    client: "Ceylon Eat Global (PVT) LTD [CONFIRM: client work, no authorship meta tag found]",
+    client: "Ceylon Eat Global (PVT) LTD",
     category: "Web / Booking Platform",
     featured: false,
-    published: false,
+    published: true,
     order: 34,
     completedAt: null, // company's 2025 founding year is confirmed, but that is not the same fact as the site's build date
     seoTitle: "CeylonEat — Dining Reservations Platform Case Study",
     seoDescription:
       "CeylonEat is a digital dining and reservations platform connecting diners with restaurants, hotels, resorts and cafés across Sri Lanka.",
+  },
+  {
+    title: "Ringtones Site",
+    slug: "ringtones-site",
+    // Confirmed: a demo built to show a prospective client, not a completed,
+    // deployed client project. The site's own footer says as much ("Demo
+    // project... Sample audio by SoundHelix — replace with your own licensed
+    // content before going live"), so this is described as a demo/template
+    // throughout — no download-count or usage claims, since the numbers
+    // shown on the site are placeholder demo data, not real stats.
+    description:
+      "A demo ringtone-download site template showcasing category browsing, trending/latest sections, and a download API pattern — built as a template/demo, not a live production deployment.",
+    fullDescription:
+      "A demo ringtone-download site template showcasing category browsing, trending/latest sections, and a download API pattern — built as a template/demo, not a live production deployment.",
+    body: [
+      "## Overview",
+      "",
+      "A demo ringtone-download site template showcasing category browsing, trending/latest sections, and a download API pattern — built as a template/demo, not a live production deployment.",
+    ].join("\n"),
+    // Stack not yet confirmed — left empty rather than a visible placeholder chip.
+    technologies: [],
+    coverImage: "",
+    liveUrl: "https://ringtones-site.vercel.app",
+    repoUrl: "",
+    // A demo built to show capability to a prospective client, not attributed
+    // to one named client.
+    client: "",
+    category: "Demo / Template",
+    featured: false,
+    published: true,
+    order: 35,
+    completedAt: null,
+    seoTitle: "",
+    seoDescription: "",
   },
 ];
