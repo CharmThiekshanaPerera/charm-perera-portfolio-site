@@ -49,6 +49,13 @@ export function LivePreviewFrame({
   href?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  // Holds the pending "never loaded" timeout so onLoad can actually cancel
+  // it. A previous version scheduled this timeout once and never cleared it
+  // on success, so every preview — including ones that loaded perfectly
+  // fine — silently vanished ~8s after appearing. This ref is what makes
+  // cancellation possible: state alone can't reach into an already-running
+  // setTimeout closure.
+  const timeoutRef = useRef<number | null>(null);
   const [scale, setScale] = useState(0);
   const [timedOut, setTimedOut] = useState(false);
 
@@ -66,9 +73,19 @@ export function LivePreviewFrame({
 
   useEffect(() => {
     if (scale <= 0) return;
-    const timeoutId = window.setTimeout(() => setTimedOut(true), LOAD_TIMEOUT_MS);
-    return () => window.clearTimeout(timeoutId);
+
+    timeoutRef.current = window.setTimeout(() => setTimedOut(true), LOAD_TIMEOUT_MS);
+    return () => {
+      if (timeoutRef.current !== null) window.clearTimeout(timeoutRef.current);
+    };
   }, [scale]);
+
+  function handleLoad() {
+    if (timeoutRef.current !== null) {
+      window.clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  }
 
   if (timedOut) return null;
 
@@ -90,7 +107,7 @@ export function LivePreviewFrame({
             referrerPolicy="no-referrer"
             tabIndex={-1}
             aria-hidden="true"
-            onLoad={() => setTimedOut(false)}
+            onLoad={handleLoad}
             className="pointer-events-none absolute left-0 top-0 origin-top-left border-0"
             style={{
               width: REFERENCE_WIDTH,

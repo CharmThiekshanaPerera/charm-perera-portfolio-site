@@ -66,38 +66,52 @@ export function isAppIcon(category: string): boolean {
  *
  * This runs server-side instead, before the iframe is ever rendered: fetch
  * the URL and read its own X-Frame-Options / CSP frame-ancestors headers
- * directly. A network failure (including a host that doesn't resolve at
- * all) is treated the same as "blocked" — either way there's nothing to
- * preview. Call sites should cache/memoize this per request; it does a real
- * network round-trip.
+ * directly. Retries once on a network-level failure (timeout, refused
+ * connection) before giving up — this result gets baked into the page for
+ * up to an hour (ISR), so one unlucky transient blip during a single
+ * revalidation shouldn't be able to hide an otherwise-fine preview for that
+ * whole window. A failure that persists through the retry is treated the
+ * same as "blocked" — either way there's nothing to preview. Call sites
+ * should cache/memoize this per request; it does a real network round-trip.
  */
 export const checkFrameable = cache(async (url: string): Promise<boolean> => {
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
 
-    const response = await fetch(url, {
-      redirect: "follow",
-      signal: controller.signal,
-      headers: { "user-agent": "Mozilla/5.0 (compatible; PortfolioPreviewCheck/1.0)" },
-    }).finally(() => clearTimeout(timeoutId));
+      const response = await fetch(url, {
+        redirect: "follow",
+        signal: controller.signal,
+        headers: {
+          // A realistic browser UA, not a self-identifying bot string — the
+          // point is to see exactly what a real visitor's browser would see
+          // when it tries to load this in an iframe. An obvious bot UA risks
+          // a different (and possibly inconsistent) response from a WAF.
+          "user-agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        },
+      }).finally(() => clearTimeout(timeoutId));
 
-    const xFrameOptions = response.headers.get("x-frame-options")?.toLowerCase().trim();
-    if (xFrameOptions === "deny" || xFrameOptions === "sameorigin") return false;
+      const xFrameOptions = response.headers.get("x-frame-options")?.toLowerCase().trim();
+      if (xFrameOptions === "deny" || xFrameOptions === "sameorigin") return false;
 
-    const csp = response.headers.get("content-security-policy")?.toLowerCase();
-    const frameAncestors = csp?.match(/frame-ancestors\s+([^;]+)/)?.[1]?.trim();
-    if (frameAncestors) {
-      // A wildcard is the only case that's unambiguously fine; anything
-      // else ('none', 'self', or a specific allowlist) doesn't include an
-      // arbitrary third-party origin like this portfolio.
-      if (!frameAncestors.includes("*")) return false;
+      const csp = response.headers.get("content-security-policy")?.toLowerCase();
+      const frameAncestors = csp?.match(/frame-ancestors\s+([^;]+)/)?.[1]?.trim();
+      if (frameAncestors) {
+        // A wildcard is the only case that's unambiguously fine; anything
+        // else ('none', 'self', or a specific allowlist) doesn't include an
+        // arbitrary third-party origin like this portfolio.
+        if (!frameAncestors.includes("*")) return false;
+      }
+
+      return true;
+    } catch {
+      // Timed out, refused to connect, DNS never resolved, etc. — try once
+      // more before concluding there's nothing to preview.
+      if (attempt === 0) continue;
+      return false;
     }
-
-    return true;
-  } catch {
-    // Timed out, refused to connect, DNS never resolved, etc. — nothing a
-    // live preview could show either way.
-    return false;
   }
+  return false;
 });
