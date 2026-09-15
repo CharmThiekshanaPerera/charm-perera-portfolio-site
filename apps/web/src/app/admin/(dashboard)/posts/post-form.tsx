@@ -12,6 +12,8 @@ import {
   TextField,
   TitleSlugFields,
 } from "@/components/admin/form-fields";
+import { SharePanel } from "@/components/admin/share-panel";
+import { buildShareCaption } from "@/lib/share";
 import { savePost, type ActionState } from "../../actions";
 
 function toDateInput(value: unknown): string {
@@ -22,126 +24,156 @@ function toDateInput(value: unknown): string {
     : date.toISOString().slice(0, 10);
 }
 
-export function PostForm({ post }: { post?: PostDoc }) {
-  const [state, formAction] = useActionState<ActionState, FormData>(savePost, {});
+export function PostForm({
+  post,
+  siteUrl,
+}: {
+  post?: PostDoc;
+  siteUrl?: string;
+}) {
+  const [state, formAction] = useActionState<ActionState, FormData>(
+    savePost,
+    {},
+  );
   const errors = state.fieldErrors ?? {};
 
+  const shareUrl =
+    post?.published && siteUrl ? `${siteUrl}/blog/${post.slug}` : null;
+
   return (
-    <form action={formAction} className="space-y-8">
-      {post ? <input type="hidden" name="id" value={String(post._id)} /> : null}
+    <>
+      <form action={formAction} className="space-y-8">
+        {post ? (
+          <input type="hidden" name="id" value={String(post._id)} />
+        ) : null}
 
-      <FormError message={state.error} />
+        <FormError message={state.error} />
 
-      <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold">Basics</h2>
+        <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
+          <h2 className="text-lg font-semibold">Basics</h2>
 
-        <TitleSlugFields
-          defaultTitle={post?.title ?? ""}
-          defaultSlug={post?.slug ?? ""}
-          errors={errors}
-          slugPrefix="/blog"
-        />
-
-        <TextAreaField
-          name="excerpt"
-          label="Excerpt"
-          required
-          rows={3}
-          defaultValue={post?.excerpt ?? ""}
-          error={errors.excerpt}
-          hint="Shown on cards and used as the fallback meta description."
-        />
-
-        <div className="grid gap-4 md:grid-cols-3">
-          <TextField
-            name="category"
-            label="Category"
-            defaultValue={post?.category ?? "Web Development"}
+          <TitleSlugFields
+            defaultTitle={post?.title ?? ""}
+            defaultSlug={post?.slug ?? ""}
+            errors={errors}
+            slugPrefix="/blog"
           />
-          <TextField
-            name="publishedAt"
-            label="Publish date"
-            type="date"
-            defaultValue={toDateInput(post?.publishedAt)}
+
+          <TextAreaField
+            name="excerpt"
+            label="Excerpt"
+            required
+            rows={3}
+            defaultValue={post?.excerpt ?? ""}
+            error={errors.excerpt}
+            hint="Shown on cards and used as the fallback meta description."
           />
+
+          <div className="grid gap-4 md:grid-cols-3">
+            <TextField
+              name="category"
+              label="Category"
+              defaultValue={post?.category ?? "Web Development"}
+            />
+            <TextField
+              name="publishedAt"
+              label="Publish date"
+              type="date"
+              defaultValue={toDateInput(post?.publishedAt)}
+            />
+            <TextField
+              name="readTimeMinutes"
+              label="Read time (minutes)"
+              type="number"
+              defaultValue={post?.readTimeMinutes ?? 5}
+            />
+          </div>
+
           <TextField
-            name="readTimeMinutes"
-            label="Read time (minutes)"
-            type="number"
-            defaultValue={post?.readTimeMinutes ?? 5}
+            name="tags"
+            label="Tags"
+            defaultValue={post?.tags?.join(", ") ?? ""}
+            hint="Comma separated. Tags drive the related-articles links."
           />
+
+          <TextField
+            name="coverImage"
+            label="Cover image URL"
+            type="url"
+            defaultValue={post?.coverImage ?? ""}
+            error={errors.coverImage}
+            hint="1200x630 works best for social sharing."
+          />
+        </section>
+
+        <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
+          <h2 className="text-lg font-semibold">Article</h2>
+
+          <TextAreaField
+            name="body"
+            label="Body (Markdown)"
+            rows={24}
+            mono
+            defaultValue={post?.body ?? ""}
+            hint="The full article. Thin or duplicated content ranks poorly, so write real depth here."
+          />
+        </section>
+
+        <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
+          <h2 className="text-lg font-semibold">SEO</h2>
+
+          <TextField
+            name="seoTitle"
+            label="Meta title"
+            defaultValue={post?.seoTitle ?? ""}
+            error={errors.seoTitle}
+            hint="Up to 70 characters."
+          />
+          <TextAreaField
+            name="seoDescription"
+            label="Meta description"
+            rows={2}
+            defaultValue={post?.seoDescription ?? ""}
+            error={errors.seoDescription}
+            hint="Up to 160 characters."
+          />
+        </section>
+
+        <section className="grid gap-4 sm:grid-cols-2">
+          <SwitchField
+            name="published"
+            label="Published"
+            hint="Drafts are hidden from the blog, the RSS feed and the sitemap."
+            defaultChecked={post ? post.published : true}
+          />
+          <SwitchField
+            name="featured"
+            label="Featured"
+            defaultChecked={post?.featured ?? false}
+          />
+        </section>
+
+        <div className="flex flex-wrap gap-3">
+          <SubmitButton>{post ? "Save changes" : "Create post"}</SubmitButton>
+          <Button asChild variant="outline" size="lg">
+            <Link href="/admin/posts">Cancel</Link>
+          </Button>
         </div>
+      </form>
 
-        <TextField
-          name="tags"
-          label="Tags"
-          defaultValue={post?.tags?.join(", ") ?? ""}
-          hint="Comma separated. Tags drive the related-articles links."
+      {shareUrl ? (
+        <SharePanel
+          url={shareUrl}
+          initialCaption={buildShareCaption({
+            emoji: "📝",
+            kind: "post",
+            title: post?.title ?? "",
+            description: post?.excerpt ?? "",
+            url: shareUrl,
+            tags: post?.tags ?? [],
+          })}
         />
-
-        <TextField
-          name="coverImage"
-          label="Cover image URL"
-          type="url"
-          defaultValue={post?.coverImage ?? ""}
-          error={errors.coverImage}
-          hint="1200x630 works best for social sharing."
-        />
-      </section>
-
-      <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold">Article</h2>
-
-        <TextAreaField
-          name="body"
-          label="Body (Markdown)"
-          rows={24}
-          mono
-          defaultValue={post?.body ?? ""}
-          hint="The full article. Thin or duplicated content ranks poorly, so write real depth here."
-        />
-      </section>
-
-      <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold">SEO</h2>
-
-        <TextField
-          name="seoTitle"
-          label="Meta title"
-          defaultValue={post?.seoTitle ?? ""}
-          error={errors.seoTitle}
-          hint="Up to 70 characters."
-        />
-        <TextAreaField
-          name="seoDescription"
-          label="Meta description"
-          rows={2}
-          defaultValue={post?.seoDescription ?? ""}
-          error={errors.seoDescription}
-          hint="Up to 160 characters."
-        />
-      </section>
-
-      <section className="grid gap-4 sm:grid-cols-2">
-        <SwitchField
-          name="published"
-          label="Published"
-          hint="Drafts are hidden from the blog, the RSS feed and the sitemap."
-          defaultChecked={post ? post.published : true}
-        />
-        <SwitchField
-          name="featured"
-          label="Featured"
-          defaultChecked={post?.featured ?? false}
-        />
-      </section>
-
-      <div className="flex flex-wrap gap-3">
-        <SubmitButton>{post ? "Save changes" : "Create post"}</SubmitButton>
-        <Button asChild variant="outline" size="lg">
-          <Link href="/admin/posts">Cancel</Link>
-        </Button>
-      </div>
-    </form>
+      ) : null}
+    </>
   );
 }

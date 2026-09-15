@@ -6,11 +6,21 @@ import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import { Button } from "@charm/ui/button";
 import { cn } from "@charm/ui/cn";
 import { Markdown } from "@/components/site/markdown";
+import { ShareButtons } from "@/components/site/share-buttons";
 import { LivePreviewFrame } from "@/components/site/live-preview-frame";
-import { getProjectBySlug, getProjects, getSiteSettings, getSiteUrl } from "@/lib/content";
+import {
+  getProjectBySlug,
+  getProjects,
+  getSiteSettings,
+  getSiteUrl,
+} from "@/lib/content";
 import { JsonLd, breadcrumbSchema, projectSchema } from "@/lib/jsonld";
 import { formatDate } from "@/lib/format";
-import { checkFrameable, isAppIcon, isLikelyEmbeddable } from "@/lib/live-preview";
+import {
+  checkFrameable,
+  isAppIcon,
+  isLikelyEmbeddable,
+} from "@/lib/live-preview";
 
 export const revalidate = 3600;
 /** Any slug not pre-rendered is generated on first request, then cached. */
@@ -23,12 +33,17 @@ export async function generateStaticParams() {
 
 type PageProps = { params: Promise<{ slug: string }> };
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
 
   if (!project) {
-    return { title: "Project not found", robots: { index: false, follow: false } };
+    return {
+      title: "Project not found",
+      robots: { index: false, follow: false },
+    };
   }
 
   const title = project.seoTitle || project.title;
@@ -51,18 +66,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProjectPage({ params }: PageProps) {
   const { slug } = await params;
-  const [project, settings] = await Promise.all([getProjectBySlug(slug), getSiteSettings()]);
+  const [project, settings] = await Promise.all([
+    getProjectBySlug(slug),
+    getSiteSettings(),
+  ]);
 
   if (!project) notFound();
 
   const siteUrl = getSiteUrl(settings);
   const allProjects = await getProjects();
   const related = allProjects
-    .filter((item) => item.slug !== project.slug && item.category === project.category)
+    .filter(
+      (item) =>
+        item.slug !== project.slug && item.category === project.category,
+    )
     .slice(0, 3);
 
   const previewEmbeddable =
-    !project.coverImage && project.liveUrl && isLikelyEmbeddable(project.liveUrl, { allowSelf: true })
+    !project.coverImage &&
+    project.liveUrl &&
+    isLikelyEmbeddable(project.liveUrl, { allowSelf: true })
       ? await checkFrameable(project.liveUrl)
       : false;
 
@@ -119,7 +142,9 @@ export default async function ProjectPage({ params }: PageProps) {
               {project.completedAt ? (
                 <div>
                   <dt className="text-muted-foreground">Completed</dt>
-                  <dd className="font-medium">{formatDate(project.completedAt)}</dd>
+                  <dd className="font-medium">
+                    {formatDate(project.completedAt)}
+                  </dd>
                 </div>
               ) : null}
             </dl>
@@ -141,7 +166,11 @@ export default async function ProjectPage({ params }: PageProps) {
               <div className="mt-8 flex flex-wrap gap-3">
                 {project.liveUrl ? (
                   <Button asChild>
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <ExternalLink className="h-4 w-4" aria-hidden="true" />
                       View live project
                     </a>
@@ -149,7 +178,11 @@ export default async function ProjectPage({ params }: PageProps) {
                 ) : null}
                 {project.repoUrl ? (
                   <Button asChild variant="outline">
-                    <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <Github className="h-4 w-4" aria-hidden="true" />
                       Source code
                     </a>
@@ -173,7 +206,11 @@ export default async function ProjectPage({ params }: PageProps) {
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 768px"
-                className={isAppIcon(project.category) ? "object-contain p-12 sm:p-16" : "object-cover"}
+                className={
+                  isAppIcon(project.category)
+                    ? "object-contain p-12 sm:p-16"
+                    : "object-cover"
+                }
               />
             </div>
           ) : previewEmbeddable ? (
@@ -192,11 +229,21 @@ export default async function ProjectPage({ params }: PageProps) {
             </p>
           ) : null}
 
-          <aside className="mt-16 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 p-8 text-center">
-            <h2 className="mb-3 text-2xl font-bold">Building something similar?</h2>
+          <div className="mt-12">
+            <ShareButtons
+              url={`${siteUrl}/projects/${project.slug}`}
+              title={project.title}
+            />
+          </div>
+
+          <aside className="mt-12 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 p-8 text-center">
+            <h2 className="mb-3 text-2xl font-bold">
+              Building something similar?
+            </h2>
             <p className="mx-auto mb-6 max-w-xl text-muted-foreground">
-              I take on a small number of freelance projects at a time. Tell me what you have in
-              mind and I will come back with a scope and timeline.
+              I take on a small number of freelance projects at a time. Tell me
+              what you have in mind and I will come back with a scope and
+              timeline.
             </p>
             <Button asChild size="lg">
               <Link href="/contact">Start a conversation</Link>

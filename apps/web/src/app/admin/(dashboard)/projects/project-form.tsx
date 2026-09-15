@@ -12,6 +12,8 @@ import {
   TextField,
   TitleSlugFields,
 } from "@/components/admin/form-fields";
+import { SharePanel } from "@/components/admin/share-panel";
+import { buildShareCaption } from "@/lib/share";
 import { saveProject, type ActionState } from "../../actions";
 
 function toDateInput(value: unknown): string {
@@ -20,160 +22,199 @@ function toDateInput(value: unknown): string {
   return Number.isNaN(date.getTime()) ? "" : date.toISOString().slice(0, 10);
 }
 
-export function ProjectForm({ project }: { project?: ProjectDoc }) {
-  const [state, formAction] = useActionState<ActionState, FormData>(saveProject, {});
+export function ProjectForm({
+  project,
+  siteUrl,
+}: {
+  project?: ProjectDoc;
+  siteUrl?: string;
+}) {
+  const [state, formAction] = useActionState<ActionState, FormData>(
+    saveProject,
+    {},
+  );
   const errors = state.fieldErrors ?? {};
 
+  // Only a published project has a real public URL worth sharing.
+  const shareUrl =
+    project?.published && siteUrl
+      ? `${siteUrl}/projects/${project.slug}`
+      : null;
+
   return (
-    <form action={formAction} className="space-y-8">
-      {project ? <input type="hidden" name="id" value={String(project._id)} /> : null}
+    <>
+      <form action={formAction} className="space-y-8">
+        {project ? (
+          <input type="hidden" name="id" value={String(project._id)} />
+        ) : null}
 
-      <FormError message={state.error} />
+        <FormError message={state.error} />
 
-      <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold">Basics</h2>
+        <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
+          <h2 className="text-lg font-semibold">Basics</h2>
 
-        <TitleSlugFields
-          defaultTitle={project?.title ?? ""}
-          defaultSlug={project?.slug ?? ""}
-          errors={errors}
-          slugPrefix="/projects"
-        />
-
-        <TextAreaField
-          name="description"
-          label="Short description"
-          required
-          rows={3}
-          defaultValue={project?.description ?? ""}
-          error={errors.description}
-          hint="Shown on project cards and used as the fallback meta description."
-        />
-
-        <div className="grid gap-4 md:grid-cols-3">
-          <TextField
-            name="category"
-            label="Category"
-            defaultValue={project?.category ?? "Web"}
-            hint="Web, Mobile, AI…"
+          <TitleSlugFields
+            defaultTitle={project?.title ?? ""}
+            defaultSlug={project?.slug ?? ""}
+            errors={errors}
+            slugPrefix="/projects"
           />
-          <TextField name="client" label="Client" defaultValue={project?.client ?? ""} />
-          <TextField
-            name="completedAt"
-            label="Completed"
-            type="date"
-            defaultValue={toDateInput(project?.completedAt)}
+
+          <TextAreaField
+            name="description"
+            label="Short description"
+            required
+            rows={3}
+            defaultValue={project?.description ?? ""}
+            error={errors.description}
+            hint="Shown on project cards and used as the fallback meta description."
           />
-        </div>
 
-        <TextField
-          name="technologies"
-          label="Technologies"
-          defaultValue={project?.technologies?.join(", ") ?? ""}
-          hint="Comma separated, e.g. React, Node.js, MongoDB"
-        />
-      </section>
+          <div className="grid gap-4 md:grid-cols-3">
+            <TextField
+              name="category"
+              label="Category"
+              defaultValue={project?.category ?? "Web"}
+              hint="Web, Mobile, AI…"
+            />
+            <TextField
+              name="client"
+              label="Client"
+              defaultValue={project?.client ?? ""}
+            />
+            <TextField
+              name="completedAt"
+              label="Completed"
+              type="date"
+              defaultValue={toDateInput(project?.completedAt)}
+            />
+          </div>
 
-      <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold">Links &amp; media</h2>
-
-        <div className="grid gap-4 md:grid-cols-2">
           <TextField
-            name="liveUrl"
-            label="Live URL"
+            name="technologies"
+            label="Technologies"
+            defaultValue={project?.technologies?.join(", ") ?? ""}
+            hint="Comma separated, e.g. React, Node.js, MongoDB"
+          />
+        </section>
+
+        <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
+          <h2 className="text-lg font-semibold">Links &amp; media</h2>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <TextField
+              name="liveUrl"
+              label="Live URL"
+              type="url"
+              defaultValue={project?.liveUrl ?? ""}
+              error={errors.liveUrl}
+              hint="Leave empty if there is no working public link."
+            />
+            <TextField
+              name="repoUrl"
+              label="Repository URL"
+              type="url"
+              defaultValue={project?.repoUrl ?? ""}
+              error={errors.repoUrl}
+            />
+          </div>
+
+          <TextField
+            name="coverImage"
+            label="Cover image URL"
             type="url"
-            defaultValue={project?.liveUrl ?? ""}
-            error={errors.liveUrl}
-            hint="Leave empty if there is no working public link."
+            defaultValue={project?.coverImage ?? ""}
+            error={errors.coverImage}
+            hint="Must be on an allowed host (see images.remotePatterns in next.config.mjs)."
+          />
+        </section>
+
+        <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
+          <h2 className="text-lg font-semibold">Case study</h2>
+
+          <TextAreaField
+            name="fullDescription"
+            label="Summary"
+            rows={4}
+            defaultValue={project?.fullDescription ?? ""}
+            hint="Optional. Used when there is no full Markdown body."
+          />
+
+          <TextAreaField
+            name="body"
+            label="Body (Markdown)"
+            rows={18}
+            mono
+            defaultValue={project?.body ?? ""}
+            hint="Supports Markdown: ## headings, **bold**, lists, links and code blocks. This is the content search engines index."
+          />
+        </section>
+
+        <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
+          <h2 className="text-lg font-semibold">SEO</h2>
+
+          <TextField
+            name="seoTitle"
+            label="Meta title"
+            defaultValue={project?.seoTitle ?? ""}
+            error={errors.seoTitle}
+            hint="Up to 70 characters. Falls back to the project title."
+          />
+          <TextAreaField
+            name="seoDescription"
+            label="Meta description"
+            rows={2}
+            defaultValue={project?.seoDescription ?? ""}
+            error={errors.seoDescription}
+            hint="Up to 160 characters. Falls back to the short description."
+          />
+        </section>
+
+        <section className="grid gap-4 sm:grid-cols-2">
+          <SwitchField
+            name="published"
+            label="Published"
+            hint="Unpublished projects are hidden from the site and the sitemap."
+            defaultChecked={project ? project.published : true}
+          />
+          <SwitchField
+            name="featured"
+            label="Featured"
+            hint="Featured projects appear on the home page in a wide card."
+            defaultChecked={project?.featured ?? false}
           />
           <TextField
-            name="repoUrl"
-            label="Repository URL"
-            type="url"
-            defaultValue={project?.repoUrl ?? ""}
-            error={errors.repoUrl}
+            name="order"
+            label="Sort order"
+            type="number"
+            defaultValue={project?.order ?? 0}
+            hint="Lower numbers appear first."
           />
+        </section>
+
+        <div className="flex flex-wrap gap-3">
+          <SubmitButton>
+            {project ? "Save changes" : "Create project"}
+          </SubmitButton>
+          <Button asChild variant="outline" size="lg">
+            <Link href="/admin/projects">Cancel</Link>
+          </Button>
         </div>
+      </form>
 
-        <TextField
-          name="coverImage"
-          label="Cover image URL"
-          type="url"
-          defaultValue={project?.coverImage ?? ""}
-          error={errors.coverImage}
-          hint="Must be on an allowed host (see images.remotePatterns in next.config.mjs)."
+      {shareUrl ? (
+        <SharePanel
+          url={shareUrl}
+          initialCaption={buildShareCaption({
+            emoji: "🚀",
+            kind: "project",
+            title: project?.title ?? "",
+            description: project?.description ?? "",
+            url: shareUrl,
+            tags: project?.technologies ?? [],
+          })}
         />
-      </section>
-
-      <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold">Case study</h2>
-
-        <TextAreaField
-          name="fullDescription"
-          label="Summary"
-          rows={4}
-          defaultValue={project?.fullDescription ?? ""}
-          hint="Optional. Used when there is no full Markdown body."
-        />
-
-        <TextAreaField
-          name="body"
-          label="Body (Markdown)"
-          rows={18}
-          mono
-          defaultValue={project?.body ?? ""}
-          hint="Supports Markdown: ## headings, **bold**, lists, links and code blocks. This is the content search engines index."
-        />
-      </section>
-
-      <section className="space-y-4 rounded-2xl border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold">SEO</h2>
-
-        <TextField
-          name="seoTitle"
-          label="Meta title"
-          defaultValue={project?.seoTitle ?? ""}
-          error={errors.seoTitle}
-          hint="Up to 70 characters. Falls back to the project title."
-        />
-        <TextAreaField
-          name="seoDescription"
-          label="Meta description"
-          rows={2}
-          defaultValue={project?.seoDescription ?? ""}
-          error={errors.seoDescription}
-          hint="Up to 160 characters. Falls back to the short description."
-        />
-      </section>
-
-      <section className="grid gap-4 sm:grid-cols-2">
-        <SwitchField
-          name="published"
-          label="Published"
-          hint="Unpublished projects are hidden from the site and the sitemap."
-          defaultChecked={project ? project.published : true}
-        />
-        <SwitchField
-          name="featured"
-          label="Featured"
-          hint="Featured projects appear on the home page in a wide card."
-          defaultChecked={project?.featured ?? false}
-        />
-        <TextField
-          name="order"
-          label="Sort order"
-          type="number"
-          defaultValue={project?.order ?? 0}
-          hint="Lower numbers appear first."
-        />
-      </section>
-
-      <div className="flex flex-wrap gap-3">
-        <SubmitButton>{project ? "Save changes" : "Create project"}</SubmitButton>
-        <Button asChild variant="outline" size="lg">
-          <Link href="/admin/projects">Cancel</Link>
-        </Button>
-      </div>
-    </form>
+      ) : null}
+    </>
   );
 }
