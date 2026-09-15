@@ -11,6 +11,7 @@ import {
   TextAreaField,
   TextField,
   TitleSlugFields,
+  UrlCheckField,
 } from "@/components/admin/form-fields";
 import { SharePanel } from "@/components/admin/share-panel";
 import { buildShareCaption } from "@/lib/share";
@@ -102,13 +103,13 @@ export function ProjectForm({
           <h2 className="text-lg font-semibold">Links &amp; media</h2>
 
           <div className="grid gap-4 md:grid-cols-2">
-            <TextField
+            <UrlCheckField
               name="liveUrl"
               label="Live URL"
-              type="url"
+              kind="frame"
               defaultValue={project?.liveUrl ?? ""}
               error={errors.liveUrl}
-              hint="Leave empty if there is no working public link."
+              hint="Leave empty if there is no working public link. Test checks the site actually loads and allows a live preview embed."
             />
             <TextField
               name="repoUrl"
@@ -119,13 +120,13 @@ export function ProjectForm({
             />
           </div>
 
-          <TextField
+          <UrlCheckField
             name="coverImage"
             label="Cover image URL"
-            type="url"
+            kind="image"
             defaultValue={project?.coverImage ?? ""}
             error={errors.coverImage}
-            hint="Must be on an allowed host (see images.remotePatterns in next.config.mjs)."
+            hint="Must be on an allowed host (see images.remotePatterns in next.config.mjs). Test checks the URL actually serves an image."
           />
         </section>
 

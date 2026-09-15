@@ -115,3 +115,87 @@ export const checkFrameable = cache(async (url: string): Promise<boolean> => {
   }
   return false;
 });
+
+export type UrlProbeKind = "image" | "frame";
+export type UrlProbeResult = { ok: boolean; message: string };
+
+/**
+ * Admin-panel diagnostic check — the "Test this link" button on the project
+ * form, and the bulk Link Health page, both call this. Same underlying idea
+ * as checkFrameable() above but returns a human-readable reason instead of
+ * a boolean, and additionally validates that an image URL actually serves
+ * an image (Content-Type) — the exact failure mode behind two real bugs
+ * found this session: a Google Images thumbnail used as a cover image, and
+ * a client's own /logo.png silently serving an HTML error page instead of a
+ * PNG. Deliberately not cached/memoized — this runs only when a human
+ * explicitly asks for it, not on every page render.
+ */
+export async function probeUrl(url: string, kind: UrlProbeKind): Promise<UrlProbeResult> {
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return { ok: false, message: "Not a valid URL." };
+  }
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    return { ok: false, message: "Must be an http(s) URL." };
+  }
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+    const response = await fetch(url, {
+      redirect: "follow",
+      signal: controller.signal,
+      headers: {
+        "user-agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      },
+    }).finally(() => clearTimeout(timeoutId));
+
+    if (!response.ok) {
+      return { ok: false, message: `Returned ${response.status} — this link doesn't work.` };
+    }
+
+    if (kind === "image") {
+      const contentType = response.headers.get("content-type") ?? "";
+      if (!contentType.startsWith("image/")) {
+        return {
+          ok: false,
+          message: `Loads, but isn't actually an image (got "${contentType || "unknown content type"}"). This will show as a broken image on the live site.`,
+        };
+      }
+      return { ok: true, message: `Loads correctly as an image (${contentType}).` };
+    }
+
+    const xFrameOptions = response.headers.get("x-frame-options")?.toLowerCase().trim();
+    if (xFrameOptions === "deny" || xFrameOptions === "sameorigin") {
+      return {
+        ok: false,
+        message:
+          "Reachable, but this site blocks embedding (X-Frame-Options) — no live preview will show. That's the site's own choice, not a bug here.",
+      };
+    }
+
+    const csp = response.headers.get("content-security-policy")?.toLowerCase();
+    const frameAncestors = csp?.match(/frame-ancestors\s+([^;]+)/)?.[1]?.trim();
+    if (frameAncestors && !frameAncestors.includes("*")) {
+      return {
+        ok: false,
+        message:
+          "Reachable, but this site's Content-Security-Policy blocks embedding — no live preview will show.",
+      };
+    }
+
+    return { ok: true, message: "Reachable and allows embedding — the live preview will work." };
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      return { ok: false, message: "Timed out — this link is very slow or unreachable." };
+    }
+    return {
+      ok: false,
+      message: "Could not reach this URL at all (DNS failure, connection refused, or similar).",
+    };
+  }
+}

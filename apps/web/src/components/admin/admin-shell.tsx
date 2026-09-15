@@ -11,6 +11,7 @@ import {
   FolderKanban,
   Inbox,
   LayoutDashboard,
+  Link2,
   LogOut,
   Menu,
   MessageSquareQuote,
@@ -32,6 +33,7 @@ const NAV = [
   { href: "/admin/experience", label: "Experience", icon: Briefcase },
   { href: "/admin/skills", label: "Skills", icon: Wrench },
   { href: "/admin/messages", label: "Messages", icon: Inbox },
+  { href: "/admin/health", label: "Link Health", icon: Link2 },
   { href: "/admin/settings", label: "Site settings", icon: Settings },
 ];
 

@@ -11,6 +11,7 @@ import {
   TextAreaField,
   TextField,
   TitleSlugFields,
+  UrlCheckField,
 } from "@/components/admin/form-fields";
 import { SharePanel } from "@/components/admin/share-panel";
 import { buildShareCaption } from "@/lib/share";
@@ -96,13 +97,13 @@ export function PostForm({
             hint="Comma separated. Tags drive the related-articles links."
           />
 
-          <TextField
+          <UrlCheckField
             name="coverImage"
             label="Cover image URL"
-            type="url"
+            kind="image"
             defaultValue={post?.coverImage ?? ""}
             error={errors.coverImage}
-            hint="1200x630 works best for social sharing."
+            hint="1200x630 works best for social sharing. Test checks the URL actually serves an image."
           />
         </section>
 

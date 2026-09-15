@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { Loader2 } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@charm/ui/button";
 import { Input } from "@charm/ui/input";
 import { Label } from "@charm/ui/label";
@@ -84,6 +84,96 @@ export function TextField({
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${id}-error` : undefined}
       />
+    </FieldShell>
+  );
+}
+
+/**
+ * Same job as TextField, plus a "Test" button that pings the URL server-side
+ * and reports whether it actually works — reachable, and for images
+ * specifically whether the response is really an image (not, say, an HTML
+ * error page silently served with a 200). Controlled (unlike TextField)
+ * because the check button needs to read whatever's currently typed, not
+ * just what was last saved.
+ */
+export function UrlCheckField({
+  name,
+  label,
+  hint,
+  error,
+  className,
+  defaultValue,
+  kind,
+}: BaseProps & {
+  defaultValue?: string | null;
+  /** "image" validates Content-Type; "frame" checks X-Frame-Options/CSP. */
+  kind: "image" | "frame";
+}) {
+  const id = useId();
+  const [value, setValue] = useState(defaultValue ?? "");
+  const [checking, setChecking] = useState(false);
+  const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null);
+
+  async function runCheck() {
+    const url = value.trim();
+    if (!url) return;
+    setChecking(true);
+    setResult(null);
+    try {
+      const response = await fetch("/api/admin/check-url", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url, kind }),
+      });
+      const data = (await response.json()) as { ok: boolean; message: string };
+      setResult(data);
+    } catch {
+      setResult({ ok: false, message: "Couldn't run the check — try again." });
+    } finally {
+      setChecking(false);
+    }
+  }
+
+  return (
+    <FieldShell id={id} label={label} hint={hint} error={error} className={className}>
+      <div className="flex gap-2">
+        <Input
+          id={id}
+          name={name}
+          type="url"
+          value={value}
+          onChange={(event) => {
+            setValue(event.target.value);
+            setResult(null);
+          }}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? `${id}-error` : undefined}
+        />
+        <Button
+          type="button"
+          variant="outline"
+          onClick={runCheck}
+          disabled={checking || !value.trim()}
+        >
+          {checking ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : "Test"}
+        </Button>
+      </div>
+      {result ? (
+        <p
+          role="status"
+          className={cn(
+            "flex items-start gap-1.5 text-xs",
+            result.ok ? "text-primary" : "text-destructive",
+          )}
+        >
+          {result.ok ? (
+            <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
+          ) : (
+            <AlertTriangle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
+          )}
+          {result.message}
+        </p>
+      ) : null}
     </FieldShell>
   );
 }
